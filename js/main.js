@@ -1,4 +1,4 @@
-// Particle Background
+// Enhanced Sparkle Particles (to match the Lovable glow)
 const canvas = document.getElementById('particles-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
@@ -14,19 +14,25 @@ class Particle {
     constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2.5 + 1;
-        this.speedX = Math.random() * 0.8 - 0.4;
-        this.speedY = Math.random() * 0.8 - 0.4;
+        this.size = Math.random() * 4 + 1;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = Math.random() * 1 - 0.5;
+        this.color = Math.random() > 0.5 ? '#bb86fc' : '#03dac6';
+        this.opacity = Math.random() * 0.8 + 0.2;
     }
     update() {
         this.x += this.speedX;
         this.y += this.speedY;
         if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
         if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+        this.opacity += Math.random() * 0.02 - 0.01;
+        this.opacity = Math.max(0.2, Math.min(1, this.opacity));
     }
     draw() {
-        ctx.fillStyle = '#ff3f3f';
-        ctx.globalAlpha = 0.6;
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = this.color;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -35,7 +41,7 @@ class Particle {
 
 function initParticles() {
     particles = [];
-    const count = window.innerWidth < 768 ? 60 : 120;
+    const count = window.innerWidth < 768 ? 80 : 150;
     for (let i = 0; i < count; i++) particles.push(new Particle());
 }
 
@@ -49,7 +55,7 @@ initParticles();
 animate();
 window.addEventListener('resize', initParticles);
 
-// Typing Effect
+// Typing Effect (same)
 const typedText = document.getElementById('typed-text');
 const phrases = [
     "Unity Game Developer",
@@ -77,18 +83,18 @@ function type() {
 }
 type();
 
-// Scroll Animations & Timeline Stagger
+// Scroll Animations & Timeline
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('visible');
         }
     });
-}, { threshold: 0.15 });
+}, { threshold: 0.1 });
 
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 document.querySelectorAll('.timeline-item').forEach((item, index) => {
-    item.style.transitionDelay = `${index * 0.2}s`;
+    item.style.transitionDelay = `${index * 0.3}s`;
     observer.observe(item);
 });
 
