@@ -4,12 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 1. Initialize Lucide Icons ---
     lucide.createIcons();
 
-    // --- 2. Loading Screen Logic ---
+    // --- 2. Loading Screen Logic (Speeded up) ---
     const loader = document.getElementById('loader');
-    // Allow the CSS animation to play out, then hide
+    // Reduced wait time from 1500ms to 800ms for snappier feel
     setTimeout(() => {
         loader.classList.add('hidden');
-    }, 1500);
+    }, 800);
 
     // --- 3. Three.js Background (The "Unity" Flex) ---
     const initThreeJS = () => {
@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Start typing after initial animation
-    setTimeout(typeEffect, 2500);
+    setTimeout(typeEffect, 1000);
 
     // --- 6. Mobile Menu & Interactions ---
     const hamburger = document.getElementById('hamburger');
@@ -296,19 +296,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     form.addEventListener("submit", handleSubmit);
 
-    // --- 8. Fix for Iframe Loading visibility ---
-    const iframes = document.querySelectorAll('iframe');
-    iframes.forEach(iframe => {
-        // Add loaded class when iframe fires onload
-        iframe.onload = () => {
-            iframe.classList.add('loaded');
-        };
-        // Fallback: Force visibility after 2 seconds if onload doesn't fire (some browsers/caches)
-        setTimeout(() => {
-            iframe.classList.add('loaded');
-        }, 2000);
-    });
-
     // Console Easter Egg
-    console.log('%c👾 System Ready: KJ-Portfolio v2.0', 'color: #8b5cf6; font-size: 16px; font-weight: bold;');
+    console.log('%c👾 System Ready: KJ-Portfolio v3.0 (Static Mode)', 'color: #8b5cf6; font-size: 16px; font-weight: bold;');
 });
