@@ -296,6 +296,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     form.addEventListener("submit", handleSubmit);
 
+    // --- 8. Fix for Iframe Loading visibility ---
+    const iframes = document.querySelectorAll('iframe');
+    iframes.forEach(iframe => {
+        // Add loaded class when iframe fires onload
+        iframe.onload = () => {
+            iframe.classList.add('loaded');
+        };
+        // Fallback: Force visibility after 2 seconds if onload doesn't fire (some browsers/caches)
+        setTimeout(() => {
+            iframe.classList.add('loaded');
+        }, 2000);
+    });
+
     // Console Easter Egg
     console.log('%c👾 System Ready: KJ-Portfolio v2.0', 'color: #8b5cf6; font-size: 16px; font-weight: bold;');
 });
