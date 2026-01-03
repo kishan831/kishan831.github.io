@@ -1,309 +1,301 @@
-// Loading Screen
-window.addEventListener('load', () => {
+// Wait for DOM
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // --- 1. Initialize Lucide Icons ---
+    lucide.createIcons();
+
+    // --- 2. Loading Screen Logic ---
     const loader = document.getElementById('loader');
+    // Allow the CSS animation to play out, then hide
     setTimeout(() => {
         loader.classList.add('hidden');
     }, 1500);
-});
 
-// Enhanced Sparkle Particles
-const canvas = document.getElementById('particles-canvas');
-const ctx = canvas.getContext('2d');
-let particles = [];
+    // --- 3. Three.js Background (The "Unity" Flex) ---
+    const initThreeJS = () => {
+        const canvas = document.getElementById('bg-canvas');
+        const scene = new THREE.Scene();
+        // Fog for depth
+        scene.fog = new THREE.FogExp2(0x0f172a, 0.002);
 
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-class Particle {
-    constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 4 + 1;
-        this.speedX = Math.random() * 1 - 0.5;
-        this.speedY = Math.random() * 1 - 0.5;
-        this.color = Math.random() > 0.5 ? '#bb86fc' : '#03dac6';
-        this.opacity = Math.random() * 0.8 + 0.2;
-    }
-
-    update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
-        if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
-
-        this.opacity += Math.random() * 0.02 - 0.01;
-        this.opacity = Math.max(0.2, Math.min(1, this.opacity));
-    }
-
-    draw() {
-        ctx.globalAlpha = this.opacity;
-        ctx.fillStyle = this.color;
-        ctx.shadowBlur = 20;
-        ctx.shadowColor = this.color;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-    }
-}
-
-function initParticles() {
-    particles = [];
-    const count = window.innerWidth < 768 ? 80 : 150;
-    for (let i = 0; i < count; i++) {
-        particles.push(new Particle());
-    }
-}
-
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-        p.update();
-        p.draw();
-    });
-    requestAnimationFrame(animate);
-}
-
-initParticles();
-animate();
-window.addEventListener('resize', initParticles);
-
-// Typing Effect
-const typedText = document.getElementById('typed-text');
-const phrases = [
-    "Unity Game Developer",
-    "Slot Game Specialist",
-    "Multiplayer Expert",
-    "Creating Immersive Worlds"
-];
-
-let i = 0, j = 0, deleting = false;
-
-function type() {
-    const current = phrases[i];
-    typedText.textContent = current.substring(0, j);
-    
-    if (!deleting && j === current.length) {
-        deleting = true;
-        setTimeout(type, 1500);
-    } else if (deleting && j === 0) {
-        deleting = false;
-        i = (i + 1) % phrases.length;
-        setTimeout(type, 500);
-    } else {
-        j += deleting ? -1 : 1;
-        setTimeout(type, deleting ? 50 : 100);
-    }
-}
-
-type();
-
-// Scroll Animations
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
-    });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-document.querySelectorAll('.timeline-item').forEach((item, index) => {
-    item.style.transitionDelay = `${index * 0.2}s`;
-    observer.observe(item);
-});
-
-// Smooth Scrolling
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-            // Close mobile menu if open
-            navLinks.classList.remove('active');
-            hamburger.classList.remove('active');
-        }
-    });
-});
-
-// Navbar Scroll Effect
-const navbar = document.getElementById('navbar');
-let lastScroll = 0;
-
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > 100) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-    
-    lastScroll = currentScroll;
-});
-
-// Hamburger Menu
-const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('navLinks');
-
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navLinks.classList.toggle('active');
-});
-
-// Close menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
-        hamburger.classList.remove('active');
-        navLinks.classList.remove('active');
-    }
-});
-
-// Scroll to Top Button
-const scrollTop = document.getElementById('scrollTop');
-
-window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 500) {
-        scrollTop.classList.add('visible');
-    } else {
-        scrollTop.classList.remove('visible');
-    }
-});
-
-scrollTop.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
-
-// Contact Form Handling
-const contactForm = document.getElementById('contactForm');
-
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
-    
-    // Create mailto link
-    const mailtoLink = `mailto:jaiswalkishan628@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}%0D%0A%0D%0AFrom: ${encodeURIComponent(email)}`;
-    
-    // Open mail client
-    window.location.href = mailtoLink;
-    
-    // Show success message
-    alert('Thank you for your message! Your email client will open to send the message.');
-    
-    // Reset form
-    contactForm.reset();
-});
-
-// Skill Cards Animation
-const skills = document.querySelectorAll('.skill');
-skills.forEach((skill, index) => {
-    skill.style.animationDelay = `${index * 0.1}s`;
-});
-
-// Project Cards Hover Effect
-const projectCards = document.querySelectorAll('.project-card');
-projectCards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.zIndex = '10';
-    });
-    
-    card.addEventListener('mouseleave', function() {
-        this.style.zIndex = '1';
-    });
-});
-
-// Dynamic Stats Counter Animation
-const statNumbers = document.querySelectorAll('.stat-number');
-const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const target = entry.target;
-            const finalValue = target.textContent;
-            const isPercentage = finalValue.includes('%');
-            const isPlus = finalValue.includes('+');
-            const numValue = parseInt(finalValue);
-            
-            let current = 0;
-            const increment = numValue / 50;
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= numValue) {
-                    current = numValue;
-                    clearInterval(timer);
-                }
-                target.textContent = Math.floor(current) + (isPlus ? '+' : '') + (isPercentage ? '%' : '');
-            }, 30);
-            
-            statsObserver.unobserve(target);
-        }
-    });
-}, { threshold: 0.5 });
-
-statNumbers.forEach(stat => statsObserver.observe(stat));
-
-// Parallax Effect for Hero Section
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.getElementById('hero');
-    if (hero) {
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-        hero.style.opacity = 1 - (scrolled / 700);
-    }
-});
-
-// Add cursor trail effect (optional - subtle)
-document.addEventListener('mousemove', (e) => {
-    if (window.innerWidth > 768) {
-        const trail = document.createElement('div');
-        trail.className = 'cursor-trail';
-        trail.style.cssText = `
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: radial-gradient(circle, #bb86fc, transparent);
-            border-radius: 50%;
-            pointer-events: none;
-            left: ${e.clientX}px;
-            top: ${e.clientY}px;
-            transform: translate(-50%, -50%);
-            opacity: 0.6;
-            z-index: 9999;
-            animation: fadeOut 1s forwards;
-        `;
-        document.body.appendChild(trail);
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
         
-        setTimeout(() => trail.remove(), 1000);
-    }
-});
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
 
-// Add fadeOut animation dynamically
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeOut {
-        to {
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(2);
+        // Create Geometric Shape (Wireframe Icosahedron)
+        const geometry = new THREE.IcosahedronGeometry(10, 2);
+        const material = new THREE.MeshBasicMaterial({ 
+            color: 0x8b5cf6, 
+            wireframe: true, 
+            transparent: true, 
+            opacity: 0.05 
+        });
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+
+        // Add Particles
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 700;
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 50; // Spread
         }
-    }
-`;
-document.head.appendChild(style);
 
-// Console Easter Egg
-console.log('%c👾 Hey there, Developer! 👾', 'color: #bb86fc; font-size: 20px; font-weight: bold;');
-console.log('%cLooking for someone who can build awesome games? Let\'s talk!', 'color: #03dac6; font-size: 14px;');
-console.log('%cEmail: jaiswalkishan628@gmail.com', 'color: #fff; font-size: 12px;');
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.05,
+            color: 0x06b6d4,
+            transparent: true,
+            opacity: 0.8,
+        });
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        camera.position.z = 20;
+
+        // Interactive Mouse Movement
+        let mouseX = 0;
+        let mouseY = 0;
+        
+        document.addEventListener('mousemove', (event) => {
+            mouseX = event.clientX / window.innerWidth - 0.5;
+            mouseY = event.clientY / window.innerHeight - 0.5;
+        });
+
+        // Animation Loop
+        const clock = new THREE.Clock();
+
+        const animate = () => {
+            const elapsedTime = clock.getElapsedTime();
+
+            // Rotate Sphere
+            sphere.rotation.y += 0.002;
+            sphere.rotation.x += 0.001;
+
+            // Parallax based on mouse
+            sphere.rotation.y += mouseX * 0.05;
+            sphere.rotation.x += mouseY * 0.05;
+
+            // Wave effect for particles
+            particlesMesh.rotation.y = -elapsedTime * 0.05;
+            particlesMesh.rotation.x = mouseY * 0.2;
+
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        };
+
+        animate();
+
+        // Resize Handler
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    };
+
+    initThreeJS();
+
+    // --- 4. GSAP Animations ---
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Navbar Blur on Scroll
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('nav');
+        if(window.scrollY > 50) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+    });
+
+    // Hero Animation
+    const tl = gsap.timeline();
+    tl.from(".hero-greeting", { y: 20, opacity: 0, duration: 0.8, ease: "power2.out" })
+      .from("#hero h1", { y: 50, opacity: 0, duration: 0.8, ease: "power2.out" }, "-=0.6")
+      .from("#typed-text", { y: 20, opacity: 0, duration: 0.8 }, "-=0.6")
+      .from(".hero-buttons", { y: 20, opacity: 0, duration: 0.8 }, "-=0.6");
+
+    // Reveal Sections (General Fade Up)
+    gsap.utils.toArray('.gs_reveal').forEach((elem) => {
+        gsap.from(elem, {
+            scrollTrigger: {
+                trigger: elem,
+                start: "top 85%",
+                toggleActions: "play none none reverse"
+            },
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out"
+        });
+    });
+
+    // Timeline Items (Slide from Left)
+    gsap.utils.toArray('.gs_reveal_left').forEach((elem) => {
+        gsap.from(elem, {
+            scrollTrigger: {
+                trigger: elem,
+                start: "top 80%",
+            },
+            x: -50,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out"
+        });
+    });
+
+    // Project Cards (Staggered Fade Up)
+    gsap.from(".gs_reveal_up", {
+        scrollTrigger: {
+            trigger: ".projects-container",
+            start: "top 75%"
+        },
+        y: 100,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: "back.out(1.7)"
+    });
+
+    // Stats Counter Animation
+    gsap.utils.toArray('.stat-number').forEach((stat) => {
+        const target = parseInt(stat.getAttribute('data-target'));
+        
+        ScrollTrigger.create({
+            trigger: stat,
+            start: "top 85%",
+            once: true,
+            onEnter: () => {
+                gsap.to(stat, {
+                    innerHTML: target,
+                    duration: 2,
+                    snap: { innerHTML: 1 },
+                    ease: "power1.inOut",
+                    onUpdate: function() {
+                        stat.innerHTML = Math.ceil(this.targets()[0].innerHTML) + "+";
+                    }
+                });
+            }
+        });
+    });
+
+    // --- 5. Typing Effect (Vanilla JS) ---
+    const typedText = document.getElementById('typed-text');
+    const phrases = [
+        "Unity Game Developer",
+        "Slot Game Specialist",
+        "Multiplayer Expert",
+        "Creating Immersive Worlds"
+    ];
+
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function typeEffect() {
+        const currentPhrase = phrases[phraseIndex];
+        
+        if (isDeleting) {
+            typedText.textContent = currentPhrase.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            typedText.textContent = currentPhrase.substring(0, charIndex + 1);
+            charIndex++;
+        }
+
+        let typeSpeed = isDeleting ? 50 : 100;
+
+        if (!isDeleting && charIndex === currentPhrase.length) {
+            typeSpeed = 2000; // Pause at end
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            typeSpeed = 500;
+        }
+
+        setTimeout(typeEffect, typeSpeed);
+    }
+    
+    // Start typing after initial animation
+    setTimeout(typeEffect, 2500);
+
+    // --- 6. Mobile Menu & Interactions ---
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    const links = document.querySelectorAll('.nav-links a');
+
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('active');
+    });
+
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navLinks.classList.remove('active');
+        });
+    });
+
+    // Scroll to top
+    const scrollTopBtn = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+        if(window.scrollY > 500) scrollTopBtn.classList.add('visible');
+        else scrollTopBtn.classList.remove('visible');
+    });
+
+    scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // --- 7. Formspree Form Handling ---
+    const form = document.getElementById("contactForm");
+    const status = document.getElementById("form-status");
+    const submitBtn = document.getElementById("submitBtn");
+
+    async function handleSubmit(event) {
+        event.preventDefault();
+        const data = new FormData(event.target);
+        
+        // Update UI state
+        submitBtn.innerHTML = "Sending...";
+        submitBtn.disabled = true;
+
+        fetch(event.target.action, {
+            method: form.method,
+            body: data,
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                status.innerHTML = "Thanks! I'll get back to you soon.";
+                status.classList.add('success');
+                form.reset();
+                submitBtn.innerHTML = 'Message Sent <i data-lucide="check"></i>';
+                lucide.createIcons(); // Re-render icon
+            } else {
+                response.json().then(data => {
+                    if (Object.hasOwn(data, 'errors')) {
+                        status.innerHTML = data["errors"].map(error => error["message"]).join(", ");
+                    } else {
+                        status.innerHTML = "Oops! There was a problem submitting your form";
+                    }
+                    status.classList.add('error');
+                    submitBtn.innerHTML = 'Send Message';
+                    submitBtn.disabled = false;
+                })
+            }
+        }).catch(error => {
+            status.innerHTML = "Oops! There was a problem submitting your form";
+            status.classList.add('error');
+            submitBtn.innerHTML = 'Send Message';
+            submitBtn.disabled = false;
+        });
+    }
+    form.addEventListener("submit", handleSubmit);
+
+    // Console Easter Egg
+    console.log('%c👾 System Ready: KJ-Portfolio v2.0', 'color: #8b5cf6; font-size: 16px; font-weight: bold;');
+});
