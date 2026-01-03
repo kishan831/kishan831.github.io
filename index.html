@@ -5,599 +5,240 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Kishan Jaiswal - Unity Game Developer with 5+ years of experience in slot games, multiplayer systems, and immersive gaming experiences.">
     <title>Kishan Jaiswal | Unity Game Developer</title>
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- AOS (Animate On Scroll) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-    
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-    
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <!-- Loading Screen -->
     <div id="loader">
-        <div class="loader-content">
-            <div class="loader-logo">KJ</div>
-            <div class="loader-bar">
-                <div class="loader-progress"></div>
-            </div>
-            <div class="loader-text">Loading Portfolio...</div>
-        </div>
+        <div class="loader-logo">KJ</div>
+        <div class="loader-text">Loading Portfolio...</div>
     </div>
 
-    <!-- Three.js Canvas -->
-    <div id="three-container"></div>
+    <canvas id="particles-canvas"></canvas>
 
-    <!-- Cursor Follower -->
-    <div class="cursor-dot" id="cursorDot"></div>
-    <div class="cursor-outline" id="cursorOutline"></div>
-
-    <!-- Navigation -->
     <nav id="navbar">
-        <div class="nav-container">
-            <div class="logo">KJ</div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#hero" class="nav-link">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#experience" class="nav-link">Experience</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
+        <div class="logo">KJ</div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
     </nav>
 
-    <!-- Hero Section -->
     <section id="hero">
-        <div class="hero-content">
-            <h1 class="hero-title" data-aos="fade-up">Kishan Jaiswal</h1>
-            <div class="typed-container" data-aos="fade-up" data-aos-delay="200">
-                <span id="typed-text"></span>
-            </div>
-            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="400">
-                Building immersive games with 5+ years of professional experience
-            </p>
-            <div class="hero-buttons" data-aos="fade-up" data-aos-delay="600">
-                <a href="#projects" class="btn btn-primary">
-                    <span>View Projects</span>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-                <a href="assets/resume.pdf" class="btn btn-secondary" download>
-                    <span>Download Resume</span>
-                    <i class="fas fa-download"></i>
-                </a>
-            </div>
+        <h1>Kishan Jaiswal</h1>
+        <div id="typed-text"></div>
+        <p class="hero-subtitle">Building immersive games with 5+ years of professional experience</p>
+        <div class="hero-buttons">
+            <a href="#projects" class="btn">View Projects</a>
+            <a href="assets/resume.pdf" class="btn" download>Download Resume</a>
+        </div>
+    </section>
+
+    <section id="about" class="fade-in">
+        <h2>About Me</h2>
+        <div class="about-content">
+            <p>Experienced Unity Developer with a passion for gaming from an early age. Specialized in creating high-performance slot games, multiplayer systems, and modular frameworks using C#, Photon Fusion, Addressables, Timeline, and advanced VFX.</p>
+            <p>I've led teams, delivered 50+ projects, and built engaging casino experiences with fair RNG, dynamic reels, bonus mechanics, and stunning UI/UX.</p>
         </div>
         
-        <!-- Scroll Indicator -->
-        <div class="scroll-indicator">
-            <div class="mouse">
-                <div class="wheel"></div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">5+</div>
+                <div class="stat-label">Years Experience</div>
             </div>
-            <p>Scroll Down</p>
+            <div class="stat-card">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Projects Delivered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Team Members Led</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Client Satisfaction</div>
+            </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">About Me</h2>
+    <section id="skills" class="fade-in">
+        <h2>Skills & Expertise</h2>
+        <div class="skill-grid">
+            <div class="skill">Unity</div>
+            <div class="skill">C# / C++</div>
+            <div class="skill">Photon Fusion</div>
+            <div class="skill">Slot Game Mechanics</div>
+            <div class="skill">RNG Systems</div>
+            <div class="skill">Animation & Timeline</div>
+            <div class="skill">VFX & Particles</div>
+            <div class="skill">Addressables</div>
+            <div class="skill">DoTween</div>
+            <div class="skill">Design Patterns</div>
+            <div class="skill">UI/UX Design</div>
+            <div class="skill">WebGL & Multiplatform</div>
+        </div>
+    </section>
+
+    <section id="experience" class="fade-in">
+        <h2>Professional Experience</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">June 2024 – Present</div>
+                <div class="timeline-content">
+                    <h3>Unity Developer <span>@ Bilions (Austin, Texas)</span></h3>
+                    <p>Developing cutting-edge casino slot machine games with multi-reel configurations, dynamic paylines, free spins, scatter wins, and auto-spin features.</p>
+                    <ul>
+                        <li>Designed immersive UI/UX for enhanced player engagement</li>
+                        <li>Implemented reliable RNG for fair and unpredictable outcomes</li>
+                        <li>Built modular, scalable frameworks for easy theme customization</li>
+                        <li>Optimized performance across mobile, WebGL, and desktop platforms</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">Dec 2023 – Jul 2024</div>
+                <div class="timeline-content">
+                    <h3>Unity Developer <span>@ Upwork (Freelance)</span></h3>
+                    <p>Delivered high-quality freelance Unity projects with focus on gameplay and performance.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">Sep 2023 – Nov 2023</div>
+                <div class="timeline-content">
+                    <h3>Mid-Level Unity Developer <span>@ Appzia Technologies (Pune)</span></h3>
+                    <p>Developed a complete multiplayer chess game with real-time synchronization.</p>
+                    <ul>
+                        <li>Implemented core chess mechanics, rules, and turn-based gameplay</li>
+                        <li>Created 3D graphics and intuitive UI with move highlighting & pawn promotion</li>
+                        <li>Built robust Photon-based multiplayer system with global matchmaking</li>
+                        <li>Added animations, sound effects, save/load, and undo features</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">Aug 2022 – Jun 2023</div>
+                <div class="timeline-content">
+                    <h3>Unity Developer <span>@ PhiBonacci Solutions (Ahmedabad)</span></h3>
+                    <p>Led a team of 15 programmers across 50+ diverse projects.</p>
+                    <ul>
+                        <li>Expert in Addressables, Timeline, Animator Controllers, Blend Shapes, Avatar Masks</li>
+                        <li>Designed responsive UI for mobile, AR, VR, Windows, and Linux</li>
+                        <li>Integrated DoTween and optimized animations & performance</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">Jan 2021 – Jul 2022</div>
+                <div class="timeline-content">
+                    <h3>Full Stack Game Developer <span>@ Outscal (Delhi)</span></h3>
+                    <p>Contributed to full-cycle game development and innovative concepts.</p>
+                    <ul>
+                        <li>Designed user-friendly interfaces and integrated third-party plugins</li>
+                        <li>Created comprehensive Game Design Documents (GDDs)</li>
+                        <li>Built interactive gameplay, AI behaviors, and performance optimizations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="fade-in">
+        <h2>Featured Projects</h2>
+        <div class="projects-container">
+            <div class="project-card">
+                <iframe src="https://www.youtube.com/embed/RubElttzOaU" title="Zombie Slot Game" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div class="project-info">
+                    <h3>Zombie Slot Game</h3>
+                    <p>Immersive multi-reel slot with dynamic paylines, scatter bonuses, free spins, and horror-themed VFX.</p>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <iframe src="https://www.youtube.com/embed/BsKxrJxeV6E" title="Vegas Empire" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div class="project-info">
+                    <h3>Vegas Empire</h3>
+                    <p>Casino empire builder with interactive UI, progressive bonuses, and high-performance reel mechanics.</p>
+                </div>
+            </div>
+
+            <div class="project-card coming-soon">
+                <div class="project-info">
+                    <h3>New Project</h3>
+                    <p>Coming Soon — Next-gen multiplayer or advanced slot experience in development.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="fade-in">
+        <h2>Get In Touch</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <p>Available for full-time, freelance, or contract Unity/Game Dev roles.</p>
+                <p>Email: <a href="mailto:jaiswalkishan628@gmail.com">jaiswalkishan628@gmail.com</a></p>
+            </div>
             
-            <div class="about-grid">
-                <div class="about-content" data-aos="fade-right">
-                    <p class="about-text">
-                        Experienced Unity Developer with a passion for gaming from an early age. Specialized in creating high-performance slot games, multiplayer systems, and modular frameworks using C#, Photon Fusion, Addressables, Timeline, and advanced VFX.
-                    </p>
-                    <p class="about-text">
-                        I've led teams, delivered 50+ projects, and built engaging casino experiences with fair RNG, dynamic reels, bonus mechanics, and stunning UI/UX.
-                    </p>
-                    
-                    <div class="about-highlights">
-                        <div class="highlight-item">
-                            <i class="fas fa-code"></i>
-                            <span>Clean Code</span>
-                        </div>
-                        <div class="highlight-item">
-                            <i class="fas fa-users"></i>
-                            <span>Team Leadership</span>
-                        </div>
-                        <div class="highlight-item">
-                            <i class="fas fa-rocket"></i>
-                            <span>Fast Delivery</span>
-                        </div>
-                    </div>
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Your Name">
                 </div>
-                
-                <div class="stats-grid" data-aos="fade-left">
-                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
-                        <div class="stat-icon">
-                            <i class="fas fa-calendar-alt"></i>
-                        </div>
-                        <div class="stat-number" data-target="5">0</div>
-                        <div class="stat-label">Years Experience</div>
-                    </div>
-                    
-                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="stat-icon">
-                            <i class="fas fa-project-diagram"></i>
-                        </div>
-                        <div class="stat-number" data-target="50">0</div>
-                        <div class="stat-label">Projects Delivered</div>
-                    </div>
-                    
-                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
-                        <div class="stat-icon">
-                            <i class="fas fa-users-cog"></i>
-                        </div>
-                        <div class="stat-number" data-target="15">0</div>
-                        <div class="stat-label">Team Members Led</div>
-                    </div>
-                    
-                    <div class="stat-card" data-aos="zoom-in" data-aos-delay="400">
-                        <div class="stat-icon">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div class="stat-number" data-target="100">0</div>
-                        <div class="stat-label">Client Satisfaction</div>
-                    </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="your.email@example.com">
                 </div>
-            </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required placeholder="Tell me about your project..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
         </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">Skills & Expertise</h2>
-            
-            <div class="skills-container">
-                <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
-                    <h3 class="category-title">Core Technologies</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <div class="skill-icon">
-                                <i class="fas fa-gamepad"></i>
-                            </div>
-                            <span>Unity</span>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-icon">
-                                <i class="fas fa-code"></i>
-                            </div>
-                            <span>C# / C++</span>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-icon">
-                                <i class="fas fa-network-wired"></i>
-                            </div>
-                            <span>Photon Fusion</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="category-title">Game Development</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <div class="skill-icon">
-                                <i class="fas fa-dice"></i>
-                            </div>
-                            <span>Slot Game Mechanics</span>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-icon">
-                                <i class="fas fa-random"></i>
-                            </div>
-                            <span>RNG Systems</span>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-icon">
-                                <i class="fas fa-film"></i>
-                            </div>
-                            <span>Animation & Timeline</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="skill-category" data-aos="fade-up" data-aos-delay="300">
-                    <h3 class="category-title">Advanced Tools</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <div class="skill-icon">
-                                <i class="fas fa-magic"></i>
-                            </div>
-                            <span>VFX & Particles</span>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-icon">
-                                <i class="fas fa-cubes"></i>
-                            </div>
-                            <span>Addressables</span>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-icon">
-                                <i class="fas fa-bezier-curve"></i>
-                            </div>
-                            <span>DoTween</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="skill-category" data-aos="fade-up" data-aos-delay="400">
-                    <h3 class="category-title">Design & Optimization</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <div class="skill-icon">
-                                <i class="fas fa-drafting-compass"></i>
-                            </div>
-                            <span>Design Patterns</span>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-icon">
-                                <i class="fas fa-palette"></i>
-                            </div>
-                            <span>UI/UX Design</span>
-                        </div>
-                        <div class="skill-item">
-                            <div class="skill-icon">
-                                <i class="fas fa-globe"></i>
-                            </div>
-                            <span>WebGL & Multiplatform</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Experience Section -->
-    <section id="experience">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">Professional Experience</h2>
-            
-            <div class="timeline">
-                <div class="timeline-item" data-aos="fade-right" data-aos-delay="100">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">
-                            <i class="fas fa-calendar"></i>
-                            June 2024 – Present
-                        </div>
-                        <h3>Unity Developer</h3>
-                        <h4>@ Bilions (Austin, Texas)</h4>
-                        <p>Developing cutting-edge casino slot machine games with multi-reel configurations, dynamic paylines, free spins, scatter wins, and auto-spin features.</p>
-                        <ul class="achievement-list">
-                            <li><i class="fas fa-check-circle"></i> Designed immersive UI/UX for enhanced player engagement</li>
-                            <li><i class="fas fa-check-circle"></i> Implemented reliable RNG for fair and unpredictable outcomes</li>
-                            <li><i class="fas fa-check-circle"></i> Built modular, scalable frameworks for easy theme customization</li>
-                            <li><i class="fas fa-check-circle"></i> Optimized performance across mobile, WebGL, and desktop platforms</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="timeline-item" data-aos="fade-right" data-aos-delay="200">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">
-                            <i class="fas fa-calendar"></i>
-                            Dec 2023 – Jul 2024
-                        </div>
-                        <h3>Unity Developer</h3>
-                        <h4>@ Upwork (Freelance)</h4>
-                        <p>Delivered high-quality freelance Unity projects with focus on gameplay and performance.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item" data-aos="fade-right" data-aos-delay="300">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">
-                            <i class="fas fa-calendar"></i>
-                            Sep 2023 – Nov 2023
-                        </div>
-                        <h3>Mid-Level Unity Developer</h3>
-                        <h4>@ Appzia Technologies (Pune)</h4>
-                        <p>Developed a complete multiplayer chess game with real-time synchronization.</p>
-                        <ul class="achievement-list">
-                            <li><i class="fas fa-check-circle"></i> Implemented core chess mechanics, rules, and turn-based gameplay</li>
-                            <li><i class="fas fa-check-circle"></i> Created 3D graphics and intuitive UI with move highlighting & pawn promotion</li>
-                            <li><i class="fas fa-check-circle"></i> Built robust Photon-based multiplayer system with global matchmaking</li>
-                            <li><i class="fas fa-check-circle"></i> Added animations, sound effects, save/load, and undo features</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="timeline-item" data-aos="fade-right" data-aos-delay="400">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">
-                            <i class="fas fa-calendar"></i>
-                            Aug 2022 – Jun 2023
-                        </div>
-                        <h3>Unity Developer</h3>
-                        <h4>@ PhiBonacci Solutions (Ahmedabad)</h4>
-                        <p>Led a team of 15 programmers across 50+ diverse projects.</p>
-                        <ul class="achievement-list">
-                            <li><i class="fas fa-check-circle"></i> Expert in Addressables, Timeline, Animator Controllers, Blend Shapes, Avatar Masks</li>
-                            <li><i class="fas fa-check-circle"></i> Designed responsive UI for mobile, AR, VR, Windows, and Linux</li>
-                            <li><i class="fas fa-check-circle"></i> Integrated DoTween and optimized animations & performance</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="timeline-item" data-aos="fade-right" data-aos-delay="500">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">
-                            <i class="fas fa-calendar"></i>
-                            Jan 2021 – Jul 2022
-                        </div>
-                        <h3>Full Stack Game Developer</h3>
-                        <h4>@ Outscal (Delhi)</h4>
-                        <p>Contributed to full-cycle game development and innovative concepts.</p>
-                        <ul class="achievement-list">
-                            <li><i class="fas fa-check-circle"></i> Designed user-friendly interfaces and integrated third-party plugins</li>
-                            <li><i class="fas fa-check-circle"></i> Created comprehensive Game Design Documents (GDDs)</li>
-                            <li><i class="fas fa-check-circle"></i> Built interactive gameplay, AI behaviors, and performance optimizations</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">Featured Projects</h2>
-            
-            <!-- Swiper Container -->
-            <div class="swiper projectsSwiper" data-aos="fade-up" data-aos-delay="200">
-                <div class="swiper-wrapper">
-                    <!-- Project 1 -->
-                    <div class="swiper-slide">
-                        <div class="project-card">
-                            <div class="project-media">
-                                <iframe src="https://www.youtube.com/embed/RubElttzOaU" 
-                                        title="Zombie Slot Game" 
-                                        frameborder="0" 
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                        allowfullscreen>
-                                </iframe>
-                            </div>
-                            <div class="project-info">
-                                <h3>Zombie Slot Game</h3>
-                                <p>Immersive multi-reel slot with dynamic paylines, scatter bonuses, free spins, and horror-themed VFX.</p>
-                                <div class="project-tags">
-                                    <span class="tag">Unity</span>
-                                    <span class="tag">C#</span>
-                                    <span class="tag">Slot Mechanics</span>
-                                    <span class="tag">VFX</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project 2 -->
-                    <div class="swiper-slide">
-                        <div class="project-card">
-                            <div class="project-media">
-                                <iframe src="https://www.youtube.com/embed/BsKxrJxeV6E" 
-                                        title="Vegas Empire" 
-                                        frameborder="0" 
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                        allowfullscreen>
-                                </iframe>
-                            </div>
-                            <div class="project-info">
-                                <h3>Vegas Empire</h3>
-                                <p>Casino empire builder with interactive UI, progressive bonuses, and high-performance reel mechanics.</p>
-                                <div class="project-tags">
-                                    <span class="tag">Unity</span>
-                                    <span class="tag">RNG</span>
-                                    <span class="tag">UI/UX</span>
-                                    <span class="tag">WebGL</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project 3 -->
-                    <div class="swiper-slide">
-                        <div class="project-card coming-soon">
-                            <div class="project-media">
-                                <div class="coming-soon-content">
-                                    <i class="fas fa-rocket"></i>
-                                    <h4>Coming Soon</h4>
-                                    <p>Next-gen multiplayer or advanced slot experience in development</p>
-                                </div>
-                            </div>
-                            <div class="project-info">
-                                <h3>New Project</h3>
-                                <p>Exciting new game development project currently in the works. Stay tuned!</p>
-                                <div class="project-tags">
-                                    <span class="tag">Unity</span>
-                                    <span class="tag">Multiplayer</span>
-                                    <span class="tag">Innovation</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Navigation -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-                
-                <!-- Pagination -->
-                <div class="swiper-pagination"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <h2 class="section-title" data-aos="fade-up">Get In Touch</h2>
-            
-            <div class="contact-grid">
-                <div class="contact-info" data-aos="fade-right">
-                    <h3>Let's Work Together</h3>
-                    <p>Available for full-time, freelance, or contract Unity/Game Dev roles. Let's create something amazing!</p>
-                    
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="contact-text">
-                                <h4>Email</h4>
-                                <a href="mailto:jaiswalkishan628@gmail.com">jaiswalkishan628@gmail.com</a>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div class="contact-text">
-                                <h4>Location</h4>
-                                <p>Available for Remote Work</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="contact-text">
-                                <h4>Response Time</h4>
-                                <p>Within 24 hours</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <form class="contact-form" id="contactForm" data-aos="fade-left">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="name">
-                                <i class="fas fa-user"></i>
-                                Name
-                            </label>
-                            <input type="text" id="name" name="name" required placeholder="Your Name">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email">
-                                <i class="fas fa-envelope"></i>
-                                Email
-                            </label>
-                            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="subject">
-                            <i class="fas fa-tag"></i>
-                            Subject
-                        </label>
-                        <input type="text" id="subject" name="subject" required placeholder="Project Discussion">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="message">
-                            <i class="fas fa-comment-dots"></i>
-                            Message
-                        </label>
-                        <textarea id="message" name="message" required placeholder="Tell me about your project..."></textarea>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">
-                        <span>Send Message</span>
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                    
-                    <div class="form-status" id="formStatus"></div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Social Icons -->
     <div class="social-icons">
-        <a href="https://github.com/kishan831" target="_blank" aria-label="GitHub" data-aos="fade-right" data-aos-delay="100">
+        <a href="https://github.com/kishan831" target="_blank" aria-label="GitHub">
             <i class="fab fa-github"></i>
         </a>
-        <a href="https://www.linkedin.com/in/kishan-jaiswal-2586a4220/" target="_blank" aria-label="LinkedIn" data-aos="fade-right" data-aos-delay="200">
+        <a href="https://www.linkedin.com/in/kishan-jaiswal-2586a4220/" target="_blank" aria-label="LinkedIn">
             <i class="fab fa-linkedin"></i>
         </a>
-        <a href="https://jaiswalkishan628.wixsite.com/kishanjaiswal-site" target="_blank" aria-label="Portfolio" data-aos="fade-right" data-aos-delay="300">
+        <a href="https://jaiswalkishan628.wixsite.com/kishanjaiswal-site" target="_blank" aria-label="Portfolio">
             <i class="fas fa-briefcase"></i>
         </a>
-        <a href="https://unitydev831.itch.io" target="_blank" aria-label="itch.io" data-aos="fade-right" data-aos-delay="400">
+        <a href="https://unitydev831.itch.io" target="_blank" aria-label="itch.io">
             <i class="fab fa-itch-io"></i>
         </a>
-        <a href="https://medium.com/@jaiswalkishan628" target="_blank" aria-label="Medium" data-aos="fade-right" data-aos-delay="500">
+        <a href="https://medium.com/@jaiswalkishan628" target="_blank" aria-label="Medium">
             <i class="fab fa-medium"></i>
         </a>
-        <a href="https://www.youtube.com/channel/UCrN0559CtMg-NeUi-9bqrTQ" target="_blank" aria-label="YouTube" data-aos="fade-right" data-aos-delay="600">
+        <a href="https://www.youtube.com/channel/UCrN0559CtMg-NeUi-9bqrTQ" target="_blank" aria-label="YouTube">
             <i class="fab fa-youtube"></i>
         </a>
     </div>
 
-    <!-- Scroll to Top -->
     <div class="scroll-top" id="scrollTop">
         <i class="fas fa-arrow-up"></i>
     </div>
 
-    <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <p>© 2026 Kishan Jaiswal | Crafted with <i class="fas fa-heart"></i> & Code</p>
-            <div class="footer-links">
-                <a href="#hero">Home</a>
-                <a href="#about">About</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
-            </div>
-        </div>
+        <p>© 2026 Kishan Jaiswal | Powered by Passion & Code ⚡</p>
     </footer>
 
-    <!-- Scripts -->
-    <!-- Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    
-    <!-- GSAP -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
-    <!-- Typed.js -->
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.16"></script>
-    
-    <!-- AOS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    
-    <!-- Swiper -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    
-    <!-- EmailJS -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    
-    <!-- Custom JS -->
     <script src="js/main.js"></script>
 </body>
 </html>
