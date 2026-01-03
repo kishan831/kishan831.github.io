@@ -334,11 +334,16 @@ nav.scrolled {
 }
 
 .project-card {
-    background: var(--glass);
+    /* FIX: Ensures dark bg while iframe loads */
+    background: rgba(30, 41, 59, 0.4); 
     border-radius: 16px;
     overflow: hidden;
     border: 1px solid var(--glass-border);
     transition: 0.4s;
+    /* FIX: Prevents layout shift */
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
 }
 
 .project-card:hover {
@@ -352,10 +357,20 @@ nav.scrolled {
     aspect-ratio: 16/9;
     border: none;
     border-bottom: 1px solid var(--glass-border);
+    background: #000; /* FIX: Black background behind video */
+    opacity: 0; /* Start invisible */
+    transition: opacity 1s ease-in-out;
+}
+
+/* FIX: JS adds this class when video is ready */
+.project-card iframe.loaded {
+    opacity: 1;
 }
 
 .project-info {
     padding: 1.5rem;
+    background: rgba(15, 23, 42, 0.4); /* Ensure info area has bg too */
+    flex-grow: 1; /* Pushes content to fill space */
 }
 
 .coming-soon {
