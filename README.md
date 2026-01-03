@@ -1,169 +1,120 @@
-
-
-Here is a professional, high-quality **README.md** file. You can copy the content below and save it as a file named `README.md` in the root folder of your project.
-
-```markdown
-# 🚀 Kishan Jaiswal | Immersive Portfolio
+# 🚀 Kishan Jaiswal | Unity & Web3D Developer
 
 <div align="center">
-  <h3>High-Performance • 3D Interactive • Animations</h3>
-  
-  ![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-  ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-  ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-  ![Three.js](https://img.shields.io/badge/Three.js-000000?style=for-the-badge&logo=three.js&logoColor=white)
-  ![GSAP](https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock&logoColor=white)
 
-  [Live Demo](#) • [Report Bug](#) • [Request Feature](#)
+![Banner](https://raw.githubusercontent.com/kishan831/kishan831.github.io/main/public/workflow/Kishan%20Banner.png)
+
+<h3>High-Performance • 3D Interactive • Cinematic Animations</h3>
+
+[![Portfolio](https://img.shields.io/badge/Portfolio-Visit-blue?style=for-the-badge&logo=github)](https://kishanjaiswal.site)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Kishan%20Jaiswal-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/kishan-jaiswal-2586a4220/)
+[![Email](https://img.shields.io/badge/Email-jaiswalkishan628@gmail.com-red?style=for-the-badge&logo=gmail)](mailto:jaiswalkishan628@gmail.com)
+
+![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Three.js](https://img.shields.io/badge/Three.js-000000?style=for-the-badge&logo=three.js&logoColor=white)
+![GSAP](https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock&logoColor=white)
+
 </div>
 
 ---
 
-## 📖 About The Project
+## 📖 About Me
 
-A next-generation portfolio website designed specifically for **Game Developers and Creative Technicians**. Unlike standard templates, this project utilizes **WebGL (Three.js)** to render an interactive 3D background, showcasing technical proficiency in graphics programming right from the landing page.
+I am **Kishan Jaiswal**, a professional Unity & Web3D Developer with **5+ years of experience** in gaming and ed-tech industries. My passion lies in creating **immersive interactive experiences**, optimizing gameplay, and building visually stunning 3D systems.  
 
-Built with a focus on performance and visual impact, it eliminates the need for heavy frameworks (like React/Next.js) by using vanilla JavaScript enhanced with industry-standard animation libraries.
+I specialize in:
+* Unity Game Development (C#)
+* WebGL & Three.js for interactive web experiences
+* Cinematic animations using GSAP & Timeline
+* Gameplay mechanics, slot systems, and networked multiplayer
 
-### ✨ Key Features
+---
 
-*   **🎮 3D Interactive Background:** A custom Three.js scene featuring a wireframe Icosahedron and particle field that reacts to mouse movement (perfect for showcasing Unity/3D skills).
-*   **🎬 Cinematic Scroll Animations:** Powered by **GSAP ScrollTrigger**, elements fade, slide, and scale seamlessly as the user navigates.
-*   **📝 Real-time Contact Form:** Integrated with **Formspree** to handle form submissions without a backend server.
-*   **📱 Fully Responsive:** A mobile-first approach with a glassmorphism UI design using Tailwind-inspired aesthetics.
-*   **⚡ High Performance:** No build tools required. Pure, optimized HTML/CSS/JS.
+## ✨ Portfolio Projects
+
+### 1. **Interactive 3D Portfolio Website**
+* **Description:** Next-gen portfolio built with Three.js and GSAP animations. Mobile-first, high-performance, and fully responsive.  
+* **Preview:**
+  
+![Portfolio Preview](https://raw.githubusercontent.com/kishan831/kishan831.github.io/main/public/workflow/PortfolioPreview.gif)
+
+* **Live Demo:** [kishanjaiswal.site](https://kishanjaiswal.site)  
+* **Tech Stack:** HTML5, CSS3, JS, Three.js, GSAP, Formspree  
+
+---
+
+### 2. **Buffalo Wild Slot Game**
+* **Description:** Full-featured slot machine game in Unity, including free spins, scatter wins, and big win classification logic.  
+* **Preview:**
+  
+![Slot Game Preview](https://raw.githubusercontent.com/kishan831/kishan831.github.io/main/public/workflow/SlotPreview.gif)
+
+* **Tech Stack:** Unity, C#, Animation, Timeline, Addressables  
+
+---
+
+### 3. **Parkour Indie Game Prototype**
+* **Description:** 3D player movement system with combat mechanics and future multiplayer support via Photon Fusion.  
+* **Preview:**
+  
+![Parkour Game Preview](https://raw.githubusercontent.com/kishan831/kishan831.github.io/main/public/workflow/ParkourPreview.gif)
+
+* **Tech Stack:** Unity, C#, Photon Fusion, Timeline Animations  
 
 ---
 
 ## 🛠️ Tech Stack
 
-This project uses modern frontend libraries via CDN to maintain a lightweight footprint while delivering heavy results.
-
-| Category | Technology |
+| Layer | Technology |
 | :--- | :--- |
-| **Structure** | Semantic HTML5 |
-| **Styling** | CSS3 (Glassmorphism, Grid, Flexbox), CSS Variables |
+| **Game Engine** | Unity (C#) |
+| **Web** | HTML5, CSS3, JavaScript |
 | **3D Engine** | Three.js (WebGL) |
-| **Animation** | GSAP (GreenSock) + ScrollTrigger |
-| **Icons** | Lucide Icons |
-| **Forms** | Formspree (Serverless Backend) |
+| **Animation** | GSAP, Timeline (Unity) |
+| **Networking** | Photon Fusion |
+| **UI/UX** | Lucide Icons, Tailwind-inspired design |
+| **Tools** | VS Code, Git, GitHub, Photoshop |
 
 ---
 
 ## 🚀 Getting Started
 
-To get a local copy up and running, follow these simple steps.
-
 ### Prerequisites
-
-*   A modern web browser (Chrome, Firefox, Edge, Safari).
-*   A code editor (VS Code recommended).
+* Modern browser (Chrome, Firefox, Safari)
+* Unity 2021.3+ for game projects
+* Code editor (VS Code recommended)
 
 ### Installation
 
-1.  **Clone the repo**
-   ```sh
-   git clone https://github.com/kishan831/portfolio.git
-   ```
-2.  **Navigate to the folder**
-   ```sh
-   cd portfolio
-   ```
-3.  **Open `index.html`**
-   You can simply double-click `index.html` to open it in your browser.
+```bash
+# Clone the repository
+git clone https://github.com/kishan831/kishan831.github.io.git
 
----
+# Navigate to project folder
+cd kishan831.github.io
 
-## ⚙️ Configuration
+# Open index.html for portfolio or Unity project folder for game prototypes
+🌐 Deployment
+Static Portfolio Website:
 
-### 1. Contact Form Setup
-The contact form uses Formspree to send emails. To make it work for you:
+GitHub Pages or Netlify for free hosting
 
-1.  Go to [Formspree.io](https://formspree.io/) and create a free account.
-2.  Create a new form and copy your **Form ID**.
-3.  Open `index.html` and look for line ~180:
-   ```html
-   <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
-   ```
-4.  Replace `YOUR_FORMSPREE_ID` with the ID you copied.
+No backend required
 
-### 2. Resume Link
-Ensure your PDF resume is located at `assets/resume.pdf`, or update the link in the Hero section of `index.html`.
+Unity Games:
 
----
+Windows, Android, iOS, WebGL export supported
 
-## 📂 Project Structure
+📄 License
+MIT License – free to use and adapt.
 
-```text
-.
-├── index.html          # Main HTML structure
-├── README.md           # This file
-├── css/
-│   └── style.css       # All styling and animations
-├── js/
-│   └── main.js         # Three.js logic, GSAP triggers, Form handling
-└── assets/
-    └── resume.pdf      # Your resume
-```
+🤝 Connect with Me
+Portfolio: kishanjaiswal.site
 
----
+LinkedIn: Kishan Jaiswal
 
-## 🌐 Deployment
+GitHub: kishan831
 
-Since this is a static site, deployment is incredibly easy and free.
-
-**Option 1: Netlify (Drag & Drop)**
-1.  Create an account on [Netlify](https://www.netlify.com/).
-2.  Drag and drop your project folder onto their dashboard.
-3.  Done! Your site is live in seconds.
-
-**Option 2: GitHub Pages**
-1.  Push this code to your GitHub repository.
-2.  Go to **Settings** > **Pages**.
-3.  Under **Source**, select `main` (or master) branch and save.
-
----
-
-## 🎨 Customization
-
-### Changing Colors
-The theme uses CSS Variables in `css/style.css`. Edit the `:root` section at the top:
-
-```css
-:root {
-    --primary: #8b5cf6; /* Change this for main theme color */
-    --secondary: #06b6d4; /* Change this for accent color */
-    --bg-dark: #0f172a;
-}
-```
-
-### Modifying 3D Background
-You can tweak the 3D scene in `js/main.js` inside the `initThreeJS` function:
-*   `geometry`: Change `IcosahedronGeometry` to `TorusKnotGeometry` or others.
-*   `wireframe`: Set to `false` for a solid object.
-
----
-
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome!
-
----
-
-## 📄 License
-
-Distributed under the MIT License.
-
----
-
-## 👨‍💻 Author
-
-**Kishan Jaiswal**
-*   Portfolio: [kishanjaiswal.site](https://kishanjaiswal.site)
-*   LinkedIn: [Kishan Jaiswal](https://www.linkedin.com/in/kishan-jaiswal-2586a4220/)
-*   Email: jaiswalkishan628@gmail.com
-
----
-
-**⚡ Built with passion and code.**
-```
+Email: jaiswalkishan628@gmail.com
