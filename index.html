@@ -3,15 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kishan Jaiswal - Unity Game Developer with 5+ years of experience in slot games, multiplayer systems, and immersive gaming experiences.">
     <title>Kishan Jaiswal | Unity Game Developer</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="loader-logo">KJ</div>
+        <div class="loader-text">Loading Portfolio...</div>
+    </div>
+
     <canvas id="particles-canvas"></canvas>
 
-    <nav>
+    <nav id="navbar">
         <div class="logo">KJ</div>
-        <ul class="nav-links">
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links" id="navLinks">
             <li><a href="#hero">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
@@ -35,7 +48,26 @@
         <h2>About Me</h2>
         <div class="about-content">
             <p>Experienced Unity Developer with a passion for gaming from an early age. Specialized in creating high-performance slot games, multiplayer systems, and modular frameworks using C#, Photon Fusion, Addressables, Timeline, and advanced VFX.</p>
-            <p>I’ve led teams, delivered 50+ projects, and built engaging casino experiences with fair RNG, dynamic reels, bonus mechanics, and stunning UI/UX.</p>
+            <p>I've led teams, delivered 50+ projects, and built engaging casino experiences with fair RNG, dynamic reels, bonus mechanics, and stunning UI/UX.</p>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">5+</div>
+                <div class="stat-label">Years Experience</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Projects Delivered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Team Members Led</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Client Satisfaction</div>
+            </div>
         </div>
     </section>
 
@@ -154,29 +186,53 @@
 
     <section id="contact" class="fade-in">
         <h2>Get In Touch</h2>
-        <p>Available for full-time, freelance, or contract Unity/Game Dev roles.</p>
-        <p>Email: <a href="mailto:jaiswalkishan628@gmail.com">jaiswalkishan628@gmail.com</a></p>
+        <div class="contact-container">
+            <div class="contact-info">
+                <p>Available for full-time, freelance, or contract Unity/Game Dev roles.</p>
+                <p>Email: <a href="mailto:jaiswalkishan628@gmail.com">jaiswalkishan628@gmail.com</a></p>
+            </div>
+            
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required placeholder="Tell me about your project..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
     </section>
 
     <div class="social-icons">
         <a href="https://github.com/kishan831" target="_blank" aria-label="GitHub">
-            <img src="assets/github.png" alt="GitHub">
+            <i class="fab fa-github"></i>
         </a>
         <a href="https://www.linkedin.com/in/kishan-jaiswal-2586a4220/" target="_blank" aria-label="LinkedIn">
-            <img src="assets/linkedin.png" alt="LinkedIn">
+            <i class="fab fa-linkedin"></i>
         </a>
         <a href="https://jaiswalkishan628.wixsite.com/kishanjaiswal-site" target="_blank" aria-label="Portfolio">
-            <img src="assets/portfolio.png" alt="Portfolio">
+            <i class="fas fa-briefcase"></i>
         </a>
         <a href="https://unitydev831.itch.io" target="_blank" aria-label="itch.io">
-            <img src="assets/itchio.png" alt="itch.io">
+            <i class="fab fa-itch-io"></i>
         </a>
         <a href="https://medium.com/@jaiswalkishan628" target="_blank" aria-label="Medium">
-            <img src="assets/medium.png" alt="Medium">
+            <i class="fab fa-medium"></i>
         </a>
         <a href="https://www.youtube.com/channel/UCrN0559CtMg-NeUi-9bqrTQ" target="_blank" aria-label="YouTube">
-            <img src="assets/youtube.png" alt="YouTube">
+            <i class="fab fa-youtube"></i>
         </a>
+    </div>
+
+    <div class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
     </div>
 
     <footer>
