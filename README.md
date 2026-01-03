@@ -6,7 +6,7 @@
 
 <h3>High-Performance • 3D Interactive • Cinematic Animations</h3>
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-Visit-blue?style=for-the-badge&logo=github)](https://kishanjaiswal.site)
+[![Portfolio](https://img.shields.io/badge/Portfolio-Visit-blue?style=for-the-badge&logo=github)](https://kishan831.github.io/)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Kishan%20Jaiswal-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/kishan-jaiswal-2586a4220/)
 [![Email](https://img.shields.io/badge/Email-jaiswalkishan628@gmail.com-red?style=for-the-badge&logo=gmail)](mailto:jaiswalkishan628@gmail.com)
 
