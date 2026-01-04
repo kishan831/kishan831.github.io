@@ -12,90 +12,114 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 800);
 
     // --- 3. Three.js Background (The "Unity" Flex) ---
-    const initThreeJS = () => {
-        const canvas = document.getElementById('bg-canvas');
-        const scene = new THREE.Scene();
-        // Fog for depth
-        scene.fog = new THREE.FogExp2(0x0f172a, 0.002);
+const initThreeJS = () => {
+    const canvas = document.getElementById('bg-canvas');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0f172a); // Matches your --bg-dark
 
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-        
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false, powerPreference: "low-power" });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // Cap pixel ratio for performance
 
-        // Create Geometric Shape (Wireframe Icosahedron)
-        const geometry = new THREE.IcosahedronGeometry(10, 2);
-        const material = new THREE.MeshBasicMaterial({ 
-            color: 0x8b5cf6, 
-            wireframe: true, 
-            transparent: true, 
-            opacity: 0.05 
+    // === Simple rotating wireframe sphere (much lighter than icosahedron) ===
+    const geometry = new THREE.SphereGeometry(12, 32, 16); // Fewer segments = faster
+    const material = new THREE.MeshBasicMaterial({
+        color: 0x8b5cf6,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.08
+    });
+    const sphere = new THREE.Mesh(geometry, material);
+    scene.add(sphere);
+
+    // === Floating light icons instead of heavy particles ===
+    const iconUrls = [
+        'https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/gamepad-2.svg',
+        'https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/cube.svg',
+        'https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/controller.svg',
+        'https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/zap.svg',
+        'https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/sparkles.svg'
+    ];
+
+    const icons = [];
+    const iconCount = 20; // Very light
+
+    const loader = new THREE.TextureLoader();
+    iconUrls.forEach(url => {
+        loader.load(url, (texture) => {
+            const spriteMaterial = new THREE.SpriteMaterial({
+                map: texture,
+                color: 0x06b6d4,
+                transparent: true,
+                opacity: 0.6,
+                depthTest: false
+            });
+
+            for (let i = 0; i < iconCount / iconUrls.length; i++) {
+                const sprite = new THREE.Sprite(spriteMaterial);
+                sprite.scale.set(1.5, 1.5, 1.5);
+
+                // Random position in a wide sphere
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.acos(2 * Math.random() - 1);
+                const radius = 15 + Math.random() * 20;
+
+                sprite.position.x = radius * Math.sin(phi) * Math.cos(theta);
+                sprite.position.y = radius * Math.cos(phi) + 10; // Start higher
+                sprite.position.z = radius * Math.sin(phi) * Math.sin(theta);
+
+                sprite.userData = { velocity: -0.02 - Math.random() * 0.03 }; // Slow falling
+                icons.push(sprite);
+                scene.add(sprite);
+            }
         });
-        const sphere = new THREE.Mesh(geometry, material);
-        scene.add(sphere);
+    });
 
-        // Add Particles
-        const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 700;
-        const posArray = new Float32Array(particlesCount * 3);
+    camera.position.z = 30;
 
-        for(let i = 0; i < particlesCount * 3; i++) {
-            posArray[i] = (Math.random() - 0.5) * 50; // Spread
-        }
+    // Mouse parallax (very light)
+    let mouseX = 0, mouseY = 0;
+    document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 10;
+        mouseY = (e.clientY / window.innerHeight - 0.5) * 10;
+    });
 
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.05,
-            color: 0x06b6d4,
-            transparent: true,
-            opacity: 0.8,
+    // Animation loop - optimized
+    const clock = new THREE.Clock();
+    const animate = () => {
+        const elapsed = clock.getElapsedTime();
+
+        // Gentle sphere rotation
+        sphere.rotation.y = elapsed * 0.1;
+        sphere.rotation.x = elapsed * 0.05 + mouseY * 0.01;
+
+        // Falling + looping icons
+        icons.forEach(icon => {
+            icon.position.y += icon.userData.velocity;
+            icon.rotation += 0.01;
+
+            if (icon.position.y < -20) {
+                icon.position.y = 40; // Reset to top
+            }
+
+            // Subtle parallax
+            icon.position.x += mouseX * 0.001;
+            icon.position.z += mouseY * 0.001;
         });
-        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particlesMesh);
 
-        camera.position.z = 20;
-
-        // Interactive Mouse Movement
-        let mouseX = 0;
-        let mouseY = 0;
-        
-        document.addEventListener('mousemove', (event) => {
-            mouseX = event.clientX / window.innerWidth - 0.5;
-            mouseY = event.clientY / window.innerHeight - 0.5;
-        });
-
-        // Animation Loop
-        const clock = new THREE.Clock();
-
-        const animate = () => {
-            const elapsedTime = clock.getElapsedTime();
-
-            // Rotate Sphere
-            sphere.rotation.y += 0.002;
-            sphere.rotation.x += 0.001;
-
-            // Parallax based on mouse
-            sphere.rotation.y += mouseX * 0.05;
-            sphere.rotation.x += mouseY * 0.05;
-
-            // Wave effect for particles
-            particlesMesh.rotation.y = -elapsedTime * 0.05;
-            particlesMesh.rotation.x = mouseY * 0.2;
-
-            renderer.render(scene, camera);
-            requestAnimationFrame(animate);
-        };
-
-        animate();
-
-        // Resize Handler
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
     };
+    animate();
+
+    // Resize
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+};
 
     initThreeJS();
 
