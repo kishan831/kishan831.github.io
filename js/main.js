@@ -49,16 +49,17 @@ const initThreeJS = () => {
     iconUrls.forEach(url => {
         loader.load(url, (texture) => {
             const spriteMaterial = new THREE.SpriteMaterial({
-                map: texture,
-                color: 0x06b6d4,
-                transparent: true,
-                opacity: 0.6,
-                depthTest: false
+               map: texture,
+               color: 0xffffff,        // Pure white
+               transparent: true,
+               opacity: 0.7,           // Slightly higher for better visibility
+               depthTest: false,
+               blending: THREE.AdditiveBlending  // Optional: gives a soft glow
             });
 
             for (let i = 0; i < iconCount / iconUrls.length; i++) {
                 const sprite = new THREE.Sprite(spriteMaterial);
-                sprite.scale.set(1.5, 1.5, 1.5);
+                sprite.scale.set(8, 8, 8);
 
                 // Random position in a wide sphere
                 const theta = Math.random() * Math.PI * 2;
