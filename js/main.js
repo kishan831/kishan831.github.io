@@ -145,18 +145,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Project Cards (Staggered Fade Up)
-    gsap.from(".gs_reveal_up", {
-        scrollTrigger: {
-            trigger: ".projects-container",
-            start: "top 75%"
-        },
-        y: 100,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: "back.out(1.7)"
-    });
+    // Project Cards (Staggered Fade Up) - FIXED for reliable load
+gsap.set(".gs_reveal_up", { opacity: 0, y: 100 }); // Initial state (safe default)
+
+ScrollTrigger.create({
+    trigger: ".projects-container",
+    start: "top 85%", // Slightly lower to be safe
+    // markers: true, // Remove after testing - helps debug
+    onEnter: () => {
+        gsap.to(".gs_reveal_up", {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "back.out(1.7)"
+        });
+    },
+    once: true // Only animate once (better performance)
+});
 
     // Stats Counter Animation
     gsap.utils.toArray('.stat-number').forEach((stat) => {
