@@ -298,4 +298,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Console Easter Egg
     console.log('%c👾 System Ready: KJ-Portfolio v3.0 (Static Mode)', 'color: #8b5cf6; font-size: 16px; font-weight: bold;');
+
+        // ==================== Lazy Load YouTube Videos on Click ====================
+    document.querySelectorAll('.youtube-lazy').forEach(card => {
+        card.addEventListener('click', function() {
+            const videoId = this.getAttribute('data-video-id');
+            
+            // Create iframe only when clicked
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            iframe.frameBorder = '0';
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+            iframe.allowFullscreen = true;
+            iframe.loading = 'lazy';
+            iframe.style.borderRadius = '16px 16px 0 0';
+
+            // Replace thumbnail with video player
+            const preview = this.querySelector('.youtube-preview');
+            if (preview) {
+                preview.replaceWith(iframe);
+            }
+        });
+    });
+
+    // Console Easter Egg (keep it if you like!)
+    console.log('%c👾 System Ready: KJ-Portfolio v3.0 (Static Mode)', 'color: #8b5cf6; font-size: 16px; font-weight: bold;');
 });
