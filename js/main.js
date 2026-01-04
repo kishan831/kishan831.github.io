@@ -47,35 +47,35 @@ const initThreeJS = () => {
 
     const loader = new THREE.TextureLoader();
     iconUrls.forEach(url => {
-        loader.load(url, (texture) => {
-            const spriteMaterial = new THREE.SpriteMaterial({
-               map: texture,
-               color: 0xffffff,        // Pure white
-               transparent: true,
-               opacity: 0.7,           // Slightly higher for better visibility
-               depthTest: false,
-               blending: THREE.AdditiveBlending  // Optional: gives a soft glow
-            });
-
-            for (let i = 0; i < iconCount / iconUrls.length; i++) {
-                const sprite = new THREE.Sprite(spriteMaterial);
-                sprite.scale.set(8, 8, 8);
-
-                // Random position in a wide sphere
-                const theta = Math.random() * Math.PI * 2;
-                const phi = Math.acos(2 * Math.random() - 1);
-                const radius = 15 + Math.random() * 20;
-
-                sprite.position.x = radius * Math.sin(phi) * Math.cos(theta);
-                sprite.position.y = radius * Math.cos(phi) + 10; // Start higher
-                sprite.position.z = radius * Math.sin(phi) * Math.sin(theta);
-
-                sprite.userData = { velocity: -0.02 - Math.random() * 0.03 }; // Slow falling
-                icons.push(sprite);
-                scene.add(sprite);
-            }
+    loader.load(url, (texture) => {
+        const spriteMaterial = new THREE.SpriteMaterial({
+            map: texture,
+            color: 0xffffff,                  // Pure white
+            transparent: true,
+            opacity: 0.7,
+            depthTest: false,
+            blending: THREE.AdditiveBlending  // Soft glow effect
         });
+
+        for (let i = 0; i < iconCount / iconUrls.length; i++) {
+            const sprite = new THREE.Sprite(spriteMaterial);
+            sprite.scale.set(3, 3, 3);        // Bigger icons
+
+            // Random position
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos(2 * Math.random() - 1);
+            const radius = 15 + Math.random() * 20;
+
+            sprite.position.x = radius * Math.sin(phi) * Math.cos(theta);
+            sprite.position.y = radius * Math.cos(phi) + 10;
+            sprite.position.z = radius * Math.sin(phi) * Math.sin(theta);
+
+            sprite.userData = { velocity: -0.02 - Math.random() * 0.03 };
+            icons.push(sprite);
+            scene.add(sprite);
+        }
     });
+});
 
     camera.position.z = 30;
 
