@@ -250,18 +250,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- 7. Formspree Form Handling ---
+       // --- 7. Formspree Form Handling ---
     const form = document.getElementById("contactForm");
     const status = document.getElementById("form-status");
     const submitBtn = document.getElementById("submitBtn");
-
     async function handleSubmit(event) {
         event.preventDefault();
         const data = new FormData(event.target);
-        
+       
         // Update UI state
         submitBtn.innerHTML = "Sending...";
         submitBtn.disabled = true;
-
         fetch(event.target.action, {
             method: form.method,
             body: data,
@@ -296,10 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     form.addEventListener("submit", handleSubmit);
 
-    // Console Easter Egg
-    console.log('%c👾 System Ready: KJ-Portfolio v3.0 (Static Mode)', 'color: #8b5cf6; font-size: 16px; font-weight: bold;');
-
-        // ==================== Lazy Load YouTube Videos on Click ====================
+    // ==================== Lazy Load YouTube Videos on Click ====================
     document.querySelectorAll('.youtube-lazy').forEach(card => {
         card.addEventListener('click', function() {
             const videoId = this.getAttribute('data-video-id');
@@ -312,6 +308,9 @@ document.addEventListener('DOMContentLoaded', () => {
             iframe.allowFullscreen = true;
             iframe.loading = 'lazy';
             iframe.style.borderRadius = '16px 16px 0 0';
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.aspectRatio = '16/9';
 
             // Replace thumbnail with video player
             const preview = this.querySelector('.youtube-preview');
@@ -321,6 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Console Easter Egg (keep it if you like!)
+    // Console Easter Egg
     console.log('%c👾 System Ready: KJ-Portfolio v3.0 (Static Mode)', 'color: #8b5cf6; font-size: 16px; font-weight: bold;');
+});
 });
