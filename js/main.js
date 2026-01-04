@@ -323,4 +323,3 @@ document.addEventListener('DOMContentLoaded', () => {
     // Console Easter Egg
     console.log('%c👾 System Ready: KJ-Portfolio v3.0 (Static Mode)', 'color: #8b5cf6; font-size: 16px; font-weight: bold;');
 });
-});
