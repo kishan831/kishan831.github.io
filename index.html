@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kishan Jaiswal - Unity Game Developer with 5+ years of experience in slot games, multiplayer systems, and immersive gaming experiences.">
+    <title>Kishan Jaiswal | Unity Game Developer</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css?v=3.0">
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- GSAP for High-End Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="loader-logo">KJ</div>
+        <div class="loader-text">Initializing Engine...</div>
+        <div class="loader-bar"><div class="loader-progress"></div></div>
+    </div>
+
+    <!-- 3D Background Container -->
+    <canvas id="bg-canvas"></canvas>
+
+    <nav id="navbar">
+        <div class="logo">KJ.dev</div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="hero">
+        <div class="hero-content">
+            <p class="hero-greeting">Hello, World!</p>
+            <h1>I'm Kishan Jaiswal</h1>
+            <div id="typed-text"></div>
+            <p class="hero-subtitle">Building immersive, high-performance games with 5+ years of professional expertise.</p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn primary">View Projects</a>
+                <a href="assets/resume.pdf" class="btn secondary" download>Download Resume</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section-padding">
+        <div class="container">
+            <h2 class="section-title"><span>About Me</span></h2>
+            <div class="about-content gs_reveal">
+                <p>Experienced Unity Developer with a passion for gaming from an early age. Specialized in creating high-performance slot games, multiplayer systems, and modular frameworks using C#, Photon Fusion, Addressables, Timeline, and advanced VFX.</p>
+                <p>I've led teams, delivered 50+ projects, and built engaging casino experiences with fair RNG, dynamic reels, bonus mechanics, and stunning UI/UX.</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card gs_reveal">
+                    <div class="stat-number" data-target="5">0</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-card gs_reveal">
+                    <div class="stat-number" data-target="50">0</div>
+                    <div class="stat-label">Projects Delivered</div>
+                </div>
+                <div class="stat-card gs_reveal">
+                    <div class="stat-number" data-target="15">0</div>
+                    <div class="stat-label">Team Members Led</div>
+                </div>
+                <div class="stat-card gs_reveal">
+                    <div class="stat-number" data-target="100">0</div>
+                    <div class="stat-label">% Satisfaction</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="section-padding">
+        <div class="container">
+            <h2 class="section-title"><span>Tech Stack</span></h2>
+            <div class="skill-grid">
+                <div class="skill-tag gs_reveal">Unity Engine</div>
+                <div class="skill-tag gs_reveal">C# / .NET</div>
+                <div class="skill-tag gs_reveal">Photon Fusion</div>
+                <div class="skill-tag gs_reveal">Slot Mechanics</div>
+                <div class="skill-tag gs_reveal">RNG Systems</div>
+                <div class="skill-tag gs_reveal">PlayMaker</div>
+                <div class="skill-tag gs_reveal">VFX Graph</div>
+                <div class="skill-tag gs_reveal">Addressables</div>
+                <div class="skill-tag gs_reveal">DoTween</div>
+                <div class="skill-tag gs_reveal">Git / CI/CD</div>
+                <div class="skill-tag gs_reveal">Blender</div>
+                <div class="skill-tag gs_reveal">WebGL</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="section-padding">
+        <div class="container">
+            <h2 class="section-title"><span>Experience</span></h2>
+            <div class="timeline">
+                <div class="timeline-item gs_reveal_left">
+                    <div class="timeline-date">June 2024 – Present</div>
+                    <div class="timeline-content">
+                        <h3>Unity Developer <span>@ Bilions (Austin, Texas)</span></h3>
+                        <p>Developing cutting-edge casino slot machine games with multi-reel configurations, dynamic paylines, free spins, scatter wins, and auto-spin features.</p>
+                        <ul>
+                            <li>Designed immersive UI/UX for enhanced player engagement</li>
+                            <li>Implemented reliable RNG for fair and unpredictable outcomes</li>
+                            <li>Built modular, scalable frameworks for easy theme customization</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item gs_reveal_left">
+                    <div class="timeline-date">Dec 2023 – Jul 2024</div>
+                    <div class="timeline-content">
+                        <h3>Unity Developer <span>@ Upwork (Freelance)</span></h3>
+                        <p>Delivered high-quality freelance Unity projects with focus on gameplay and performance.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item gs_reveal_left">
+                    <div class="timeline-date">Sep 2023 – Nov 2023</div>
+                    <div class="timeline-content">
+                        <h3>Mid-Level Unity Developer <span>@ Appzia Technologies (Pune)</span></h3>
+                        <p>Developed a complete multiplayer chess game with real-time synchronization.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item gs_reveal_left">
+                    <div class="timeline-date">Aug 2022 – Jun 2023</div>
+                    <div class="timeline-content">
+                        <h3>Unity Developer <span>@ PhiBonacci Solutions (Ahmedabad)</span></h3>
+                        <p>Led a team of 15 programmers across 50+ diverse projects.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section-padding">
+    <div class="container">
+        <h2 class="section-title"><span>Featured Projects</span></h2>
+        <div class="projects-container">
+            <!-- Project 1: Zombie Slot Game -->
+            <div class="project-card gs_reveal_up youtube-lazy" data-video-id="RubElttzOaU">
+                <div class="youtube-preview" style="background-image: url('https://img.youtube.com/vi/RubElttzOaU/maxresdefault.jpg');">
+                    <div class="play-icon">
+                        <svg viewBox="0 0 100 100" width="80" height="80">
+                            <circle cx="50" cy="50" r="48" fill="rgba(0,0,0,0.6)" stroke="white" stroke-width="2"/>
+                            <polygon points="40,30 40,70 70,50" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Zombie Slot Game</h3>
+                    <p>Immersive multi-reel slot with dynamic paylines, scatter bonuses, free spins, and horror-themed VFX.</p>
+                </div>
+            </div>
+
+            <!-- Project 2: Vegas Empire -->
+            <div class="project-card gs_reveal_up youtube-lazy" data-video-id="BsKxrJxeV6E">
+                <div class="youtube-preview" style="background-image: url('https://img.youtube.com/vi/BsKxrJxeV6E/maxresdefault.jpg');">
+                    <div class="play-icon">
+                        <svg viewBox="0 0 100 100" width="80" height="80">
+                            <circle cx="50" cy="50" r="48" fill="rgba(0,0,0,0.6)" stroke="white" stroke-width="2"/>
+                            <polygon points="40,30 40,70 70,50" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Vegas Empire</h3>
+                    <p>Casino empire builder with interactive UI, progressive bonuses, and high-performance reel mechanics.</p>
+                </div>
+            </div>
+
+
+            <!-- 1. Buffalo Gold Rush -->
+            <div class="project-card gs_reveal_up youtube-lazy" data-video-id="2dcOnKkfR3c">
+                <div class="youtube-preview" style="background-image: url('https://img.youtube.com/vi/2dcOnKkfR3c/maxresdefault.jpg');">
+                    <div class="play-icon">
+                        <svg viewBox="0 0 100 100" width="80" height="80">
+                            <circle cx="50" cy="50" r="48" fill="rgba(0,0,0,0.6)" stroke="white" stroke-width="2"/>
+                            <polygon points="40,30 40,70 70,50" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Buffalo Gold Rush</h3>
+                    <p>Classic 5x4 slot • 25 paylines • 90% RTP<br>Free Spin Wheel • 2x Wild Multiplier • High Volatility</p>
+                </div>
+            </div>
+
+            <div class="project-card gs_reveal_up youtube-lazy" data-video-id="EpKVVICdjdI">
+                <div class="youtube-preview" style="background-image: url('https://img.youtube.com/vi/EpKVVICdjdI/maxresdefault.jpg');">
+                    <div class="play-icon">
+                        <svg viewBox="0 0 100 100" width="80" height="80">
+                            <circle cx="50" cy="50" r="48" fill="rgba(0,0,0,0.6)" stroke="white" stroke-width="2"/>
+                            <polygon points="40,30 40,70 70,50" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Fireball Chinatown</h3>
+                    <p>Fireball Slot • 5x4 • 50 paylines • 90% RTP<br>Fireball Feature • Free Spins + Wild Multipliers</p>
+                </div>
+            </div>
+
+            <!-- 3. Jungle Safari -->
+            <div class="project-card gs_reveal_up youtube-lazy" data-video-id="gm90SaB44Vo">
+                <div class="youtube-preview" style="background-image: url('https://img.youtube.com/vi/gm90SaB44Vo/maxresdefault.jpg');">
+                    <div class="play-icon">
+                        <svg viewBox="0 0 100 100" width="80" height="80">
+                            <circle cx="50" cy="50" r="48" fill="rgba(0,0,0,0.6)" stroke="white" stroke-width="2"/>
+                            <polygon points="40,30 40,70 70,50" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Jungle Safari</h3>
+                    <p>Classic Slot • 5x3 • 20 paylines • 90% RTP<br>Free Spins • Expanding Wilds • Scatter Payouts</p>
+                </div>
+            </div>
+
+            <!-- 4. Viva La Fiesta -->
+            <div class="project-card gs_reveal_up youtube-lazy" data-video-id="KaJ14D6Ap2c">
+                <div class="youtube-preview" style="background-image: url('https://img.youtube.com/vi/KaJ14D6Ap2c/maxresdefault.jpg');">
+                    <div class="play-icon">
+                        <svg viewBox="0 0 100 100" width="80" height="80">
+                            <circle cx="50" cy="50" r="48" fill="rgba(0,0,0,0.6)" stroke="white" stroke-width="2"/>
+                            <polygon points="40,30 40,70 70,50" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Viva La Fiesta</h3>
+                    <p>Classic Slot • 5x3 • 20 paylines • 90% RTP<br>Free Spins • Wild Multipliers (2x-4x) • Scatter Triggers</p>
+                </div>
+            </div>
+
+            <!-- 5. Empress of Fortune: Cleopatra -->
+            <div class="project-card gs_reveal_up youtube-lazy" data-video-id="itwqD6WdViY">
+                <div class="youtube-preview" style="background-image: url('https://img.youtube.com/vi/itwqD6WdViY/maxresdefault.jpg');">
+                    <div class="play-icon">
+                        <svg viewBox="0 0 100 100" width="80" height="80">
+                            <circle cx="50" cy="50" r="48" fill="rgba(0,0,0,0.6)" stroke="white" stroke-width="2"/>
+                            <polygon points="40,30 40,70 70,50" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Empress of Fortune: Cleopatra</h3>
+                    <p>Classic Slot • 5x3 • 20 paylines • 90% RTP<br>Free Bonus Spins • Scatter Multipliers up to 100x • Wild Fury</p>
+                </div>
+            </div>
+
+            <!-- 6. AiLO-Adventure: A Parkour Odyssey -->
+            <div class="project-card gs_reveal_up youtube-lazy" data-video-id="kF5E60FwK8I">
+                <div class="youtube-preview" style="background-image: url('https://img.youtube.com/vi/F2Ag78wDMuc/maxresdefault.jpg');">
+                    <div class="play-icon">
+                        <svg viewBox="0 0 100 100" width="80" height="80">
+                            <circle cx="50" cy="50" r="48" fill="rgba(0,0,0,0.6)" stroke="white" stroke-width="2"/>
+                            <polygon points="40,30 40,70 70,50" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>AiLO-Adventure: Parkour Odyssey</h3>
+                    <p>Epic parkour adventure in a massive world • Multiplayer with Unity Fusion • Intense combat</p>
+                </div>
+            </div>
+
+            <!-- 7. Character Selection Menu -->
+            <div class="project-card gs_reveal_up youtube-lazy" data-video-id="i3U6mhh7QqU">
+                <div class="youtube-preview" style="background-image: url('https://img.youtube.com/vi/i3U6mhh7QqU/maxresdefault.jpg');">
+                    <div class="play-icon">
+                        <svg viewBox="0 0 100 100" width="80" height="80">
+                            <circle cx="50" cy="50" r="48" fill="rgba(0,0,0,0.6)" stroke="white" stroke-width="2"/>
+                            <polygon points="40,30 40,70 70,50" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Character Selection Menu (Unity)</h3>
+                    <p>Immersive and seamless character selection system built with Unity scripting</p>
+                </div>
+            </div>
+
+            <!-- 8. Audio Setup - Unity -->
+            <div class="project-card gs_reveal_up youtube-lazy" data-video-id="zcj_hkVfUkE">
+                <div class="youtube-preview" style="background-image: url('https://img.youtube.com/vi/zcj_hkVfUkE/maxresdefault.jpg');">
+                    <div class="play-icon">
+                        <svg viewBox="0 0 100 100" width="80" height="80">
+                            <circle cx="50" cy="50" r="48" fill="rgba(0,0,0,0.6)" stroke="white" stroke-width="2"/>
+                            <polygon points="40,30 40,70 70,50" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Audio Synthesis System (Unity)</h3>
+                    <p>Custom audio engine using Arpie.Synth namespace • Procedural sinewave generation</p>
+                </div>
+            </div>
+
+            <!-- 9. Klant Wig Control (Unity) -->
+            <div class="project-card gs_reveal_up youtube-lazy" data-video-id="mCWUNc845eE">
+                <div class="youtube-preview" style="background-image: url('https://img.youtube.com/vi/mCWUNc845eE/maxresdefault.jpg');">
+                    <div class="play-icon">
+                        <svg viewBox="0 0 100 100" width="80" height="80">
+                            <circle cx="50" cy="50" r="48" fill="rgba(0,0,0,0.6)" stroke="white" stroke-width="2"/>
+                            <polygon points="40,30 40,70 70,50" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Klant Wig Control (Unity)</h3>
+                    <p>Robotic dance animation • Smooth Camera Follow + Brownian Motion scripts</p>
+                </div>
+            </div>
+
+            <!-- 10. Jigsaw Puzzle -->
+            <div class="project-card gs_reveal_up youtube-lazy" data-video-id="sKI_xMpbuok">
+                <div class="youtube-preview" style="background-image: url('https://img.youtube.com/vi/sKI_xMpbuok/maxresdefault.jpg');">
+                    <div class="play-icon">
+                        <svg viewBox="0 0 100 100" width="80" height="80">
+                            <circle cx="50" cy="50" r="48" fill="rgba(0,0,0,0.6)" stroke="white" stroke-width="2"/>
+                            <polygon points="40,30 40,70 70,50" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Jigsaw Adventures (Unity)</h3>
+                    <p>Complete puzzle game with smooth piece snapping and engaging gameplay</p>
+                </div>
+            </div>
+
+            <!-- 11. Fruit Ninja Clone -->
+            <div class="project-card gs_reveal_up youtube-lazy" data-video-id="6Ugcdbxnj5o">
+                <div class="youtube-preview" style="background-image: url('https://img.youtube.com/vi/6Ugcdbxnj5o/maxresdefault.jpg');">
+                    <div class="play-icon">
+                        <svg viewBox="0 0 100 100" width="80" height="80">
+                            <circle cx="50" cy="50" r="48" fill="rgba(0,0,0,0.6)" stroke="white" stroke-width="2"/>
+                            <polygon points="40,30 40,70 70,50" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Fruit Ninja (Unity)</h3>
+                    <p>High-performance slicing mechanics • Particle effects • Score system</p>
+                </div>
+            </div>
+
+            <!-- 12. Climbing & Jumping Updates -->
+            <div class="project-card gs_reveal_up youtube-lazy" data-video-id="j9f0AC0J6tw">
+                <div class="youtube-preview" style="background-image: url('https://img.youtube.com/vi/j9f0AC0J6tw/maxresdefault.jpg');">
+                    <div class="play-icon">
+                        <svg viewBox="0 0 100 100" width="80" height="80">
+                            <circle cx="50" cy="50" r="48" fill="rgba(0,0,0,0.6)" stroke="white" stroke-width="2"/>
+                            <polygon points="40,30 40,70 70,50" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>Advanced Parkour Mechanics (Unity)</h3>
+                    <p>Procedural climbing • Jumping prediction • Advanced vaulting system</p>
+                </div>
+            </div>
+            
+            <!-- Project 3: Coming Soon -->
+            <div class="project-card coming-soon gs_reveal_up">
+                <div class="project-info">
+                    <i data-lucide="hammer" class="coming-icon"></i>
+                    <h3>New Project</h3>
+                    <p>In Development — Next-gen multiplayer or advanced slot experience.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section id="contact" class="section-padding">
+        <div class="container">
+            <h2 class="section-title"><span>Get In Touch</span></h2>
+            <div class="contact-wrapper gs_reveal">
+                <div class="contact-info">
+                    <p>Available for full-time, freelance, or contract Unity/Game Dev roles.</p>
+                    <p>Email: <a href="mailto:jaiswalkishan628@gmail.com">jaiswalkishan628@gmail.com</a></p>
+                    <div class="social-links-inline">
+                        <a href="https://github.com/kishan831" target="_blank"><i data-lucide="github"></i></a>
+                        <a href="https://www.linkedin.com/in/kishan-jaiswal-2586a4220/" target="_blank"><i data-lucide="linkedin"></i></a>
+                        <a href="https://medium.com/@jaiswalkishan628" target="_blank"><i data-lucide="pen-tool"></i></a>
+                    </div>
+                </div>
+                
+                <!-- IMPORTANT: Replace 'YOUR_FORMSPREE_ID' with your actual Form ID -->
+                <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="john@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required placeholder="Tell me about your project..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn" id="submitBtn">Send Message <i data-lucide="send"></i></button>
+                    <p id="form-status" class="form-status"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Social Dock -->
+    <div class="social-dock">
+        <a href="https://github.com/kishan831" target="_blank" aria-label="GitHub"><i data-lucide="github"></i></a>
+        <a href="https://www.linkedin.com/in/kishan-jaiswal-2586a4220/" target="_blank" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+        <a href="https://unitydev831.itch.io" target="_blank" aria-label="itch.io"><i data-lucide="gamepad-2"></i></a>
+        <a href="https://www.youtube.com/channel/UCrN0559CtMg-NeUi-9bqrTQ" target="_blank" aria-label="YouTube"><i data-lucide="youtube"></i></a>
+    </div>
+
+    <div class="scroll-top" id="scrollTop">
+        <i data-lucide="arrow-up"></i>
+    </div>
+
+    <footer>
+        <p>© 2026 Kishan Jaiswal. Built with <i data-lucide="code-2" size="14"></i> and Passion.</p>
+    </footer>
+
+    <script src="js/main.js?v=3.0"></script>
+</body>
+</html>
