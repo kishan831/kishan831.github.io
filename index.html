@@ -1,1014 +1,421 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Kishan Jaiswal — Unity & Casino Game Developer with 5+ years crafting immersive slot games, multiplayer systems, and high-performance gaming experiences.">
-    <meta name="keywords" content="Unity Developer, Game Developer, Slot Games, Casino Games, Multiplayer, Photon Fusion, C#, WebGL">
+    <meta name="keywords" content="Unity Developer, Game Developer, Slot Games, Casino Games, Multiplayer, Photon Fusion, C#, WebGL, Kishan Jaiswal">
     <meta name="author" content="Kishan Jaiswal">
     <meta property="og:title" content="Kishan Jaiswal | Unity Game Developer">
     <meta property="og:description" content="5+ years building immersive casino games, slot mechanics, and multiplayer systems.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://kishan831.github.io/">
     <title>Kishan Jaiswal — Unity Game Developer</title>
-
-    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        base: { 50: '#e8e8ec', 100: '#c5c5cd', 200: '#9d9dab', 300: '#6e6e82', 400: '#3d3d56', 500: '#1a1a2e', 600: '#121225', 700: '#0d0d1a', 800: '#0a0a12', 900: '#06060b' },
-                        accent: { 50: '#e0fff3', 100: '#b3ffe0', 200: '#80ffcc', 300: '#4dffb8', 400: '#1affa4', 500: '#00e58f', 600: '#00b871', 700: '#008a55', 800: '#005c38', 900: '#002e1c' },
-                        gold: { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706' },
-                    },
-                    fontFamily: {
-                        heading: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
-                        body: ['"DM Sans"', 'system-ui', 'sans-serif'],
-                        mono: ['"JetBrains Mono"', 'monospace'],
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
-                        'slide-up': 'slideUp 0.6s ease-out forwards',
-                        'fade-in': 'fadeIn 0.8s ease-out forwards',
-                    },
-                    keyframes: {
-                        float: { '0%, 100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-20px)' } },
-                        pulseGlow: { '0%, 100%': { boxShadow: '0 0 20px rgba(0,229,143,0.15)' }, '50%': { boxShadow: '0 0 40px rgba(0,229,143,0.3)' } },
-                        slideUp: { from: { opacity: '0', transform: 'translateY(40px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
-                        fadeIn: { from: { opacity: '0' }, to: { opacity: '1' } },
-                    }
-                }
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    surface: { 50:'#f4f4f6', 100:'#e2e2e8', 200:'#c5c5cd', 300:'#9e9eac', 400:'#6b6b80', 500:'#1c1c2e', 600:'#141424', 700:'#0e0e1b', 800:'#0a0a14', 900:'#07070d' },
+                    mint: { 50:'#e6fff5', 100:'#b3ffe0', 200:'#80ffcc', 300:'#4dfdb5', 400:'#1ae89e', 500:'#00d68a', 600:'#00ad6f', 700:'#008454', 800:'#005b3a', 900:'#00331f' },
+                    ember: { 400:'#fca556', 500:'#f59042', 600:'#e07a2f' },
+                },
+                fontFamily: {
+                    heading: ['Sora', 'system-ui', 'sans-serif'],
+                    body: ['Inter', 'system-ui', 'sans-serif'],
+                    mono: ['"JetBrains Mono"', 'monospace'],
+                },
             }
         }
+    }
     </script>
 
-    <!-- Three.js -->
+    <!-- Three.js + GSAP + Lucide -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        /* === Base Resets & Custom Properties === */
-        :root {
-            --accent: #00e58f;
-            --accent-dim: rgba(0,229,143,0.15);
-            --gold: #fbbf24;
-            --surface: #111120;
-            --surface-hover: #1a1a30;
-        }
-
-        ::selection { background: rgba(0,229,143,0.3); color: #fff; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0a0a12; }
-        ::-webkit-scrollbar-thumb { background: #1a1a2e; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #00e58f; }
-
+        :root { --mint: #00d68a; --bg: #07070d; --card: rgba(14,14,27,0.7); --border: rgba(255,255,255,0.06); }
+        ::selection { background: rgba(0,214,138,0.25); color: #fff; }
         html { scroll-behavior: smooth; }
-        body { font-family: 'DM Sans', sans-serif; background: #06060b; color: #e8e8ec; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: #c5c5cd; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #07070d; }
+        ::-webkit-scrollbar-thumb { background: #1c1c2e; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--mint); }
 
-        /* === Loader === */
-        #preloader {
-            position: fixed; inset: 0; z-index: 9999;
-            background: #06060b;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-        }
-        #preloader.done { opacity: 0; visibility: hidden; pointer-events: none; }
-        .loader-ring {
-            width: 48px; height: 48px;
-            border: 3px solid rgba(0,229,143,0.1);
-            border-top-color: #00e58f;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        #loader { position:fixed; inset:0; z-index:9999; background:#07070d; display:flex; flex-direction:column; align-items:center; justify-content:center; transition: opacity 0.5s ease, visibility 0.5s; }
+        #loader.hide { opacity:0; visibility:hidden; pointer-events:none; }
+        .ld-bar { width:140px; height:2px; background:#1c1c2e; border-radius:2px; overflow:hidden; margin-top:16px; }
+        .ld-fill { height:100%; background:var(--mint); animation: ldFill 1s ease-in-out forwards; }
+        @keyframes ldFill { from{width:0} to{width:100%} }
 
-        /* === 3D Canvas === */
-        #three-canvas {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 0; pointer-events: none; opacity: 0.4;
-        }
+        #bg3d { position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.3; }
 
-        /* === Glass Cards === */
-        .glass {
-            background: rgba(17,17,32,0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .glass-hover:hover {
-            background: rgba(26,26,48,0.8);
-            border-color: rgba(0,229,143,0.2);
-            transform: translateY(-4px);
-        }
+        .card { background: var(--card); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border:1px solid var(--border); transition: all 0.35s cubic-bezier(.4,0,.2,1); }
+        .card:hover { border-color: rgba(0,214,138,0.18); transform: translateY(-6px); box-shadow: 0 24px 48px rgba(0,0,0,0.25); }
 
-        /* === Gradient Text === */
-        .gradient-text {
-            background: linear-gradient(135deg, #00e58f 0%, #00b871 40%, #fbbf24 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+        .text-gradient { background: linear-gradient(135deg, #00d68a, #00ad6f, #fca556); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 
-        /* === Typing Cursor === */
-        .typing-cursor::after {
-            content: '|'; color: #00e58f;
-            animation: blink 1s step-end infinite;
-            margin-left: 2px;
-        }
-        @keyframes blink { 50% { opacity: 0; } }
+        .tag { display:inline-block; padding:4px 10px; border-radius:6px; font-size:11px; font-family:'JetBrains Mono',monospace; background:rgba(0,214,138,0.08); color:#4dfdb5; border:1px solid rgba(0,214,138,0.12); white-space:nowrap; }
+        .tag-neutral { background:rgba(255,255,255,0.04); color:#9e9eac; border-color:rgba(255,255,255,0.06); }
 
-        /* === Section Divider === */
-        .section-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(0,229,143,0.2), transparent);
-        }
+        .cursor::after { content:'▌'; color:var(--mint); animation:blink 1s step-end infinite; margin-left:1px; font-weight:300; }
+        @keyframes blink { 50%{opacity:0} }
 
-        /* === YouTube Lazy Thumbnail === */
-        .yt-thumb {
-            position: relative; cursor: pointer; overflow: hidden;
-            background-size: cover; background-position: center;
-            aspect-ratio: 16/9;
-        }
-        .yt-thumb::after {
-            content: ''; position: absolute; inset: 0;
-            background: linear-gradient(to top, rgba(6,6,11,0.8) 0%, transparent 60%);
-        }
-        .yt-play {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%,-50%); z-index: 2;
-            width: 64px; height: 64px; border-radius: 50%;
-            background: rgba(0,229,143,0.9);
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 30px rgba(0,229,143,0.3);
-        }
-        .yt-thumb:hover .yt-play { transform: translate(-50%,-50%) scale(1.15); background: #00e58f; }
+        .yt-wrap { position:relative; aspect-ratio:16/9; overflow:hidden; cursor:pointer; background:#0a0a14; }
+        .yt-wrap img { width:100%; height:100%; object-fit:cover; transition:transform 0.5s ease, opacity 0.5s; }
+        .yt-wrap:hover img { transform:scale(1.05); }
+        .yt-wrap::after { content:''; position:absolute; inset:0; background:linear-gradient(0deg, rgba(7,7,13,0.85) 0%, transparent 50%); pointer-events:none; }
+        .yt-btn { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:2; width:56px; height:56px; border-radius:50%; background:rgba(0,214,138,0.9); display:flex; align-items:center; justify-content:center; transition: all 0.3s; box-shadow:0 0 30px rgba(0,214,138,0.25); }
+        .yt-wrap:hover .yt-btn { transform:translate(-50%,-50%) scale(1.12); background:#00d68a; }
 
-        /* === Timeline Line === */
-        .timeline-line {
-            position: absolute; left: 7px; top: 0; bottom: 0; width: 2px;
-            background: linear-gradient(to bottom, #00e58f, rgba(0,229,143,0.1), transparent);
-        }
-        .timeline-dot {
-            width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0;
-            background: #06060b; border: 2px solid #00e58f;
-            box-shadow: 0 0 12px rgba(0,229,143,0.3);
-            z-index: 2;
-        }
+        .tl-line { position:absolute; left:19px; top:0; bottom:0; width:2px; background:linear-gradient(to bottom, rgba(0,214,138,0.5), rgba(0,214,138,0.05)); }
+        .tl-dot { width:14px; height:14px; border-radius:50%; border:2.5px solid var(--mint); background:#07070d; flex-shrink:0; z-index:2; box-shadow:0 0 10px rgba(0,214,138,0.2); }
+        .tl-dot-active { background:var(--mint); box-shadow:0 0 16px rgba(0,214,138,0.4); }
 
-        /* === Stats Counter === */
-        .stat-ring {
-            width: 100px; height: 100px; border-radius: 50%;
-            border: 2px solid rgba(0,229,143,0.2);
-            display: flex; align-items: center; justify-content: center;
-            position: relative;
-        }
-        .stat-ring::before {
-            content: ''; position: absolute; inset: -1px; border-radius: 50%;
-            background: conic-gradient(from 0deg, #00e58f var(--progress, 0%), transparent var(--progress, 0%));
-            mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
-            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
-        }
+        .sep { height:1px; background:linear-gradient(90deg, transparent 0%, rgba(0,214,138,0.15) 50%, transparent 100%); }
 
-        /* === Skill Chip Hover Glow === */
-        .skill-chip {
-            position: relative; overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        .skill-chip::before {
-            content: ''; position: absolute; inset: 0;
-            background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(0,229,143,0.15) 0%, transparent 60%);
-            opacity: 0; transition: opacity 0.3s;
-        }
-        .skill-chip:hover::before { opacity: 1; }
-        .skill-chip:hover { border-color: rgba(0,229,143,0.4); transform: translateY(-2px); }
+        .collage { display:grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap:8px; max-width:380px; }
+        .collage img { width:100%; height:100%; object-fit:cover; border-radius:12px; border:1px solid var(--border); }
+        .collage-main { grid-row: 1/3; border-radius:16px !important; }
 
-        /* === Noise Overlay === */
-        .noise::before {
-            content: ''; position: fixed; inset: 0; z-index: 1; pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-            background-repeat: repeat;
-            opacity: 0.4;
-        }
+        .reveal { opacity:0; transform:translateY(32px); }
 
-        /* === Responsive Fixes === */
-        @media (max-width: 768px) {
-            .hero-title { font-size: 2.5rem !important; line-height: 1.1 !important; }
-            .stat-ring { width: 80px; height: 80px; }
-            .projects-grid { grid-template-columns: 1fr !important; }
+        @media(max-width:768px) {
+            .hero-h { font-size:2.5rem !important; }
+            .collage { max-width:100%; }
+            .proj-grid { grid-template-columns:1fr !important; }
         }
-
-        /* === Smooth reveal for GSAP === */
-        .gs-hidden { opacity: 0; transform: translateY(40px); }
+        @media(max-width:480px) { .hero-h { font-size:2rem !important; } }
     </style>
 </head>
-<body class="noise">
+<body>
 
-    <!-- ========== PRELOADER ========== -->
-    <div id="preloader">
-        <div class="loader-ring"></div>
-        <p class="mt-4 text-sm text-base-300 font-mono tracking-widest">LOADING ASSETS<span class="dots"></span></p>
+<div id="loader">
+    <span class="font-heading font-bold text-2xl text-gradient">KJ</span>
+    <div class="ld-bar"><div class="ld-fill"></div></div>
+</div>
+
+<canvas id="bg3d"></canvas>
+
+<!-- NAV -->
+<nav id="nav" class="fixed top-0 w-full z-50 transition-all duration-300">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
+        <a href="#hero" class="flex items-center gap-2.5 group">
+            <div class="w-9 h-9 rounded-lg bg-mint-500/10 border border-mint-500/20 flex items-center justify-center group-hover:bg-mint-500/20 transition">
+                <span class="font-heading font-bold text-mint-500 text-base">K</span>
+            </div>
+            <span class="font-heading font-semibold text-surface-50 text-sm hidden sm:inline">kishan<span class="text-mint-500">.</span>dev</span>
+        </a>
+        <div class="hidden md:flex items-center gap-7">
+            <a href="#about" class="text-[13px] text-surface-300 hover:text-mint-400 transition font-medium">About</a>
+            <a href="#skills" class="text-[13px] text-surface-300 hover:text-mint-400 transition font-medium">Skills</a>
+            <a href="#experience" class="text-[13px] text-surface-300 hover:text-mint-400 transition font-medium">Experience</a>
+            <a href="#projects" class="text-[13px] text-surface-300 hover:text-mint-400 transition font-medium">Projects</a>
+            <a href="#contact" class="ml-1 px-5 py-2 rounded-full text-[13px] font-semibold bg-mint-500/10 border border-mint-500/25 text-mint-400 hover:bg-mint-500 hover:text-surface-900 transition-all duration-300">Contact</a>
+        </div>
+        <button id="mobBtn" class="md:hidden flex flex-col gap-[5px] p-2 z-[60]" aria-label="Menu">
+            <span class="w-6 h-[2px] bg-surface-100 transition-all duration-300 origin-center" id="b1"></span>
+            <span class="w-6 h-[2px] bg-surface-100 transition-all duration-300" id="b2"></span>
+            <span class="w-4 h-[2px] bg-surface-100 transition-all duration-300 origin-center" id="b3"></span>
+        </button>
     </div>
+    <div id="mobMenu" class="fixed inset-0 bg-surface-900/95 backdrop-blur-2xl z-50 flex flex-col items-center justify-center gap-7 translate-x-full transition-transform duration-500 md:hidden">
+        <a href="#about" class="mob-link font-heading text-2xl font-bold text-surface-50">About</a>
+        <a href="#skills" class="mob-link font-heading text-2xl font-bold text-surface-50">Skills</a>
+        <a href="#experience" class="mob-link font-heading text-2xl font-bold text-surface-50">Experience</a>
+        <a href="#projects" class="mob-link font-heading text-2xl font-bold text-surface-50">Projects</a>
+        <a href="#contact" class="mob-link font-heading text-2xl font-bold text-mint-400">Contact</a>
+    </div>
+</nav>
 
-    <!-- ========== 3D BACKGROUND ========== -->
-    <canvas id="three-canvas"></canvas>
+<!-- HERO -->
+<section id="hero" class="relative z-10 min-h-screen flex items-center">
+    <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-mint-500/[0.04] rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="max-w-6xl mx-auto px-5 sm:px-8 w-full pt-28 pb-20 sm:pt-0 sm:pb-0">
+        <div class="max-w-3xl">
+            <div class="reveal inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-mint-500/[0.07] border border-mint-500/15 mb-7">
+                <span class="w-[6px] h-[6px] rounded-full bg-mint-500 animate-pulse"></span>
+                <span class="text-[11px] font-mono text-mint-400 tracking-widest uppercase">Open to Opportunities</span>
+            </div>
+            <h1 class="reveal hero-h font-heading font-extrabold text-4xl sm:text-5xl lg:text-[3.6rem] text-surface-50 leading-[1.1] tracking-tight mb-5">Kishan Jaiswal</h1>
+            <p class="reveal font-heading text-lg sm:text-xl text-surface-300 font-medium mb-2">Unity Game Developer — <span class="text-mint-400 cursor" id="typed"></span></p>
+            <p class="reveal text-surface-400 text-[15px] sm:text-base leading-relaxed max-w-xl mb-9">Crafting high-performance casino slot games, multiplayer combat systems, and immersive 3D experiences with <strong class="text-surface-200">5+ years</strong> of professional expertise.</p>
+            <div class="reveal flex flex-wrap items-center gap-3.5">
+                <a href="#projects" class="group inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-mint-500 text-surface-900 text-sm font-bold hover:shadow-[0_0_32px_rgba(0,214,138,0.25)] transition-all duration-300">Explore Projects <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i></a>
+                <a href="assets/resume.pdf" download class="inline-flex items-center gap-2 px-6 py-3 rounded-xl card text-surface-200 text-sm font-semibold hover:text-mint-400 hover:border-mint-500/20"><i data-lucide="file-text" class="w-4 h-4"></i> Resume</a>
+            </div>
+        </div>
+        <div class="hidden sm:flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-1.5 opacity-40">
+            <span class="text-[9px] font-mono text-surface-400 tracking-[0.2em] uppercase">Scroll</span>
+            <div class="w-[18px] h-[28px] rounded-full border border-surface-400/30 flex justify-center pt-1">
+                <div class="w-[3px] h-[6px] rounded-full bg-mint-500 animate-bounce"></div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <!-- ========== NAVBAR ========== -->
-    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <!-- Logo -->
-            <a href="#hero" class="flex items-center gap-2 group">
-                <div class="w-10 h-10 rounded-xl bg-accent-500/10 border border-accent-500/20 flex items-center justify-center group-hover:bg-accent-500/20 transition-all">
-                    <span class="text-accent-500 font-heading font-bold text-lg">K</span>
+<!-- ABOUT -->
+<section id="about" class="relative z-10 py-20 sm:py-28">
+    <div class="sep"></div>
+    <div class="max-w-6xl mx-auto px-5 sm:px-8 pt-20 sm:pt-28">
+        <div class="reveal flex items-center gap-3 mb-14">
+            <span class="font-mono text-[11px] text-mint-500 tracking-widest uppercase">Meet Kishan</span>
+            <div class="flex-1 h-px bg-surface-500/20"></div>
+        </div>
+        <div class="grid lg:grid-cols-5 gap-12 lg:gap-16 items-start">
+            <div class="lg:col-span-3">
+                <h2 class="reveal font-heading font-bold text-[1.75rem] sm:text-3xl text-surface-50 leading-snug mb-5">I build games that players <span class="text-gradient">remember.</span></h2>
+                <p class="reveal text-surface-300 text-[15px] leading-[1.75] mb-4">I'm a professional Unity & Casino Game Developer passionate about immersive interactive experiences. From architecting slot machine logic with provably fair RNG systems to building real-time multiplayer combat using Photon Fusion — I've spent the last five years turning ideas into shipped products.</p>
+                <p class="reveal text-surface-300 text-[15px] leading-[1.75] mb-8">I've led a team of 15+ developers, shipped 50+ projects across mobile, PC, and WebGL, and built an entire casino platform with 30+ games featuring real-time socket-based balance updates. When I'm not coding, you'll find me studying game design patterns or exploring the latest in real-time rendering.</p>
+                <div class="reveal">
+                    <h3 class="text-[11px] font-mono text-mint-500/60 tracking-widest uppercase mb-3">Core Skills</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tag">Unity Engine (C#)</span><span class="tag">Casino & Slot Mechanics</span><span class="tag">Photon Fusion</span><span class="tag">WebGL / Cross-Platform</span><span class="tag">VFX & Animation</span><span class="tag">RNG & Game Math</span>
+                    </div>
                 </div>
-                <span class="font-heading font-bold text-lg text-base-50 hidden sm:block">Kishan<span class="text-accent-500">.</span>dev</span>
-            </a>
-
-            <!-- Desktop Nav -->
-            <div class="hidden md:flex items-center gap-8">
-                <a href="#about" class="nav-link text-sm text-base-300 hover:text-accent-500 transition-colors font-medium">About</a>
-                <a href="#skills" class="nav-link text-sm text-base-300 hover:text-accent-500 transition-colors font-medium">Skills</a>
-                <a href="#experience" class="nav-link text-sm text-base-300 hover:text-accent-500 transition-colors font-medium">Experience</a>
-                <a href="#projects" class="nav-link text-sm text-base-300 hover:text-accent-500 transition-colors font-medium">Projects</a>
-                <a href="#contact" class="px-5 py-2.5 rounded-full bg-accent-500/10 border border-accent-500/30 text-accent-500 text-sm font-semibold hover:bg-accent-500 hover:text-base-900 transition-all duration-300">Let's Talk</a>
             </div>
-
-            <!-- Mobile Toggle -->
-            <button id="mobileToggle" class="md:hidden flex flex-col gap-1.5 p-2 z-[60]" aria-label="Toggle menu">
-                <span class="block w-6 h-0.5 bg-base-50 transition-all duration-300 origin-center" id="bar1"></span>
-                <span class="block w-6 h-0.5 bg-base-50 transition-all duration-300" id="bar2"></span>
-                <span class="block w-4 h-0.5 bg-base-50 transition-all duration-300 origin-center" id="bar3"></span>
-            </button>
-        </div>
-
-        <!-- Mobile Menu -->
-        <div id="mobileMenu" class="fixed inset-0 bg-base-900/95 backdrop-blur-xl z-50 flex flex-col items-center justify-center gap-8 transform translate-x-full transition-transform duration-500 md:hidden">
-            <a href="#about" class="mobile-link text-2xl font-heading font-bold text-base-50 hover:text-accent-500 transition-colors">About</a>
-            <a href="#skills" class="mobile-link text-2xl font-heading font-bold text-base-50 hover:text-accent-500 transition-colors">Skills</a>
-            <a href="#experience" class="mobile-link text-2xl font-heading font-bold text-base-50 hover:text-accent-500 transition-colors">Experience</a>
-            <a href="#projects" class="mobile-link text-2xl font-heading font-bold text-base-50 hover:text-accent-500 transition-colors">Projects</a>
-            <a href="#contact" class="mobile-link text-2xl font-heading font-bold text-accent-500">Contact</a>
-        </div>
-    </nav>
-
-    <!-- ========== HERO ========== -->
-    <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden z-10">
-        <!-- Subtle radial glow -->
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-accent-500/5 blur-[120px] pointer-events-none"></div>
-
-        <div class="max-w-5xl mx-auto px-6 text-center relative">
-            <!-- Badge -->
-            <div class="gs-hidden inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-accent-500/20 mb-8">
-                <span class="w-2 h-2 rounded-full bg-accent-500 animate-pulse"></span>
-                <span class="text-xs font-mono text-accent-500 tracking-wider uppercase">Available for Work</span>
-            </div>
-
-            <!-- Name -->
-            <h1 class="gs-hidden hero-title font-heading font-extrabold text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-base-50 mb-6 leading-[1.05] tracking-tight">
-                I'm <span class="gradient-text">Kishan</span><br class="sm:hidden"> Jaiswal
-            </h1>
-
-            <!-- Typed Text -->
-            <div class="gs-hidden h-10 flex items-center justify-center mb-6">
-                <span class="font-mono text-lg sm:text-xl text-accent-500/80 tracking-wide typing-cursor" id="typed-output"></span>
-            </div>
-
-            <!-- Description -->
-            <p class="gs-hidden max-w-2xl mx-auto text-base-300 text-base sm:text-lg leading-relaxed mb-10">
-                Unity Game Developer with <strong class="text-base-100">5+ years</strong> crafting high-performance 
-                slot machines, multiplayer systems, and immersive 3D experiences for casino & ed-tech industries.
-            </p>
-
-            <!-- CTAs -->
-            <div class="gs-hidden flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#projects" class="group px-8 py-4 rounded-2xl bg-accent-500 text-base-900 font-bold text-sm tracking-wide hover:shadow-[0_0_40px_rgba(0,229,143,0.3)] transition-all duration-300 flex items-center gap-2">
-                    View Projects
-                    <i data-lucide="arrow-down-right" class="w-4 h-4 group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform"></i>
-                </a>
-                <a href="assets/resume.pdf" download class="px-8 py-4 rounded-2xl glass border border-base-400/20 text-base-100 font-semibold text-sm hover:border-accent-500/30 transition-all duration-300 flex items-center gap-2">
-                    <i data-lucide="download" class="w-4 h-4"></i>
-                    Resume
-                </a>
-            </div>
-
-            <!-- Scroll Indicator -->
-            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
-                <span class="text-[10px] font-mono text-base-400 tracking-widest uppercase">Scroll</span>
-                <div class="w-5 h-8 rounded-full border border-base-400/30 flex justify-center pt-1.5">
-                    <div class="w-1 h-2 rounded-full bg-accent-500 animate-bounce"></div>
+            <div class="lg:col-span-2 flex justify-center lg:justify-end">
+                <div class="collage reveal">
+                    <img class="collage-main" src="https://img.youtube.com/vi/RubElttzOaU/maxresdefault.jpg" alt="Zombie Slot Game" loading="lazy">
+                    <img src="https://img.youtube.com/vi/BsKxrJxeV6E/maxresdefault.jpg" alt="Vegas Empire" loading="lazy">
+                    <img src="https://img.youtube.com/vi/kF5E60FwK8I/maxresdefault.jpg" alt="Parkour Game" loading="lazy">
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- ========== ABOUT / STATS ========== -->
-    <section id="about" class="relative z-10 py-24 sm:py-32">
-        <div class="section-divider mb-24"></div>
-        <div class="max-w-6xl mx-auto px-6">
-            <!-- Section Label -->
-            <div class="gs-hidden flex items-center gap-4 mb-16">
-                <span class="font-mono text-xs text-accent-500 tracking-widest uppercase">01 — About</span>
-                <div class="flex-1 h-px bg-base-500/30"></div>
-            </div>
-
-            <div class="grid lg:grid-cols-2 gap-16 items-start">
-                <!-- Text -->
-                <div>
-                    <h2 class="gs-hidden font-heading font-bold text-3xl sm:text-4xl text-base-50 mb-6 leading-tight">
-                        Building worlds,<br><span class="gradient-text">one game at a time.</span>
-                    </h2>
-                    <p class="gs-hidden text-base-300 text-base leading-relaxed mb-4">
-                        I'm a professional Unity & Casino Game Developer passionate about creating immersive interactive experiences. From slot machine mechanics with fair RNG systems to multiplayer combat using Photon Fusion — I build games that players love.
-                    </p>
-                    <p class="gs-hidden text-base-300 text-base leading-relaxed mb-8">
-                        I've led teams of 15+ developers, shipped 50+ projects across mobile, PC, and WebGL, and built casino platforms generating real-time experiences for thousands of players.
-                    </p>
-                    <!-- Quick Links -->
-                    <div class="gs-hidden flex flex-wrap gap-3">
-                        <a href="https://github.com/kishan831" target="_blank" class="flex items-center gap-2 px-4 py-2 rounded-xl glass text-sm text-base-200 hover:text-accent-500 hover:border-accent-500/20 transition-all">
-                            <i data-lucide="github" class="w-4 h-4"></i> GitHub
-                        </a>
-                        <a href="https://www.linkedin.com/in/kishan-jaiswal-2586a4220/" target="_blank" class="flex items-center gap-2 px-4 py-2 rounded-xl glass text-sm text-base-200 hover:text-accent-500 hover:border-accent-500/20 transition-all">
-                            <i data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn
-                        </a>
-                        <a href="https://www.youtube.com/channel/UCrN0559CtMg-NeUi-9bqrTQ" target="_blank" class="flex items-center gap-2 px-4 py-2 rounded-xl glass text-sm text-base-200 hover:text-accent-500 hover:border-accent-500/20 transition-all">
-                            <i data-lucide="youtube" class="w-4 h-4"></i> YouTube
-                        </a>
-                        <a href="https://unitydev831.itch.io" target="_blank" class="flex items-center gap-2 px-4 py-2 rounded-xl glass text-sm text-base-200 hover:text-accent-500 hover:border-accent-500/20 transition-all">
-                            <i data-lucide="gamepad-2" class="w-4 h-4"></i> itch.io
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Stats Grid -->
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="gs-hidden glass rounded-2xl p-6 text-center group hover:border-accent-500/20 transition-all">
-                        <div class="text-4xl font-heading font-extrabold text-accent-500 mb-1" data-count="5">0</div>
-                        <div class="text-xs font-mono text-base-400 tracking-wider uppercase">Years Exp.</div>
-                    </div>
-                    <div class="gs-hidden glass rounded-2xl p-6 text-center group hover:border-accent-500/20 transition-all">
-                        <div class="text-4xl font-heading font-extrabold text-accent-500 mb-1" data-count="50">0</div>
-                        <div class="text-xs font-mono text-base-400 tracking-wider uppercase">Projects</div>
-                    </div>
-                    <div class="gs-hidden glass rounded-2xl p-6 text-center group hover:border-accent-500/20 transition-all">
-                        <div class="text-4xl font-heading font-extrabold text-accent-500 mb-1" data-count="15">0</div>
-                        <div class="text-xs font-mono text-base-400 tracking-wider uppercase">Team Led</div>
-                    </div>
-                    <div class="gs-hidden glass rounded-2xl p-6 text-center group hover:border-accent-500/20 transition-all">
-                        <div class="text-4xl font-heading font-extrabold text-gold-400 mb-1" data-count="30">0</div>
-                        <div class="text-xs font-mono text-base-400 tracking-wider uppercase">Casino Games</div>
-                    </div>
-                </div>
-            </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-16">
+            <div class="reveal card rounded-2xl p-5 text-center"><div class="font-heading font-extrabold text-3xl text-mint-400 mb-0.5" data-count="5">0</div><div class="text-[10px] font-mono text-surface-400 tracking-widest uppercase">Years Exp.</div></div>
+            <div class="reveal card rounded-2xl p-5 text-center"><div class="font-heading font-extrabold text-3xl text-mint-400 mb-0.5" data-count="50">0</div><div class="text-[10px] font-mono text-surface-400 tracking-widest uppercase">Projects</div></div>
+            <div class="reveal card rounded-2xl p-5 text-center"><div class="font-heading font-extrabold text-3xl text-mint-400 mb-0.5" data-count="30">0</div><div class="text-[10px] font-mono text-surface-400 tracking-widest uppercase">Casino Games</div></div>
+            <div class="reveal card rounded-2xl p-5 text-center"><div class="font-heading font-extrabold text-3xl text-ember-400 mb-0.5" data-count="15">0</div><div class="text-[10px] font-mono text-surface-400 tracking-widest uppercase">Team Led</div></div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ========== SKILLS ========== -->
-    <section id="skills" class="relative z-10 py-24 sm:py-32">
-        <div class="section-divider mb-24"></div>
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="gs-hidden flex items-center gap-4 mb-16">
-                <span class="font-mono text-xs text-accent-500 tracking-widest uppercase">02 — Tech Stack</span>
-                <div class="flex-1 h-px bg-base-500/30"></div>
-            </div>
-
-            <h2 class="gs-hidden font-heading font-bold text-3xl sm:text-4xl text-base-50 mb-12 leading-tight">
-                Tools of the <span class="gradient-text">Trade</span>
-            </h2>
-
-            <!-- Skill Categories -->
-            <div class="space-y-8">
-                <!-- Game Engine -->
-                <div class="gs-hidden">
-                    <h3 class="text-xs font-mono text-accent-500/60 tracking-widest uppercase mb-4">Game Engine & Core</h3>
-                    <div class="flex flex-wrap gap-3">
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">Unity Engine</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">C# / .NET</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">C++</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">OOP & SOLID</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">Design Patterns</div>
-                    </div>
-                </div>
-
-                <!-- Specializations -->
-                <div class="gs-hidden">
-                    <h3 class="text-xs font-mono text-accent-500/60 tracking-widest uppercase mb-4">Specializations</h3>
-                    <div class="flex flex-wrap gap-3">
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">Slot Mechanics</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">RNG Systems</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">Casino Game Logic</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">Photon Fusion</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">Multiplayer Networking</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">Gameplay AI</div>
-                    </div>
-                </div>
-
-                <!-- Unity Systems -->
-                <div class="gs-hidden">
-                    <h3 class="text-xs font-mono text-accent-500/60 tracking-widest uppercase mb-4">Unity Systems</h3>
-                    <div class="flex flex-wrap gap-3">
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">Addressables</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">Timeline & Animation</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">VFX Graph</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">Particle System</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">DoTween</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">UI Toolkit</div>
-                    </div>
-                </div>
-
-                <!-- Platform & Tools -->
-                <div class="gs-hidden">
-                    <h3 class="text-xs font-mono text-accent-500/60 tracking-widest uppercase mb-4">Platforms & Tools</h3>
-                    <div class="flex flex-wrap gap-3">
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">WebGL</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">Android / iOS</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">PC / Mac</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">Git / GitHub</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">Blender</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">Photoshop</div>
-                        <div class="skill-chip glass px-5 py-3 rounded-xl text-sm text-base-100 font-medium border border-base-500/10 cursor-default">Socket.IO</div>
-                    </div>
-                </div>
-            </div>
+<!-- SKILLS -->
+<section id="skills" class="relative z-10 py-20 sm:py-28">
+    <div class="sep"></div>
+    <div class="max-w-6xl mx-auto px-5 sm:px-8 pt-20 sm:pt-28">
+        <div class="reveal flex items-center gap-3 mb-14"><span class="font-mono text-[11px] text-mint-500 tracking-widest uppercase">Tech Stack</span><div class="flex-1 h-px bg-surface-500/20"></div></div>
+        <h2 class="reveal font-heading font-bold text-[1.75rem] sm:text-3xl text-surface-50 leading-snug mb-12">Tools & Technologies</h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="reveal card rounded-2xl p-6"><div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-xl bg-mint-500/10 flex items-center justify-center"><i data-lucide="gamepad-2" class="w-5 h-5 text-mint-400"></i></div><h3 class="font-heading font-semibold text-surface-50 text-[15px]">Game Engine</h3></div><div class="flex flex-wrap gap-1.5"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag">C++</span><span class="tag">OOP</span><span class="tag">SOLID</span><span class="tag">Design Patterns</span></div></div>
+            <div class="reveal card rounded-2xl p-6"><div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-xl bg-ember-500/10 flex items-center justify-center"><i data-lucide="dice-5" class="w-5 h-5 text-ember-400"></i></div><h3 class="font-heading font-semibold text-surface-50 text-[15px]">Casino & Gameplay</h3></div><div class="flex flex-wrap gap-1.5"><span class="tag">Slot Mechanics</span><span class="tag">RNG Systems</span><span class="tag">RTP Logic</span><span class="tag">Payline Engine</span><span class="tag">Bonus Rounds</span><span class="tag">Gameplay AI</span></div></div>
+            <div class="reveal card rounded-2xl p-6"><div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-xl bg-mint-500/10 flex items-center justify-center"><i data-lucide="wifi" class="w-5 h-5 text-mint-400"></i></div><h3 class="font-heading font-semibold text-surface-50 text-[15px]">Multiplayer</h3></div><div class="flex flex-wrap gap-1.5"><span class="tag">Photon Fusion</span><span class="tag">Socket.IO</span><span class="tag">REST APIs</span><span class="tag">Matchmaking</span><span class="tag">State Sync</span></div></div>
+            <div class="reveal card rounded-2xl p-6"><div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-xl bg-mint-500/10 flex items-center justify-center"><i data-lucide="sparkles" class="w-5 h-5 text-mint-400"></i></div><h3 class="font-heading font-semibold text-surface-50 text-[15px]">Unity Systems</h3></div><div class="flex flex-wrap gap-1.5"><span class="tag">Addressables</span><span class="tag">Timeline</span><span class="tag">VFX Graph</span><span class="tag">Particle System</span><span class="tag">DoTween</span><span class="tag">Animation</span></div></div>
+            <div class="reveal card rounded-2xl p-6"><div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-xl bg-mint-500/10 flex items-center justify-center"><i data-lucide="layout-template" class="w-5 h-5 text-mint-400"></i></div><h3 class="font-heading font-semibold text-surface-50 text-[15px]">Architecture</h3></div><div class="flex flex-wrap gap-1.5"><span class="tag">MVC / MVCS</span><span class="tag">Observer</span><span class="tag">State Pattern</span><span class="tag">Command</span><span class="tag">Singleton</span><span class="tag">Object Pooling</span></div></div>
+            <div class="reveal card rounded-2xl p-6"><div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-xl bg-mint-500/10 flex items-center justify-center"><i data-lucide="monitor-smartphone" class="w-5 h-5 text-mint-400"></i></div><h3 class="font-heading font-semibold text-surface-50 text-[15px]">Platforms & Tools</h3></div><div class="flex flex-wrap gap-1.5"><span class="tag">WebGL</span><span class="tag">Android</span><span class="tag">iOS</span><span class="tag">PC / Mac</span><span class="tag">Git</span><span class="tag">Blender</span><span class="tag">Photoshop</span></div></div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ========== EXPERIENCE ========== -->
-    <section id="experience" class="relative z-10 py-24 sm:py-32">
-        <div class="section-divider mb-24"></div>
-        <div class="max-w-4xl mx-auto px-6">
-            <div class="gs-hidden flex items-center gap-4 mb-16">
-                <span class="font-mono text-xs text-accent-500 tracking-widest uppercase">03 — Experience</span>
-                <div class="flex-1 h-px bg-base-500/30"></div>
+<!-- EXPERIENCE -->
+<section id="experience" class="relative z-10 py-20 sm:py-28">
+    <div class="sep"></div>
+    <div class="max-w-4xl mx-auto px-5 sm:px-8 pt-20 sm:pt-28">
+        <div class="reveal flex items-center gap-3 mb-14"><span class="font-mono text-[11px] text-mint-500 tracking-widest uppercase">Experience</span><div class="flex-1 h-px bg-surface-500/20"></div></div>
+        <h2 class="reveal font-heading font-bold text-[1.75rem] sm:text-3xl text-surface-50 leading-snug mb-14">Education & Experience</h2>
+        <div class="relative pl-10">
+            <div class="tl-line"></div>
+
+            <div class="reveal relative flex gap-5 pb-12"><div class="tl-dot tl-dot-active mt-1"></div><div class="flex-1"><div class="flex flex-wrap items-center gap-2 mb-1.5"><span class="text-[11px] font-mono text-surface-400">Jul 2024 – Present</span><span class="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-mint-500/10 text-mint-400 border border-mint-500/20">Current</span></div><h3 class="font-heading font-bold text-lg text-surface-50">Unity Developer</h3><p class="text-mint-500/70 text-sm font-medium mb-3">Bilions · Austin, Texas (Remote)</p><p class="text-surface-300 text-[13px] leading-relaxed mb-3">Building cutting-edge casino slot machine games with multi-reel configurations, dynamic paylines, and bonus mechanics. Designed immersive UI/UX, implemented reliable RNG, and built modular scalable frameworks for theme customization.</p><div class="flex flex-wrap gap-1.5"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag">RNG</span><span class="tag">Socket</span><span class="tag">WebGL</span><span class="tag">Addressables</span></div></div></div>
+
+            <div class="reveal relative flex gap-5 pb-12"><div class="tl-dot mt-1"></div><div class="flex-1"><span class="text-[11px] font-mono text-surface-400">Dec 2023 – Jul 2024</span><h3 class="font-heading font-bold text-lg text-surface-50 mt-1">Freelance Unity Developer</h3><p class="text-mint-500/70 text-sm font-medium mb-3">Upwork · Remote</p><p class="text-surface-300 text-[13px] leading-relaxed mb-3">Delivered high-quality freelance Unity projects focused on gameplay programming, performance optimization, and cross-platform deployment.</p><div class="flex flex-wrap gap-1.5"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Freelance</span></div></div></div>
+
+            <div class="reveal relative flex gap-5 pb-12"><div class="tl-dot mt-1"></div><div class="flex-1"><span class="text-[11px] font-mono text-surface-400">Aug 2023 – Nov 2023</span><h3 class="font-heading font-bold text-lg text-surface-50 mt-1">Mid-Level Unity Developer</h3><p class="text-mint-500/70 text-sm font-medium mb-3">Appzia Technologies · Pune, India</p><p class="text-surface-300 text-[13px] leading-relaxed mb-3">Developed core chess mechanics including piece movement, turn-based logic, and rule enforcement. Built a real-time multiplayer system with global matchmaking and game synchronization.</p><div class="flex flex-wrap gap-1.5"><span class="tag">Unity</span><span class="tag">Multiplayer</span><span class="tag">C#</span><span class="tag">3D UI</span></div></div></div>
+
+            <div class="reveal relative flex gap-5 pb-12"><div class="tl-dot mt-1"></div><div class="flex-1"><span class="text-[11px] font-mono text-surface-400">Jul 2022 – Jul 2023</span><h3 class="font-heading font-bold text-lg text-surface-50 mt-1">Unity Developer (Level 1)</h3><p class="text-mint-500/70 text-sm font-medium mb-3">PhiBonacci Solutions · Ahmedabad, India</p><p class="text-surface-300 text-[13px] leading-relaxed mb-3">Led a team of 15 developers across 50+ game projects. Developed responsive UIs for Windows, Linux, Mobile, AR, and VR. Specialized in animation systems and asset management with Addressables.</p><div class="flex flex-wrap gap-1.5"><span class="tag">Unity</span><span class="tag">Team Lead</span><span class="tag">AR/VR</span><span class="tag">Addressables</span><span class="tag">DoTween</span><span class="tag">Animation</span></div></div></div>
+
+            <div class="reveal relative flex gap-5 pb-12"><div class="tl-dot mt-1"></div><div class="flex-1"><span class="text-[11px] font-mono text-surface-400">Jan 2021 – Jul 2022</span><h3 class="font-heading font-bold text-lg text-surface-50 mt-1">Game Developer</h3><p class="text-mint-500/70 text-sm font-medium mb-3">Outscal · Delhi, India (Remote)</p><p class="text-surface-300 text-[13px] leading-relaxed mb-3">Designed gameplay elements, AI behaviors, and UI systems. Integrated third-party plugins and optimized game performance through advanced profiling.</p><div class="flex flex-wrap gap-1.5"><span class="tag">Unity</span><span class="tag">C#</span><span class="tag">AI</span><span class="tag">UI/UX</span><span class="tag">Profiling</span></div></div></div>
+
+            <div class="reveal relative flex gap-5 pb-8"><div class="tl-dot mt-1"></div><div class="flex-1"><span class="text-[11px] font-mono text-surface-400">Diploma</span><h3 class="font-heading font-bold text-lg text-surface-50 mt-1">Diploma in C.S.E.</h3><p class="text-mint-500/70 text-sm font-medium mb-1">Government Polytechnic Shahjahanpur · GPA: 7.9</p><p class="text-surface-400 text-[12px]">Best Project Award 2021 · Game Programming Certification</p></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="relative z-10 py-20 sm:py-28">
+    <div class="sep"></div>
+    <div class="max-w-6xl mx-auto px-5 sm:px-8 pt-20 sm:pt-28">
+        <div class="reveal flex items-center gap-3 mb-14"><span class="font-mono text-[11px] text-mint-500 tracking-widest uppercase">Featured Work</span><div class="flex-1 h-px bg-surface-500/20"></div></div>
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+            <div>
+                <h2 class="reveal font-heading font-bold text-[1.75rem] sm:text-3xl text-surface-50 leading-snug">Projects I've Built</h2>
+                <p class="reveal text-surface-400 text-sm mt-2">A showcase of casino, slot, and indie games from my professional & personal portfolio.</p>
             </div>
+            <p class="reveal text-surface-500 text-xs font-mono tracking-wide">Click thumbnails to play</p>
+        </div>
 
-            <h2 class="gs-hidden font-heading font-bold text-3xl sm:text-4xl text-base-50 mb-16 leading-tight">
-                Where I've <span class="gradient-text">Shipped</span>
-            </h2>
+        <div class="proj-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="projGrid">
+            <!-- JS will populate this -->
+        </div>
+    </div>
+</section>
 
-            <!-- Timeline -->
-            <div class="relative pl-8">
-                <div class="timeline-line"></div>
-
-                <!-- Job 1 -->
-                <div class="gs-hidden relative flex gap-6 pb-12">
-                    <div class="timeline-dot mt-1.5"></div>
-                    <div class="flex-1 glass rounded-2xl p-6 hover:border-accent-500/20 transition-all">
-                        <div class="flex flex-wrap items-center gap-3 mb-3">
-                            <span class="px-3 py-1 rounded-full bg-accent-500/10 text-accent-500 text-xs font-mono tracking-wider">Current</span>
-                            <span class="text-xs text-base-400 font-mono">Jul 2024 — Present</span>
+<!-- CONTACT -->
+<section id="contact" class="relative z-10 py-20 sm:py-28">
+    <div class="sep"></div>
+    <div class="max-w-5xl mx-auto px-5 sm:px-8 pt-20 sm:pt-28">
+        <div class="reveal flex items-center gap-3 mb-14"><span class="font-mono text-[11px] text-mint-500 tracking-widest uppercase">Let's Connect</span><div class="flex-1 h-px bg-surface-500/20"></div></div>
+        <div class="grid lg:grid-cols-5 gap-10 lg:gap-14">
+            <div class="lg:col-span-2">
+                <h2 class="reveal font-heading font-bold text-2xl sm:text-3xl text-surface-50 leading-snug mb-4">Get In Touch</h2>
+                <p class="reveal text-surface-400 text-[14px] leading-relaxed mb-8">I'm always interested in new opportunities — full-time, freelance, or contract Unity & Game Development roles.</p>
+                <div class="space-y-3">
+                    <a href="mailto:jaiswalkishan628@gmail.com" class="reveal card rounded-xl p-4 flex items-center gap-3 hover:border-mint-500/20 group"><div class="w-9 h-9 rounded-lg bg-mint-500/10 flex items-center justify-center flex-shrink-0"><i data-lucide="mail" class="w-4 h-4 text-mint-400"></i></div><div><div class="text-[11px] font-mono text-surface-500 tracking-wider uppercase">Email</div><div class="text-sm text-surface-200 group-hover:text-mint-400 transition">jaiswalkishan628@gmail.com</div></div></a>
+                    <a href="https://github.com/kishan831" target="_blank" class="reveal card rounded-xl p-4 flex items-center gap-3 hover:border-mint-500/20 group"><div class="w-9 h-9 rounded-lg bg-surface-600/50 flex items-center justify-center flex-shrink-0"><i data-lucide="github" class="w-4 h-4 text-surface-300"></i></div><div><div class="text-[11px] font-mono text-surface-500 tracking-wider uppercase">GitHub</div><div class="text-sm text-surface-200 group-hover:text-mint-400 transition">github.com/kishan831</div></div></a>
+                    <a href="https://www.linkedin.com/in/kishan-jaiswal-2586a4220/" target="_blank" class="reveal card rounded-xl p-4 flex items-center gap-3 hover:border-mint-500/20 group"><div class="w-9 h-9 rounded-lg bg-surface-600/50 flex items-center justify-center flex-shrink-0"><i data-lucide="linkedin" class="w-4 h-4 text-surface-300"></i></div><div><div class="text-[11px] font-mono text-surface-500 tracking-wider uppercase">LinkedIn</div><div class="text-sm text-surface-200 group-hover:text-mint-400 transition">Kishan Jaiswal</div></div></a>
+                    <a href="https://www.youtube.com/channel/UCrN0559CtMg-NeUi-9bqrTQ" target="_blank" class="reveal card rounded-xl p-4 flex items-center gap-3 hover:border-mint-500/20 group"><div class="w-9 h-9 rounded-lg bg-surface-600/50 flex items-center justify-center flex-shrink-0"><i data-lucide="youtube" class="w-4 h-4 text-surface-300"></i></div><div><div class="text-[11px] font-mono text-surface-500 tracking-wider uppercase">YouTube</div><div class="text-sm text-surface-200 group-hover:text-mint-400 transition">Game Dev Channel</div></div></a>
+                </div>
+            </div>
+            <div class="lg:col-span-3">
+                <div class="reveal card rounded-2xl p-6 sm:p-8">
+                    <h3 class="font-heading font-semibold text-surface-50 text-lg mb-1">Send a Message</h3>
+                    <p class="text-surface-500 text-xs mb-6">Fill out the form and I'll get back to you as soon as possible.</p>
+                    <form id="contactForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" class="space-y-5">
+                        <div class="grid sm:grid-cols-2 gap-5">
+                            <div><label for="name" class="block text-[11px] font-mono text-surface-400 tracking-wider uppercase mb-1.5">Name *</label><input type="text" id="name" name="name" required placeholder="Your name" class="w-full px-4 py-3 rounded-xl bg-surface-800/60 border border-surface-500/10 text-surface-100 text-sm placeholder:text-surface-600 focus:outline-none focus:border-mint-500/30 focus:ring-1 focus:ring-mint-500/15 transition"></div>
+                            <div><label for="email" class="block text-[11px] font-mono text-surface-400 tracking-wider uppercase mb-1.5">Email *</label><input type="email" id="email" name="email" required placeholder="you@email.com" class="w-full px-4 py-3 rounded-xl bg-surface-800/60 border border-surface-500/10 text-surface-100 text-sm placeholder:text-surface-600 focus:outline-none focus:border-mint-500/30 focus:ring-1 focus:ring-mint-500/15 transition"></div>
                         </div>
-                        <h3 class="font-heading font-bold text-xl text-base-50 mb-1">Unity Developer</h3>
-                        <p class="text-accent-500/80 text-sm font-medium mb-3">Bilions · Austin, Texas (Remote)</p>
-                        <p class="text-base-300 text-sm leading-relaxed mb-3">Building cutting-edge casino slot games with multi-reel configurations, dynamic paylines, and bonus mechanics including free spins, scatter wins, and auto-spin systems.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-2.5 py-1 rounded-lg bg-base-700/50 text-xs text-base-300 font-mono">Unity</span>
-                            <span class="px-2.5 py-1 rounded-lg bg-base-700/50 text-xs text-base-300 font-mono">C#</span>
-                            <span class="px-2.5 py-1 rounded-lg bg-base-700/50 text-xs text-base-300 font-mono">RNG</span>
-                            <span class="px-2.5 py-1 rounded-lg bg-base-700/50 text-xs text-base-300 font-mono">Socket</span>
-                            <span class="px-2.5 py-1 rounded-lg bg-base-700/50 text-xs text-base-300 font-mono">WebGL</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Job 2 -->
-                <div class="gs-hidden relative flex gap-6 pb-12">
-                    <div class="timeline-dot mt-1.5"></div>
-                    <div class="flex-1 glass rounded-2xl p-6 hover:border-accent-500/20 transition-all">
-                        <span class="text-xs text-base-400 font-mono">Dec 2023 — Jul 2024</span>
-                        <h3 class="font-heading font-bold text-xl text-base-50 mb-1 mt-2">Freelance Unity Developer</h3>
-                        <p class="text-accent-500/80 text-sm font-medium mb-3">Upwork · Remote</p>
-                        <p class="text-base-300 text-sm leading-relaxed">Delivered high-quality freelance Unity projects with focus on gameplay programming, performance optimization, and cross-platform deployment.</p>
-                    </div>
-                </div>
-
-                <!-- Job 3 -->
-                <div class="gs-hidden relative flex gap-6 pb-12">
-                    <div class="timeline-dot mt-1.5"></div>
-                    <div class="flex-1 glass rounded-2xl p-6 hover:border-accent-500/20 transition-all">
-                        <span class="text-xs text-base-400 font-mono">Aug 2023 — Nov 2023</span>
-                        <h3 class="font-heading font-bold text-xl text-base-50 mb-1 mt-2">Mid-Level Unity Developer</h3>
-                        <p class="text-accent-500/80 text-sm font-medium mb-3">Appzia Technologies · Pune, India</p>
-                        <p class="text-base-300 text-sm leading-relaxed">Developed a complete multiplayer chess game with real-time synchronization, 3D piece movement, pawn promotion, and global matchmaking system.</p>
-                    </div>
-                </div>
-
-                <!-- Job 4 -->
-                <div class="gs-hidden relative flex gap-6 pb-12">
-                    <div class="timeline-dot mt-1.5"></div>
-                    <div class="flex-1 glass rounded-2xl p-6 hover:border-accent-500/20 transition-all">
-                        <span class="text-xs text-base-400 font-mono">Jul 2022 — Jul 2023</span>
-                        <h3 class="font-heading font-bold text-xl text-base-50 mb-1 mt-2">Unity Developer (Level 1)</h3>
-                        <p class="text-accent-500/80 text-sm font-medium mb-3">PhiBonacci Solutions · Ahmedabad, India</p>
-                        <p class="text-base-300 text-sm leading-relaxed">Led a team of 15 developers across 50+ game projects. Built responsive UIs for Windows, Linux, Mobile, AR, and VR platforms. Specialized in animation systems and asset management.</p>
-                    </div>
-                </div>
-
-                <!-- Job 5 -->
-                <div class="gs-hidden relative flex gap-6">
-                    <div class="timeline-dot mt-1.5"></div>
-                    <div class="flex-1 glass rounded-2xl p-6 hover:border-accent-500/20 transition-all">
-                        <span class="text-xs text-base-400 font-mono">Jan 2021 — Jul 2022</span>
-                        <h3 class="font-heading font-bold text-xl text-base-50 mb-1 mt-2">Game Developer</h3>
-                        <p class="text-accent-500/80 text-sm font-medium mb-3">Outscal · Delhi, India (Remote)</p>
-                        <p class="text-base-300 text-sm leading-relaxed">Designed gameplay elements, AI behaviors, and UI systems using C# and Unity. Integrated third-party plugins and optimized game performance through advanced profiling.</p>
-                    </div>
+                        <div><label for="message" class="block text-[11px] font-mono text-surface-400 tracking-wider uppercase mb-1.5">Message *</label><textarea id="message" name="message" required rows="5" placeholder="Tell me about your project..." class="w-full px-4 py-3 rounded-xl bg-surface-800/60 border border-surface-500/10 text-surface-100 text-sm placeholder:text-surface-600 focus:outline-none focus:border-mint-500/30 focus:ring-1 focus:ring-mint-500/15 transition resize-none"></textarea></div>
+                        <button type="submit" id="submitBtn" class="w-full py-3.5 rounded-xl bg-mint-500 text-surface-900 font-bold text-sm hover:shadow-[0_0_32px_rgba(0,214,138,0.2)] transition-all duration-300 flex items-center justify-center gap-2">Send Message <i data-lucide="send" class="w-4 h-4"></i></button>
+                        <p id="formStatus" class="text-center text-xs min-h-[1.2em]"></p>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ========== PROJECTS ========== -->
-    <section id="projects" class="relative z-10 py-24 sm:py-32">
-        <div class="section-divider mb-24"></div>
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="gs-hidden flex items-center gap-4 mb-16">
-                <span class="font-mono text-xs text-accent-500 tracking-widest uppercase">04 — Projects</span>
-                <div class="flex-1 h-px bg-base-500/30"></div>
-            </div>
-
-            <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
-                <h2 class="gs-hidden font-heading font-bold text-3xl sm:text-4xl text-base-50 leading-tight">
-                    Featured <span class="gradient-text">Work</span>
-                </h2>
-                <p class="gs-hidden text-base-400 text-sm font-mono">Click to play demo videos</p>
-            </div>
-
-            <!-- Projects Grid -->
-            <div class="projects-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                <!-- Project Card Template -->
-                <div class="gs-hidden group glass rounded-2xl overflow-hidden hover:border-accent-500/20 transition-all duration-500 youtube-lazy" data-video-id="RubElttzOaU">
-                    <div class="yt-thumb" style="background-image: url('https://img.youtube.com/vi/RubElttzOaU/maxresdefault.jpg');">
-                        <div class="yt-play"><i data-lucide="play" class="w-6 h-6 text-base-900 ml-0.5"></i></div>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="font-heading font-bold text-base text-base-50 mb-1 group-hover:text-accent-500 transition-colors">Zombie Slot Game</h3>
-                        <p class="text-xs text-base-400 leading-relaxed">Multi-reel slot with dynamic paylines, scatter bonuses, free spins & horror VFX.</p>
-                    </div>
-                </div>
-
-                <div class="gs-hidden group glass rounded-2xl overflow-hidden hover:border-accent-500/20 transition-all duration-500 youtube-lazy" data-video-id="BsKxrJxeV6E">
-                    <div class="yt-thumb" style="background-image: url('https://img.youtube.com/vi/BsKxrJxeV6E/maxresdefault.jpg');">
-                        <div class="yt-play"><i data-lucide="play" class="w-6 h-6 text-base-900 ml-0.5"></i></div>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="font-heading font-bold text-base text-base-50 mb-1 group-hover:text-accent-500 transition-colors">Vegas Empire</h3>
-                        <p class="text-xs text-base-400 leading-relaxed">Casino empire with interactive UI, progressive bonuses & reel mechanics.</p>
-                    </div>
-                </div>
-
-                <div class="gs-hidden group glass rounded-2xl overflow-hidden hover:border-accent-500/20 transition-all duration-500 youtube-lazy" data-video-id="I8Fej49mxJc">
-                    <div class="yt-thumb" style="background-image: url('https://img.youtube.com/vi/I8Fej49mxJc/maxresdefault.jpg');">
-                        <div class="yt-play"><i data-lucide="play" class="w-6 h-6 text-base-900 ml-0.5"></i></div>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="font-heading font-bold text-base text-base-50 mb-1 group-hover:text-accent-500 transition-colors">Black Jack</h3>
-                        <p class="text-xs text-base-400 leading-relaxed">Classic casino Black Jack with polished UI, smooth card animations & responsive design.</p>
-                    </div>
-                </div>
-
-                <div class="gs-hidden group glass rounded-2xl overflow-hidden hover:border-accent-500/20 transition-all duration-500 youtube-lazy" data-video-id="Sq1utN9apPg">
-                    <div class="yt-thumb" style="background-image: url('https://img.youtube.com/vi/Sq1utN9apPg/maxresdefault.jpg');">
-                        <div class="yt-play"><i data-lucide="play" class="w-6 h-6 text-base-900 ml-0.5"></i></div>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="font-heading font-bold text-base text-base-50 mb-1 group-hover:text-accent-500 transition-colors">Keno</h3>
-                        <p class="text-xs text-base-400 leading-relaxed">Number-based casino Keno with configurable bets, real-time draw animations & clean UI.</p>
-                    </div>
-                </div>
-
-                <div class="gs-hidden group glass rounded-2xl overflow-hidden hover:border-accent-500/20 transition-all duration-500 youtube-lazy" data-video-id="2dcOnKkfR3c">
-                    <div class="yt-thumb" style="background-image: url('https://img.youtube.com/vi/2dcOnKkfR3c/maxresdefault.jpg');">
-                        <div class="yt-play"><i data-lucide="play" class="w-6 h-6 text-base-900 ml-0.5"></i></div>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="font-heading font-bold text-base text-base-50 mb-1 group-hover:text-accent-500 transition-colors">Buffalo Gold Rush</h3>
-                        <p class="text-xs text-base-400 leading-relaxed">5×4 slot · 25 paylines · Free Spin Wheel · 2x Wild Multiplier · High Volatility.</p>
-                    </div>
-                </div>
-
-                <div class="gs-hidden group glass rounded-2xl overflow-hidden hover:border-accent-500/20 transition-all duration-500 youtube-lazy" data-video-id="EpKVVICdjdI">
-                    <div class="yt-thumb" style="background-image: url('https://img.youtube.com/vi/EpKVVICdjdI/maxresdefault.jpg');">
-                        <div class="yt-play"><i data-lucide="play" class="w-6 h-6 text-base-900 ml-0.5"></i></div>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="font-heading font-bold text-base text-base-50 mb-1 group-hover:text-accent-500 transition-colors">Fireball Chinatown</h3>
-                        <p class="text-xs text-base-400 leading-relaxed">5×4 · 50 paylines · Fireball Feature · Free Spins + Wild Multipliers.</p>
-                    </div>
-                </div>
-
-                <div class="gs-hidden group glass rounded-2xl overflow-hidden hover:border-accent-500/20 transition-all duration-500 youtube-lazy" data-video-id="gm90SaB44Vo">
-                    <div class="yt-thumb" style="background-image: url('https://img.youtube.com/vi/gm90SaB44Vo/maxresdefault.jpg');">
-                        <div class="yt-play"><i data-lucide="play" class="w-6 h-6 text-base-900 ml-0.5"></i></div>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="font-heading font-bold text-base text-base-50 mb-1 group-hover:text-accent-500 transition-colors">Jungle Safari</h3>
-                        <p class="text-xs text-base-400 leading-relaxed">5×3 · 20 paylines · Free Spins · Expanding Wilds · Scatter Payouts.</p>
-                    </div>
-                </div>
-
-                <div class="gs-hidden group glass rounded-2xl overflow-hidden hover:border-accent-500/20 transition-all duration-500 youtube-lazy" data-video-id="itwqD6WdViY">
-                    <div class="yt-thumb" style="background-image: url('https://img.youtube.com/vi/itwqD6WdViY/maxresdefault.jpg');">
-                        <div class="yt-play"><i data-lucide="play" class="w-6 h-6 text-base-900 ml-0.5"></i></div>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="font-heading font-bold text-base text-base-50 mb-1 group-hover:text-accent-500 transition-colors">Empress of Fortune: Cleopatra</h3>
-                        <p class="text-xs text-base-400 leading-relaxed">Free Bonus Spins · Scatter Multipliers up to 100x · Wild Fury.</p>
-                    </div>
-                </div>
-
-                <div class="gs-hidden group glass rounded-2xl overflow-hidden hover:border-accent-500/20 transition-all duration-500 youtube-lazy" data-video-id="kF5E60FwK8I">
-                    <div class="yt-thumb" style="background-image: url('https://img.youtube.com/vi/F2Ag78wDMuc/maxresdefault.jpg');">
-                        <div class="yt-play"><i data-lucide="play" class="w-6 h-6 text-base-900 ml-0.5"></i></div>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="font-heading font-bold text-base text-base-50 mb-1 group-hover:text-accent-500 transition-colors">AiLO-Adventure: Parkour Odyssey</h3>
-                        <p class="text-xs text-base-400 leading-relaxed">Massive open-world parkour · Multiplayer with Photon Fusion · Intense combat.</p>
-                    </div>
-                </div>
-
-                <div class="gs-hidden group glass rounded-2xl overflow-hidden hover:border-accent-500/20 transition-all duration-500 youtube-lazy" data-video-id="KaJ14D6Ap2c">
-                    <div class="yt-thumb" style="background-image: url('https://img.youtube.com/vi/KaJ14D6Ap2c/maxresdefault.jpg');">
-                        <div class="yt-play"><i data-lucide="play" class="w-6 h-6 text-base-900 ml-0.5"></i></div>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="font-heading font-bold text-base text-base-50 mb-1 group-hover:text-accent-500 transition-colors">Viva La Fiesta</h3>
-                        <p class="text-xs text-base-400 leading-relaxed">5×3 · 20 paylines · Free Spins · Wild Multipliers (2x-4x) · Scatter Triggers.</p>
-                    </div>
-                </div>
-
-                <div class="gs-hidden group glass rounded-2xl overflow-hidden hover:border-accent-500/20 transition-all duration-500 youtube-lazy" data-video-id="i3U6mhh7QqU">
-                    <div class="yt-thumb" style="background-image: url('https://img.youtube.com/vi/i3U6mhh7QqU/maxresdefault.jpg');">
-                        <div class="yt-play"><i data-lucide="play" class="w-6 h-6 text-base-900 ml-0.5"></i></div>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="font-heading font-bold text-base text-base-50 mb-1 group-hover:text-accent-500 transition-colors">Character Selection Menu</h3>
-                        <p class="text-xs text-base-400 leading-relaxed">Immersive character selection system with smooth transitions.</p>
-                    </div>
-                </div>
-
-                <div class="gs-hidden group glass rounded-2xl overflow-hidden hover:border-accent-500/20 transition-all duration-500 youtube-lazy" data-video-id="sKI_xMpbuok">
-                    <div class="yt-thumb" style="background-image: url('https://img.youtube.com/vi/sKI_xMpbuok/maxresdefault.jpg');">
-                        <div class="yt-play"><i data-lucide="play" class="w-6 h-6 text-base-900 ml-0.5"></i></div>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="font-heading font-bold text-base text-base-50 mb-1 group-hover:text-accent-500 transition-colors">Jigsaw Adventures</h3>
-                        <p class="text-xs text-base-400 leading-relaxed">Complete puzzle game with smooth piece snapping and engaging gameplay.</p>
-                    </div>
-                </div>
-
-            </div>
+<!-- FOOTER -->
+<footer class="relative z-10 border-t border-surface-500/8 py-7">
+    <div class="max-w-6xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <p class="text-[11px] font-mono text-surface-600">&copy; 2026 Kishan Jaiswal</p>
+        <div class="flex items-center gap-3.5">
+            <a href="https://github.com/kishan831" target="_blank" class="text-surface-600 hover:text-mint-400 transition"><i data-lucide="github" class="w-4 h-4"></i></a>
+            <a href="https://www.linkedin.com/in/kishan-jaiswal-2586a4220/" target="_blank" class="text-surface-600 hover:text-mint-400 transition"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+            <a href="https://www.youtube.com/channel/UCrN0559CtMg-NeUi-9bqrTQ" target="_blank" class="text-surface-600 hover:text-mint-400 transition"><i data-lucide="youtube" class="w-4 h-4"></i></a>
+            <a href="https://unitydev831.itch.io" target="_blank" class="text-surface-600 hover:text-mint-400 transition"><i data-lucide="gamepad-2" class="w-4 h-4"></i></a>
+            <a href="https://medium.com/@jaiswalkishan628" target="_blank" class="text-surface-600 hover:text-mint-400 transition"><i data-lucide="pen-tool" class="w-4 h-4"></i></a>
         </div>
-    </section>
+    </div>
+</footer>
 
-    <!-- ========== CONTACT ========== -->
-    <section id="contact" class="relative z-10 py-24 sm:py-32">
-        <div class="section-divider mb-24"></div>
-        <div class="max-w-4xl mx-auto px-6">
-            <div class="gs-hidden flex items-center gap-4 mb-16">
-                <span class="font-mono text-xs text-accent-500 tracking-widest uppercase">05 — Contact</span>
-                <div class="flex-1 h-px bg-base-500/30"></div>
+<button id="toTop" class="fixed bottom-5 right-5 z-50 w-11 h-11 rounded-full card flex items-center justify-center text-mint-400 opacity-0 pointer-events-none transition-all duration-300 hover:bg-mint-500 hover:text-surface-900" aria-label="Back to top"><i data-lucide="chevron-up" class="w-5 h-5"></i></button>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // === Projects Data ===
+    const projects = [
+        { vid:'RubElttzOaU', title:'Zombie Slot Game', badge:'Bilions', desc:'Multi-reel slot with dynamic paylines, scatter bonuses, free spins & horror-themed VFX.', tags:['Unity','C#','VFX'] },
+        { vid:'BsKxrJxeV6E', title:'Vegas Empire', badge:'Bilions', desc:'30+ casino games, real-time balance via sockets, API-driven login, RTP-backed mechanics.', tags:['Unity','Socket','API'], extra:'+2' },
+        { vid:'I8Fej49mxJc', title:'Black Jack', badge:'Casino', desc:'Classic Black Jack with polished UI, smooth card animations & responsive interactions.', tags:['Unity','Animation','UI'] },
+        { vid:'2dcOnKkfR3c', title:'Buffalo Gold Rush', badge:'Slot', desc:'5×4 · 25 paylines · 90% RTP · Free Spin Wheel · 2x Wild Multiplier · High Volatility.', tags:['Unity','RNG','VFX'] },
+        { vid:'itwqD6WdViY', title:'Empress of Fortune', badge:'Personal', desc:'Cleopatra-themed slot with Free Bonus Spins, Scatter Multipliers up to 100x, Wild Fury.', tags:['Unity','VFX Graph','Timeline'] },
+        { vid:'kF5E60FwK8I', thumb:'F2Ag78wDMuc', title:'AiLO: Parkour Odyssey', badge:'Indie', desc:'Open-world parkour adventure with multiplayer via Photon Fusion & intense combat.', tags:['Photon Fusion','Unity','Combat'] },
+        { vid:'EpKVVICdjdI', title:'Fireball Chinatown', badge:'Slot', desc:'5×4 · 50 paylines · 90% RTP · Fireball Feature · Free Spins + Wild Multipliers.', tags:['Unity','C#','VFX'] },
+        { vid:'Sq1utN9apPg', title:'Keno', badge:'Casino', desc:'Number-based casino game with configurable bets, real-time draw animations & clean UI.', tags:['Unity','UI','Animation'] },
+        { vid:'gm90SaB44Vo', title:'Jungle Safari', badge:'Slot', desc:'5×3 · 20 paylines · Free Spins · Expanding Wilds · Scatter Payouts.', tags:['Unity','RNG','VFX'] },
+        { vid:'KaJ14D6Ap2c', title:'Viva La Fiesta', badge:'Slot', desc:'5×3 · 20 paylines · Free Spins · Wild Multipliers (2x-4x) · Scatter Triggers.', tags:['Unity','C#','Animation'] },
+        { vid:'sKI_xMpbuok', title:'Jigsaw Adventures', badge:'Puzzle', desc:'Complete puzzle game with smooth piece snapping and engaging gameplay.', tags:['Unity','Physics','C#'] },
+        { vid:'j9f0AC0J6tw', title:'Parkour Mechanics', badge:'Prototype', desc:'Procedural climbing, jumping prediction & advanced vaulting system.', tags:['Unity','Physics','IK'] },
+    ];
+
+    const grid = document.getElementById('projGrid');
+    projects.forEach(p => {
+        const thumbId = p.thumb || p.vid;
+        grid.innerHTML += `
+        <div class="reveal card rounded-2xl overflow-hidden group yt-lazy" data-vid="${p.vid}">
+            <div class="yt-wrap">
+                <img src="https://img.youtube.com/vi/${thumbId}/maxresdefault.jpg" alt="${p.title}" loading="lazy">
+                <div class="yt-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#07070d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg></div>
             </div>
-
-            <div class="text-center mb-12">
-                <h2 class="gs-hidden font-heading font-bold text-3xl sm:text-5xl text-base-50 mb-4 leading-tight">
-                    Let's Build Something<br><span class="gradient-text">Extraordinary</span>
-                </h2>
-                <p class="gs-hidden text-base-300 text-base max-w-xl mx-auto">
-                    Available for full-time, freelance, or contract Unity & Game Development roles. Let's connect.
-                </p>
+            <div class="p-5">
+                <div class="flex items-center gap-2 mb-2">
+                    <h3 class="font-heading font-semibold text-[15px] text-surface-50 group-hover:text-mint-400 transition">${p.title}</h3>
+                    <span class="tag-neutral tag text-[9px]">${p.badge}</span>
+                </div>
+                <p class="text-surface-400 text-xs leading-relaxed mb-3">${p.desc}</p>
+                <div class="flex flex-wrap gap-1">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}${p.extra?`<span class="tag-neutral tag">${p.extra}</span>`:''}</div>
             </div>
-
-            <div class="gs-hidden glass rounded-3xl p-8 sm:p-10 max-w-2xl mx-auto">
-                <form id="contactForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" class="space-y-6">
-                    <div class="grid sm:grid-cols-2 gap-6">
-                        <div>
-                            <label for="name" class="block text-xs font-mono text-base-400 tracking-wider uppercase mb-2">Name</label>
-                            <input type="text" id="name" name="name" required placeholder="Your name"
-                                class="w-full px-4 py-3 rounded-xl bg-base-800/50 border border-base-500/10 text-base-100 text-sm placeholder:text-base-500 focus:outline-none focus:border-accent-500/40 focus:ring-1 focus:ring-accent-500/20 transition-all">
-                        </div>
-                        <div>
-                            <label for="email" class="block text-xs font-mono text-base-400 tracking-wider uppercase mb-2">Email</label>
-                            <input type="email" id="email" name="email" required placeholder="you@email.com"
-                                class="w-full px-4 py-3 rounded-xl bg-base-800/50 border border-base-500/10 text-base-100 text-sm placeholder:text-base-500 focus:outline-none focus:border-accent-500/40 focus:ring-1 focus:ring-accent-500/20 transition-all">
-                        </div>
-                    </div>
-                    <div>
-                        <label for="message" class="block text-xs font-mono text-base-400 tracking-wider uppercase mb-2">Message</label>
-                        <textarea id="message" name="message" required rows="5" placeholder="Tell me about your project..."
-                            class="w-full px-4 py-3 rounded-xl bg-base-800/50 border border-base-500/10 text-base-100 text-sm placeholder:text-base-500 focus:outline-none focus:border-accent-500/40 focus:ring-1 focus:ring-accent-500/20 transition-all resize-none"></textarea>
-                    </div>
-                    <button type="submit" id="submitBtn"
-                        class="w-full py-4 rounded-2xl bg-accent-500 text-base-900 font-bold text-sm tracking-wide hover:shadow-[0_0_40px_rgba(0,229,143,0.3)] transition-all duration-300 flex items-center justify-center gap-2">
-                        Send Message <i data-lucide="send" class="w-4 h-4"></i>
-                    </button>
-                    <p id="form-status" class="text-center text-sm min-h-[1.5em]"></p>
-                </form>
-            </div>
-
-            <!-- Direct Contact -->
-            <div class="gs-hidden flex flex-wrap items-center justify-center gap-6 mt-12">
-                <a href="mailto:jaiswalkishan628@gmail.com" class="flex items-center gap-2 text-sm text-base-300 hover:text-accent-500 transition-colors">
-                    <i data-lucide="mail" class="w-4 h-4"></i> jaiswalkishan628@gmail.com
-                </a>
-                <a href="tel:+918318230945" class="flex items-center gap-2 text-sm text-base-300 hover:text-accent-500 transition-colors">
-                    <i data-lucide="phone" class="w-4 h-4"></i> +91 8318230945
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========== FOOTER ========== -->
-    <footer class="relative z-10 border-t border-base-500/10 py-8">
-        <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p class="text-xs text-base-500 font-mono">&copy; 2026 Kishan Jaiswal. Crafted with passion.</p>
-            <div class="flex items-center gap-4">
-                <a href="https://github.com/kishan831" target="_blank" class="text-base-500 hover:text-accent-500 transition-colors"><i data-lucide="github" class="w-4 h-4"></i></a>
-                <a href="https://www.linkedin.com/in/kishan-jaiswal-2586a4220/" target="_blank" class="text-base-500 hover:text-accent-500 transition-colors"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
-                <a href="https://www.youtube.com/channel/UCrN0559CtMg-NeUi-9bqrTQ" target="_blank" class="text-base-500 hover:text-accent-500 transition-colors"><i data-lucide="youtube" class="w-4 h-4"></i></a>
-                <a href="https://unitydev831.itch.io" target="_blank" class="text-base-500 hover:text-accent-500 transition-colors"><i data-lucide="gamepad-2" class="w-4 h-4"></i></a>
-                <a href="https://medium.com/@jaiswalkishan628" target="_blank" class="text-base-500 hover:text-accent-500 transition-colors"><i data-lucide="pen-tool" class="w-4 h-4"></i></a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- ========== SCROLL TO TOP ========== -->
-    <button id="scrollTopBtn" class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-accent-500/10 border border-accent-500/20 text-accent-500 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 hover:bg-accent-500 hover:text-base-900 backdrop-blur-sm" aria-label="Scroll to top">
-        <i data-lucide="chevron-up" class="w-5 h-5"></i>
-    </button>
-
-    <!-- ========== SCRIPTS ========== -->
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-
-        // === 1. LUCIDE ICONS ===
-        lucide.createIcons();
-
-        // === 2. PRELOADER ===
-        const preloader = document.getElementById('preloader');
-        window.addEventListener('load', () => {
-            setTimeout(() => preloader.classList.add('done'), 600);
-        });
-        // Fallback in case load already fired
-        setTimeout(() => preloader.classList.add('done'), 2000);
-
-        // === 3. THREE.JS BACKGROUND ===
-        const initThree = () => {
-            const canvas = document.getElementById('three-canvas');
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
-            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false, powerPreference: 'low-power' });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-            renderer.setClearColor(0x000000, 0);
-
-            // Particle field
-            const particleCount = 600;
-            const positions = new Float32Array(particleCount * 3);
-            for (let i = 0; i < particleCount * 3; i++) {
-                positions[i] = (Math.random() - 0.5) * 60;
-            }
-            const geometry = new THREE.BufferGeometry();
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            const material = new THREE.PointsMaterial({ color: 0x00e58f, size: 0.08, transparent: true, opacity: 0.6 });
-            const particles = new THREE.Points(geometry, material);
-            scene.add(particles);
-
-            // Wireframe torus knot (subtle)
-            const torusGeo = new THREE.TorusKnotGeometry(8, 2.5, 80, 12, 2, 3);
-            const torusMat = new THREE.MeshBasicMaterial({ color: 0x00e58f, wireframe: true, transparent: true, opacity: 0.04 });
-            const torus = new THREE.Mesh(torusGeo, torusMat);
-            scene.add(torus);
-
-            camera.position.z = 25;
-
-            let mouseX = 0, mouseY = 0;
-            document.addEventListener('mousemove', (e) => {
-                mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-                mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-            });
-
-            const clock = new THREE.Clock();
-            const animate = () => {
-                const t = clock.getElapsedTime();
-                particles.rotation.y = t * 0.03 + mouseX * 0.1;
-                particles.rotation.x = t * 0.01 + mouseY * 0.05;
-                torus.rotation.y = t * 0.05;
-                torus.rotation.x = t * 0.02;
-                renderer.render(scene, camera);
-                requestAnimationFrame(animate);
-            };
-            animate();
-
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-        };
-        initThree();
-
-        // === 4. GSAP SCROLL ANIMATIONS ===
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Navbar blur on scroll
-        ScrollTrigger.create({
-            start: 'top -80',
-            onUpdate: (self) => {
-                const nav = document.getElementById('navbar');
-                if (self.direction === 1 && window.scrollY > 80) {
-                    nav.style.background = 'rgba(6,6,11,0.85)';
-                    nav.style.backdropFilter = 'blur(16px)';
-                    nav.style.borderBottom = '1px solid rgba(255,255,255,0.04)';
-                } else if (window.scrollY < 80) {
-                    nav.style.background = 'transparent';
-                    nav.style.backdropFilter = 'none';
-                    nav.style.borderBottom = 'none';
-                }
-            }
-        });
-
-        // Hero stagger
-        const heroTl = gsap.timeline({ delay: 0.8 });
-        heroTl.to('#hero .gs-hidden', {
-            opacity: 1, y: 0, duration: 0.7, stagger: 0.15, ease: 'power3.out'
-        });
-
-        // General section reveals
-        gsap.utils.toArray('.gs-hidden').forEach((el) => {
-            if (el.closest('#hero')) return; // Skip hero (handled above)
-            gsap.to(el, {
-                scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-                opacity: 1, y: 0, duration: 0.7, ease: 'power3.out'
-            });
-        });
-
-        // Counter animation
-        document.querySelectorAll('[data-count]').forEach(el => {
-            const target = parseInt(el.dataset.count);
-            ScrollTrigger.create({
-                trigger: el, start: 'top 85%', once: true,
-                onEnter: () => {
-                    gsap.to(el, {
-                        innerHTML: target, duration: 2, snap: { innerHTML: 1 }, ease: 'power1.inOut',
-                        onUpdate() { el.innerHTML = Math.ceil(parseFloat(el.innerHTML)) + '+'; }
-                    });
-                }
-            });
-        });
-
-        // === 5. TYPING EFFECT ===
-        const typedOutput = document.getElementById('typed-output');
-        const phrases = [
-            'Unity Game Developer',
-            'Slot Machine Architect',
-            'Multiplayer Systems Engineer',
-            'Casino Game Specialist',
-            'Creating Immersive Worlds'
-        ];
-        let phraseIdx = 0, charIdx = 0, deleting = false;
-
-        function typeLoop() {
-            const current = phrases[phraseIdx];
-            if (deleting) {
-                typedOutput.textContent = current.substring(0, --charIdx);
-            } else {
-                typedOutput.textContent = current.substring(0, ++charIdx);
-            }
-
-            let speed = deleting ? 40 : 80;
-            if (!deleting && charIdx === current.length) { speed = 2200; deleting = true; }
-            else if (deleting && charIdx === 0) { deleting = false; phraseIdx = (phraseIdx + 1) % phrases.length; speed = 400; }
-
-            setTimeout(typeLoop, speed);
-        }
-        setTimeout(typeLoop, 1500);
-
-        // === 6. MOBILE MENU ===
-        const toggle = document.getElementById('mobileToggle');
-        const menu = document.getElementById('mobileMenu');
-        const bar1 = document.getElementById('bar1');
-        const bar2 = document.getElementById('bar2');
-        const bar3 = document.getElementById('bar3');
-        let menuOpen = false;
-
-        toggle.addEventListener('click', () => {
-            menuOpen = !menuOpen;
-            menu.style.transform = menuOpen ? 'translateX(0)' : 'translateX(100%)';
-            bar1.style.transform = menuOpen ? 'rotate(45deg) translate(4px, 4px)' : '';
-            bar2.style.opacity = menuOpen ? '0' : '1';
-            bar3.style.transform = menuOpen ? 'rotate(-45deg) translate(4px, -4px)' : '';
-            bar3.style.width = menuOpen ? '24px' : '16px';
-            document.body.style.overflow = menuOpen ? 'hidden' : '';
-        });
-
-        document.querySelectorAll('.mobile-link').forEach(link => {
-            link.addEventListener('click', () => {
-                menuOpen = false;
-                menu.style.transform = 'translateX(100%)';
-                bar1.style.transform = '';
-                bar2.style.opacity = '1';
-                bar3.style.transform = '';
-                bar3.style.width = '16px';
-                document.body.style.overflow = '';
-            });
-        });
-
-        // === 7. SCROLL TO TOP ===
-        const scrollBtn = document.getElementById('scrollTopBtn');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 600) {
-                scrollBtn.style.opacity = '1';
-                scrollBtn.style.pointerEvents = 'all';
-            } else {
-                scrollBtn.style.opacity = '0';
-                scrollBtn.style.pointerEvents = 'none';
-            }
-        });
-        scrollBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-        // === 8. YOUTUBE LAZY LOAD ===
-        document.querySelectorAll('.youtube-lazy').forEach(card => {
-            card.addEventListener('click', function() {
-                const videoId = this.dataset.videoId;
-                const thumb = this.querySelector('.yt-thumb');
-                if (!thumb) return;
-                const iframe = document.createElement('iframe');
-                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-                iframe.style.cssText = 'width:100%;aspect-ratio:16/9;border:none;';
-                iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-                iframe.allowFullscreen = true;
-                thumb.replaceWith(iframe);
-            });
-        });
-
-        // === 9. SKILL CHIP MOUSE FOLLOW ===
-        document.querySelectorAll('.skill-chip').forEach(chip => {
-            chip.addEventListener('mousemove', (e) => {
-                const rect = chip.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / rect.width * 100).toFixed(0);
-                const y = ((e.clientY - rect.top) / rect.height * 100).toFixed(0);
-                chip.style.setProperty('--mx', x + '%');
-                chip.style.setProperty('--my', y + '%');
-            });
-        });
-
-        // === 10. FORM HANDLING ===
-        const form = document.getElementById('contactForm');
-        const status = document.getElementById('form-status');
-        const submitBtn = document.getElementById('submitBtn');
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            submitBtn.innerHTML = 'Sending...';
-            submitBtn.disabled = true;
-            try {
-                const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
-                if (res.ok) {
-                    status.textContent = "Thanks! I'll get back to you soon.";
-                    status.className = 'text-center text-sm text-accent-500';
-                    form.reset();
-                    submitBtn.innerHTML = 'Sent! ✓';
-                } else {
-                    throw new Error('Failed');
-                }
-            } catch {
-                status.textContent = 'Something went wrong. Please try again.';
-                status.className = 'text-center text-sm text-red-400';
-                submitBtn.innerHTML = 'Send Message <i data-lucide="send" class="w-4 h-4"></i>';
-                submitBtn.disabled = false;
-                lucide.createIcons();
-            }
-        });
-
-        // === 11. SMOOTH SCROLL FOR NAV LINKS ===
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        });
-
-        // Console
-        console.log('%c🎮 Kishan Jaiswal Portfolio v4.0 — Redesigned', 'color: #00e58f; font-size: 14px; font-weight: bold;');
+        </div>`;
     });
-    </script>
+
+    lucide.createIcons();
+
+    // Loader
+    setTimeout(() => document.getElementById('loader').classList.add('hide'), 1100);
+
+    // Three.js
+    (() => {
+        const c=document.getElementById('bg3d'), scene=new THREE.Scene();
+        const cam=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,100);
+        const r=new THREE.WebGLRenderer({canvas:c,alpha:true,antialias:false,powerPreference:'low-power'});
+        r.setSize(innerWidth,innerHeight); r.setPixelRatio(Math.min(devicePixelRatio,1.5));
+        const n=500,pos=new Float32Array(n*3);
+        for(let i=0;i<n*3;i++) pos[i]=(Math.random()-0.5)*50;
+        const geo=new THREE.BufferGeometry(); geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+        scene.add(new THREE.Points(geo,new THREE.PointsMaterial({color:0x00d68a,size:0.06,transparent:true,opacity:0.5})));
+        const tg=new THREE.TorusKnotGeometry(7,2.2,64,10,2,3);
+        scene.add(new THREE.Mesh(tg,new THREE.MeshBasicMaterial({color:0x00d68a,wireframe:true,transparent:true,opacity:0.03})));
+        cam.position.z=22; let mx=0,my=0;
+        addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-0.5)*2;my=(e.clientY/innerHeight-0.5)*2});
+        const clk=new THREE.Clock();
+        !function loop(){const t=clk.getElapsedTime();scene.children[0].rotation.y=t*0.025+mx*0.08;scene.children[0].rotation.x=t*0.008+my*0.04;scene.children[1].rotation.y=t*0.04;scene.children[1].rotation.x=t*0.015;r.render(scene,cam);requestAnimationFrame(loop)}();
+        addEventListener('resize',()=>{cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();r.setSize(innerWidth,innerHeight)});
+    })();
+
+    // GSAP
+    gsap.registerPlugin(ScrollTrigger);
+    const nav=document.getElementById('nav');
+    ScrollTrigger.create({start:'top -60',onUpdate:()=>{
+        if(scrollY>60){nav.style.background='rgba(7,7,13,0.88)';nav.style.backdropFilter='blur(14px)';nav.style.borderBottom='1px solid rgba(255,255,255,0.04)'}
+        else{nav.style.background='transparent';nav.style.backdropFilter='none';nav.style.borderBottom='none'}
+    }});
+    gsap.timeline({delay:1.2}).to('#hero .reveal',{opacity:1,y:0,duration:0.65,stagger:0.12,ease:'power3.out'});
+    gsap.utils.toArray('.reveal').forEach(el=>{if(el.closest('#hero'))return;gsap.to(el,{scrollTrigger:{trigger:el,start:'top 90%',once:true},opacity:1,y:0,duration:0.6,ease:'power3.out'})});
+    document.querySelectorAll('[data-count]').forEach(el=>{const t=+el.dataset.count;ScrollTrigger.create({trigger:el,start:'top 87%',once:true,onEnter:()=>{gsap.to(el,{innerHTML:t,duration:1.8,snap:{innerHTML:1},ease:'power1.inOut',onUpdate(){el.innerHTML=Math.ceil(+el.innerHTML)+'+';}})}})});
+
+    // Typing
+    const out=document.getElementById('typed');
+    const words=['Casino & Slot Games','Multiplayer Systems','Immersive 3D Worlds','Gameplay Architecture'];
+    let wi=0,ci=0,del=false;
+    !function type(){const w=words[wi];del?out.textContent=w.substring(0,--ci):out.textContent=w.substring(0,++ci);let sp=del?35:70;if(!del&&ci===w.length){sp=2200;del=true}else if(del&&ci===0){del=false;wi=(wi+1)%words.length;sp=350}setTimeout(type,sp)}();
+
+    // Mobile menu
+    const btn=document.getElementById('mobBtn'),menu=document.getElementById('mobMenu'),b1=document.getElementById('b1'),b2=document.getElementById('b2'),b3=document.getElementById('b3');let open=false;
+    btn.onclick=()=>{open=!open;menu.style.transform=open?'translateX(0)':'translateX(100%)';b1.style.transform=open?'rotate(45deg) translate(4px,4px)':'';b2.style.opacity=open?'0':'1';b3.style.transform=open?'rotate(-45deg) translate(3px,-3px)':'';b3.style.width=open?'24px':'16px';document.body.style.overflow=open?'hidden':''};
+    document.querySelectorAll('.mob-link').forEach(l=>l.onclick=()=>{open=false;menu.style.transform='translateX(100%)';b1.style.transform='';b2.style.opacity='1';b3.style.transform='';b3.style.width='16px';document.body.style.overflow=''});
+
+    // Scroll top
+    const tt=document.getElementById('toTop');
+    addEventListener('scroll',()=>{tt.style.opacity=scrollY>500?'1':'0';tt.style.pointerEvents=scrollY>500?'all':'none'});
+    tt.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+
+    // YouTube lazy
+    document.addEventListener('click',e=>{const card=e.target.closest('.yt-lazy');if(!card)return;const vid=card.dataset.vid,wrap=card.querySelector('.yt-wrap');if(!wrap)return;const ifr=document.createElement('iframe');ifr.src=`https://www.youtube.com/embed/${vid}?autoplay=1&rel=0`;ifr.style.cssText='width:100%;aspect-ratio:16/9;border:none;display:block;';ifr.allow='accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture';ifr.allowFullscreen=true;wrap.replaceWith(ifr)});
+
+    // Form
+    const form=document.getElementById('contactForm'),status=document.getElementById('formStatus'),sub=document.getElementById('submitBtn');
+    form.onsubmit=async e=>{e.preventDefault();sub.innerHTML='Sending...';sub.disabled=true;try{const res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});if(res.ok){status.textContent="Thanks! I'll get back to you soon.";status.className='text-center text-xs text-mint-400';form.reset();sub.innerHTML='Sent! ✓'}else throw 0}catch{status.textContent='Something went wrong. Try again.';status.className='text-center text-xs text-red-400';sub.innerHTML='Send Message';sub.disabled=false}};
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',function(e){e.preventDefault();document.querySelector(this.getAttribute('href'))?.scrollIntoView({behavior:'smooth'})}));
+
+    console.log('%c🎮 Kishan Jaiswal Portfolio v5.0','color:#00d68a;font-size:14px;font-weight:bold');
+});
+</script>
 </body>
 </html>
