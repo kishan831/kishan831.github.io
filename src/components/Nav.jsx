@@ -12,12 +12,31 @@ const LINKS = [
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [active, setActive] = useState('')
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Scroll-spy: highlight the nav link for the section currently in view
+  useEffect(() => {
+    const ids = [...LINKS.map((l) => l.href.slice(1)), 'contact']
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActive(e.target.id)
+        })
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    )
+    ids.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+    return () => observer.disconnect()
   }, [])
 
   // Lock body scroll while the mobile menu is open
@@ -52,7 +71,10 @@ export default function Nav() {
             <a
               key={l.href}
               href={l.href}
-              className="text-[13px] font-medium text-surface-300 transition hover:text-mint-400"
+              aria-current={active === l.href.slice(1) ? 'true' : undefined}
+              className={`text-[13px] font-medium transition hover:text-mint-400 ${
+                active === l.href.slice(1) ? 'text-mint-400' : 'text-surface-300'
+              }`}
             >
               {l.label}
             </a>
