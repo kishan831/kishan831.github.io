@@ -1,6 +1,12 @@
 import Nav from './components/Nav'
 import Hero from './components/Hero'
+import About from './components/About'
+import Skills from './components/Skills'
+import Experience from './components/Experience'
+import Projects from './components/Projects'
+import Contact from './components/Contact'
 import Footer from './components/Footer'
+import ScrollTop from './components/ScrollTop'
 
 export default function App() {
   return (
@@ -8,9 +14,14 @@ export default function App() {
       <Nav />
       <main>
         <Hero />
-        {/* Sections (About, Skills, Experience, Projects, Contact) land in Phases 1–3 */}
+        <About />
+        <Skills />
+        <Experience />
+        <Projects />
+        <Contact />
       </main>
       <Footer />
+      <ScrollTop />
     </>
   )
 }

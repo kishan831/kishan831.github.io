@@ -32,6 +32,11 @@ html {
   -webkit-text-size-adjust: 100%; /* stop iOS auto-inflating text */
 }
 
+/* Anchored sections clear the fixed nav when jumped to */
+section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
