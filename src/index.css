@@ -158,9 +158,79 @@ body {
   }
 }
 
+/* ============================================================
+   HERO FX — lightweight floating casino elements (no WebGL)
+   ============================================================ */
+.hero-fx {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.fx-disc {
+  position: absolute;
+  /* parallax: translate by pointer offset × per-disc depth */
+  transform: translate3d(
+    calc(var(--px, 0) * var(--depth, 16) * 1px),
+    calc(var(--py, 0) * var(--depth, 16) * 1px),
+    0
+  );
+  transition: transform 0.35s ease-out;
+  will-change: transform;
+}
+
+.fx-inner {
+  display: block;
+  width: var(--size, 64px);
+  height: var(--size, 64px);
+  border-radius: 50%;
+  animation: fxFloat 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.fx-blur {
+  filter: blur(2px);
+  opacity: 0.7;
+}
+
+.fx-coin {
+  background: radial-gradient(circle at 34% 28%, #ffdca6 0%, #fca556 52%, #e07a2f 100%);
+  border: 2px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 0 36px rgba(252, 165, 86, 0.22), inset 0 -4px 10px rgba(0, 0, 0, 0.25),
+    inset 0 4px 8px rgba(255, 255, 255, 0.35);
+}
+
+.fx-chip {
+  background: radial-gradient(circle at 34% 28%, #7dffce 0%, #00d68a 52%, #007a4d 100%);
+  border: 3px dashed rgba(255, 255, 255, 0.32);
+  box-shadow: 0 0 40px rgba(0, 214, 138, 0.22), inset 0 -4px 10px rgba(0, 0, 0, 0.25);
+}
+
+@keyframes fxFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+  }
+}
+
+/* Paused when hero is scrolled out of view */
+.hero-fx.is-paused .fx-inner {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .card:hover {
     transform: none;
+  }
+  .fx-inner {
+    animation: none;
+  }
+  .fx-disc {
+    transition: none;
   }
   *,
   *::before,

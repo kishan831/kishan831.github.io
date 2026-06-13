@@ -37,7 +37,7 @@ export default function About() {
               </p>
             </Reveal>
             <Reveal delay={0.15}>
-              <h3 className="mb-3 font-mono text-[11px] uppercase tracking-widest text-mint-500/60">
+              <h3 className="mb-3 font-mono text-[11px] uppercase tracking-widest text-mint-400/80">
                 Core Skills
               </h3>
               <div className="flex flex-wrap gap-2">

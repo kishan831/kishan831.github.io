@@ -1,9 +1,6 @@
-import { lazy, Suspense } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight, FileText } from 'lucide-react'
-
-// Lazy-loaded so the heavy 3D libs never block first paint
-const HeroScene = lazy(() => import('./HeroScene'))
+import HeroFX from './HeroFX'
 
 const fade = {
   hidden: { opacity: 0, y: 28 },
@@ -28,14 +25,8 @@ export default function Hero() {
         className="pointer-events-none absolute left-1/2 top-1/3 z-0 h-[500px] w-[700px] max-w-[90vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-mint-500/[0.05] blur-[140px]"
       />
 
-      {/* Interactive casino-themed 3D scene (skipped for reduced-motion users) */}
-      {!reduceMotion && (
-        <div aria-hidden className="absolute inset-0 z-0 opacity-90">
-          <Suspense fallback={null}>
-            <HeroScene />
-          </Suspense>
-        </div>
-      )}
+      {/* Floating casino elements — lightweight CSS (skipped for reduced-motion users) */}
+      {!reduceMotion && <HeroFX />}
 
       <div className="container-px relative z-10 pb-20 pt-28 sm:pb-0 sm:pt-0">
         <div className="max-w-3xl">

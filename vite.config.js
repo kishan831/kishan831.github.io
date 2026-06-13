@@ -9,8 +9,5 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
-    // The 3D scene (three.js) is intentionally lazy-loaded into its own chunk,
-    // so the default 500 kB warning is expected noise — raise the threshold.
-    chunkSizeWarningLimit: 900,
   },
 })

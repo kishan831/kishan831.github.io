@@ -19,7 +19,7 @@ export function Divider() {
 export function Eyebrow({ children }) {
   return (
     <div className="mb-12 flex items-center gap-3">
-      <span className="font-mono text-[11px] uppercase tracking-widest text-mint-500">
+      <span className="font-mono text-[11px] uppercase tracking-widest text-mint-400">
         {children}
       </span>
       <div className="h-px flex-1 bg-surface-500/20" />

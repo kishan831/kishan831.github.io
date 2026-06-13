@@ -46,7 +46,7 @@ export default function Experience() {
                     )}
                   </div>
                   <h3 className="font-heading text-lg font-bold text-surface-50">{item.role}</h3>
-                  <p className="mb-3 text-sm font-medium text-mint-500/70">{item.org}</p>
+                  <p className="mb-3 text-sm font-medium text-mint-400/85">{item.org}</p>
                   {item.desc && (
                     <p className="mb-3 text-[13px] leading-relaxed text-surface-300">{item.desc}</p>
                   )}
