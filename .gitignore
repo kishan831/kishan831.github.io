@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Build output (GitHub Actions builds and deploys this — never commit it)
+dist/
+dist-ssr/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor / OS
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea/
+Thumbs.db
+
+# Env
+.env
+.env.local
+.env.*.local
