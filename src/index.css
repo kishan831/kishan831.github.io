@@ -105,12 +105,31 @@ body {
 }
 
 /* ============================================================
-   ACCESSIBILITY — visible keyboard focus
+   ACCESSIBILITY — visible keyboard focus + skip link
    ============================================================ */
 :focus-visible {
   outline: 2px solid var(--mint);
   outline-offset: 3px;
   border-radius: 4px;
+}
+
+/* Skip-to-content link: hidden until keyboard-focused */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  transform: translateY(-150%);
+  transition: transform 0.2s ease;
+  border-radius: 0.5rem;
+  background: var(--mint);
+  padding: 0.6rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #07070d;
+}
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 /* ============================================================

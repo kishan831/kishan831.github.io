@@ -11,8 +11,11 @@ import ScrollTop from './components/ScrollTop'
 export default function App() {
   return (
     <>
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
       <Nav />
-      <main>
+      <main id="main">
         <Hero />
         <About />
         <Skills />

@@ -1,7 +1,38 @@
+import { useState } from 'react'
 import { Divider, Eyebrow, Reveal, CountUp } from './primitives'
 import { stats, coreSkills } from '../data/portfolio'
 
-const COLLAGE = ['RubElttzOaU', 'BsKxrJxeV6E', 'kF5E60FwK8I']
+const THUMBS = [
+  { id: 'BsKxrJxeV6E', alt: 'Slot Empire gameplay' },
+  { id: 'kF5E60FwK8I', alt: 'AiLO Parkour Odyssey gameplay' },
+]
+
+function Avatar() {
+  const [err, setErr] = useState(false)
+  return (
+    <div className="relative">
+      <div
+        aria-hidden
+        className="absolute -inset-1.5 rounded-[1.75rem] bg-gradient-to-br from-mint-500/40 via-mint-500/10 to-ember-500/30 opacity-60 blur-lg"
+      />
+      <div className="relative aspect-[4/5] overflow-hidden rounded-3xl border border-white/10">
+        {err ? (
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-surface-700 to-surface-800">
+            <span className="text-gradient font-heading text-7xl font-extrabold">KJ</span>
+          </div>
+        ) : (
+          <img
+            src="/assets/kishan.jpg"
+            alt="Kishan Jaiswal, Unity Game Developer"
+            loading="lazy"
+            onError={() => setErr(true)}
+            className="h-full w-full object-cover object-top"
+          />
+        )}
+      </div>
+    </div>
+  )
+}
 
 export default function About() {
   return (
@@ -21,19 +52,18 @@ export default function About() {
             </Reveal>
             <Reveal delay={0.05}>
               <p className="mb-4 text-fluid-base leading-[1.75] text-surface-300">
-                I'm a professional Unity &amp; Casino Game Developer passionate about immersive
-                interactive experiences. From architecting slot machine logic with provably fair
-                RNG systems to building real-time multiplayer combat using Photon Fusion — I've
-                spent the last five years turning ideas into shipped products.
+                Results-driven Unity Game Developer with <strong className="text-surface-100">5+ years</strong>{' '}
+                of professional experience building high-performance 2D/3D games across mobile, PC,
+                and WebGL platforms. Specialized in casino slot game development — architected a{' '}
+                <strong className="text-surface-100">67+ game slot empire</strong> with real-time
+                socket services, in-app updates, and RTP-backed mechanics.
               </p>
             </Reveal>
             <Reveal delay={0.1}>
               <p className="mb-8 text-fluid-base leading-[1.75] text-surface-300">
-                I've led a team of 15+ developers, shipped 50+ projects across mobile, PC, and
-                WebGL, and built an entire casino platform with 67+ games featuring real-time
-                socket-based balance updates, Addressables-driven asset delivery, and in-app
-                update systems. Currently expanding into Stack Engine integration and RGS (Remote
-                Gaming Server) systems.
+                Proven expertise in gameplay programming, UI/UX, performance optimization,
+                multiplayer systems (Photon Fusion), and scalable architecture patterns. Currently
+                expanding into Stack Engine integration and RGS (Remote Gaming Server) systems.
               </p>
             </Reveal>
             <Reveal delay={0.15}>
@@ -51,25 +81,19 @@ export default function About() {
           </div>
 
           <Reveal delay={0.1} className="lg:col-span-2">
-            <div className="mx-auto grid max-w-[380px] grid-cols-2 grid-rows-2 gap-2 lg:ml-auto lg:mr-0">
-              <img
-                src={`https://img.youtube.com/vi/${COLLAGE[0]}/maxresdefault.jpg`}
-                alt="Zombie Slot Game"
-                loading="lazy"
-                className="row-span-2 h-full w-full rounded-2xl border border-white/[0.06] object-cover"
-              />
-              <img
-                src={`https://img.youtube.com/vi/${COLLAGE[1]}/maxresdefault.jpg`}
-                alt="Vegas Empire slot"
-                loading="lazy"
-                className="h-full w-full rounded-xl border border-white/[0.06] object-cover"
-              />
-              <img
-                src={`https://img.youtube.com/vi/${COLLAGE[2]}/maxresdefault.jpg`}
-                alt="Parkour game"
-                loading="lazy"
-                className="h-full w-full rounded-xl border border-white/[0.06] object-cover"
-              />
+            <div className="mx-auto max-w-[340px] lg:ml-auto lg:mr-0">
+              <Avatar />
+              <div className="mt-3 grid grid-cols-2 gap-3">
+                {THUMBS.map((t) => (
+                  <img
+                    key={t.id}
+                    src={`https://img.youtube.com/vi/${t.id}/mqdefault.jpg`}
+                    alt={t.alt}
+                    loading="lazy"
+                    className="aspect-video w-full rounded-xl border border-white/[0.06] object-cover"
+                  />
+                ))}
+              </div>
             </div>
           </Reveal>
         </div>

@@ -103,7 +103,7 @@ export const experience = [
 ]
 
 export const projects = [
-  { vid: 'BsKxrJxeV6E', title: 'Slot Empire (67+ Games)', badge: 'Bilions', desc: '67+ slot games via Addressables · 30+ built from scratch · Sockets, APIs, in-app updates, festival themes, bonus wheel, Stack Engine & RGS integration.', tags: ['Unity', 'Socket', 'RGS'], extra: '+4' },
+  { vid: 'BsKxrJxeV6E', title: 'Slot Empire (67+ Games)', badge: 'Bilions', caseId: 'slot-empire', desc: '67+ slot games via Addressables · 30+ built from scratch · Sockets, APIs, in-app updates, festival themes, bonus wheel, Stack Engine & RGS integration.', tags: ['Unity', 'Socket', 'RGS'], extra: '+4' },
   { vid: 'RubElttzOaU', title: 'Zombie Slot Game', badge: 'Bilions', desc: 'Multi-reel slot with dynamic paylines, scatter bonuses, free spins & horror-themed VFX.', tags: ['Unity', 'C#', 'VFX'] },
   { vid: 'I8Fej49mxJc', title: 'Black Jack', badge: 'Bilions', desc: 'Classic casino Black Jack with polished UI, smooth card animations & responsive interactions.', tags: ['Unity', 'Animation', 'UI'] },
   { vid: 'Sq1utN9apPg', title: 'Keno', badge: 'Bilions', desc: 'Number-based casino game with configurable bets, real-time draw animations & clean UI.', tags: ['Unity', 'UI', 'Animation'] },
@@ -112,7 +112,7 @@ export const projects = [
   { vid: 'EpKVVICdjdI', title: 'Fireball Chinatown', badge: 'Slot', desc: '5×4 · 50 paylines · 90% RTP · Fireball Feature · Free Spins + Wild Multipliers.', tags: ['Unity', 'C#', 'VFX'] },
   { vid: 'gm90SaB44Vo', title: 'Jungle Safari', badge: 'Slot', desc: '5×3 · 20 paylines · Free Spins · Expanding Wilds · Scatter Payouts.', tags: ['Unity', 'RNG', 'VFX'] },
   { vid: 'KaJ14D6Ap2c', title: 'Viva La Fiesta', badge: 'Slot', desc: '5×3 · 20 paylines · Free Spins · Wild Multipliers (2x-4x) · Scatter Triggers.', tags: ['Unity', 'C#', 'Animation'] },
-  { type: 'github', url: 'https://github.com/kishan831/Advanced-Tetris-Game', title: 'Advanced Tetris', badge: 'Personal', desc: 'Guideline-compliant Tetris · SRS rotation · 7-bag randomizer · 4 game modes · T-spin detection · MVC architecture · ScriptableObject-driven.', tags: ['Unity', 'C#', 'MVC'] },
+  { type: 'github', url: 'https://github.com/kishan831/Advanced-Tetris-Game', title: 'Advanced Tetris', badge: 'Personal', caseId: 'advanced-tetris', desc: 'Guideline-compliant Tetris · SRS rotation · 7-bag randomizer · 4 game modes · T-spin detection · MVC architecture · ScriptableObject-driven.', tags: ['Unity', 'C#', 'MVC'] },
   { type: 'github', url: 'https://github.com/kishan831/Match-Card', title: 'Match Card Game', badge: 'Personal', desc: 'Card matching memory game with clean architecture, smooth flip animations & engaging gameplay.', tags: ['Unity', 'C#', 'UI'] },
   { vid: 'kF5E60FwK8I', thumb: 'F2Ag78wDMuc', title: 'AiLO: Parkour Odyssey', badge: 'Indie', desc: 'Open-world parkour adventure with multiplayer via Photon Fusion & intense combat.', tags: ['Photon Fusion', 'Unity', 'Combat'] },
 ]
@@ -124,5 +124,47 @@ export const socials = {
   youtube: 'https://www.youtube.com/channel/UCrN0559CtMg-NeUi-9bqrTQ',
 }
 
-// TODO: replace with your real Formspree form ID (currently a placeholder).
-export const FORMSPREE_ACTION = 'https://formspree.io/f/YOUR_FORMSPREE_ID'
+// Deep case studies for flagship projects (opened via a modal)
+export const caseStudies = {
+  'slot-empire': {
+    title: 'Slot Empire — 67+ Game Casino Platform',
+    badge: 'Bilions · Unity',
+    vid: 'BsKxrJxeV6E',
+    overview:
+      'A production casino platform hosting 67+ slot games — 30+ of which I architected and built from scratch — unified under one shared infrastructure with real-time services and on-demand content delivery.',
+    role: 'Lead Unity Developer — game-systems architecture, real-time backend integration, and live-ops tooling.',
+    highlights: [
+      'Addressables-based asset delivery so players download only the games they open, keeping the core app tiny.',
+      'Real-time socket services (Socket.IO) for live balance, jackpots and session sync, backed by REST APIs.',
+      'In-app update system to ship new games and content without a full store re-download.',
+      'RTP-backed RNG slot mechanics: paylines, scatters, free spins, bonus wheel and festival-themed UI.',
+      'Integrating Stack Engine (server-driven game logic) and an RGS for web-playable deployment.',
+    ],
+    tech: ['Unity', 'C#', 'Socket.IO', 'REST APIs', 'Addressables', 'RNG / RTP', 'Stack Engine', 'RGS'],
+    outcome:
+      '67+ games live on one scalable platform with real-time, multiplayer-grade infrastructure and streamlined live content updates.',
+    links: [{ label: 'Watch demo', url: 'https://www.youtube.com/watch?v=BsKxrJxeV6E', type: 'video' }],
+  },
+  'advanced-tetris': {
+    title: 'Advanced Tetris — Guideline-Compliant Engine',
+    badge: 'Personal · Unity',
+    overview:
+      'A modern, guideline-compliant Tetris built to official "feel" standards — a showcase of faithful mechanics and clean, data-driven architecture.',
+    role: 'Solo developer — gameplay systems, architecture and configuration design.',
+    highlights: [
+      'SRS (Super Rotation System) with correct wall-kicks for authentic rotation behavior.',
+      '7-bag randomizer for fair, guideline-standard piece distribution.',
+      'T-spin detection and scoring, plus 4 distinct game modes.',
+      'MVC architecture with ScriptableObject-driven configuration for clean, data-driven tuning.',
+    ],
+    tech: ['Unity', 'C#', 'MVC', 'ScriptableObjects'],
+    outcome:
+      'A polished, guideline-accurate Tetris that doubles as a demonstration of maintainable, pattern-driven game architecture.',
+    links: [{ label: 'View on GitHub', url: 'https://github.com/kishan831/Advanced-Tetris-Game', type: 'github' }],
+  },
+}
+
+// Contact: form submits via mailto (no backend needed on GitHub Pages).
+// To enable silent in-page submission instead, create a free form at formspree.io
+// and set FORMSPREE_ACTION to its endpoint (e.g. https://formspree.io/f/abcdwxyz).
+export const FORMSPREE_ACTION = ''

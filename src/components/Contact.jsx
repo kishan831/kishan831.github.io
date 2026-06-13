@@ -17,12 +17,26 @@ export default function Contact() {
   async function handleSubmit(e) {
     e.preventDefault()
     const form = e.target
+    const data = new FormData(form)
+
+    // No backend configured → open the visitor's email app with a prefilled message
+    if (!FORMSPREE_ACTION) {
+      const name = data.get('name') || ''
+      const email = data.get('email') || ''
+      const message = data.get('message') || ''
+      const subject = encodeURIComponent(`Portfolio enquiry from ${name}`)
+      const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`)
+      window.location.href = `mailto:${socials.email}?subject=${subject}&body=${body}`
+      setStatus({ msg: 'Opening your email app to send…', ok: true })
+      return
+    }
+
     setSending(true)
     setStatus({ msg: '', ok: null })
     try {
-      const res = await fetch(form.action, {
+      const res = await fetch(FORMSPREE_ACTION, {
         method: 'POST',
-        body: new FormData(form),
+        body: data,
         headers: { Accept: 'application/json' },
       })
       if (!res.ok) throw new Error('bad response')
@@ -91,7 +105,12 @@ export default function Contact() {
                 <p className="mb-6 text-xs text-surface-500">
                   Fill out the form and I'll get back to you as soon as possible.
                 </p>
-                <form action={FORMSPREE_ACTION} method="POST" onSubmit={handleSubmit} className="space-y-5">
+                <form
+                  action={FORMSPREE_ACTION || undefined}
+                  method="POST"
+                  onSubmit={handleSubmit}
+                  className="space-y-5"
+                >
                   <div className="grid gap-5 sm:grid-cols-2">
                     <Field id="name" label="Name *" type="text" placeholder="Your name" />
                     <Field id="email" label="Email *" type="email" placeholder="you@email.com" />
