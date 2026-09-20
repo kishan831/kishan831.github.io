@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { X, ExternalLink, Github, Play, Check } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
+import { X, ExternalLink, Play, Check } from 'lucide-react'
+import { Github } from './BrandIcons'
 
 export default function CaseStudyModal({ study, onClose }) {
   const closeRef = useRef(null)
@@ -32,7 +33,7 @@ export default function CaseStudyModal({ study, onClose }) {
           transition={{ duration: 0.2 }}
         >
           <div
-            className="absolute inset-0 bg-surface-900/80 backdrop-blur-sm"
+            className="absolute inset-0 bg-surface-900/80 backdrop-blur-xs"
             onClick={onClose}
             aria-hidden
           />
@@ -87,7 +88,7 @@ export default function CaseStudyModal({ study, onClose }) {
               <ul className="space-y-2">
                 {study.highlights.map((h) => (
                   <li key={h} className="flex gap-2.5 text-sm leading-relaxed text-surface-300">
-                    <Check size={16} className="mt-0.5 flex-shrink-0 text-mint-400" aria-hidden />
+                    <Check size={16} className="mt-0.5 shrink-0 text-mint-400" aria-hidden />
                     <span>{h}</span>
                   </li>
                 ))}

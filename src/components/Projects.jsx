@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Github, Play, ArrowRight } from 'lucide-react'
+import { Play, ArrowRight } from 'lucide-react'
+import { Github } from './BrandIcons'
 import { Divider, Eyebrow, Reveal } from './primitives'
 import { projects, caseStudies } from '../data/portfolio'
 import CaseStudyModal from './CaseStudyModal'

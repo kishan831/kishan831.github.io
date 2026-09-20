@@ -30,7 +30,7 @@ export default function Experience() {
             <Reveal key={item.role + item.date} delay={0.04}>
               <div className="relative flex gap-5 pb-12 last:pb-0">
                 <span
-                  className={`mt-1 h-3.5 w-3.5 flex-shrink-0 rounded-full border-2 border-mint-500 ${
+                  className={`mt-1 h-3.5 w-3.5 shrink-0 rounded-full border-2 border-mint-500 ${
                     item.current ? 'bg-mint-500 shadow-[0_0_16px_rgba(0,214,138,0.4)]' : 'bg-surface-900'
                   }`}
                   style={{ marginLeft: '-1.6rem', zIndex: 2 }}

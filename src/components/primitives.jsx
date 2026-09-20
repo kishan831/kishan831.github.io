@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { animate, motion, useInView } from 'framer-motion'
+import { animate, motion, useInView } from 'motion/react'
 
 /** Thin gradient divider that opens each section */
 export function Divider() {

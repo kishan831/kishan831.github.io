@@ -1,4 +1,5 @@
-import { Github, Linkedin, Youtube, Gamepad2, PenTool } from 'lucide-react'
+import { Gamepad2, PenTool } from 'lucide-react'
+import { Github, Linkedin, Youtube } from './BrandIcons'
 
 const SOCIALS = [
   { href: 'https://github.com/kishan831', label: 'GitHub', Icon: Github },

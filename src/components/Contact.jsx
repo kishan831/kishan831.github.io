@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Mail, Github, Linkedin, Youtube, Send } from 'lucide-react'
+import { Mail, Send } from 'lucide-react'
+import { Github, Linkedin, Youtube } from './BrandIcons'
 import { Divider, Eyebrow, Reveal } from './primitives'
 import { socials, FORMSPREE_ACTION } from '../data/portfolio'
 
@@ -79,7 +80,7 @@ export default function Contact() {
                     rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     className="card group flex items-center gap-3 rounded-xl p-4"
                   >
-                    <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-mint-500/10">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-mint-500/10">
                       <Icon size={16} className="text-mint-400" aria-hidden />
                     </span>
                     <span className="min-w-0">
@@ -123,7 +124,7 @@ export default function Contact() {
                       required
                       rows={5}
                       placeholder="Tell me about your project..."
-                      className="w-full resize-none rounded-xl border border-surface-500/10 bg-surface-800/60 px-4 py-3 text-sm text-surface-100 placeholder:text-surface-600 transition focus:border-mint-500/30 focus:outline-none focus:ring-1 focus:ring-mint-500/15"
+                      className="w-full resize-none rounded-xl border border-surface-500/10 bg-surface-800/60 px-4 py-3 text-sm text-surface-100 placeholder:text-surface-600 transition focus:border-mint-500/30 focus:outline-hidden focus:ring-1 focus:ring-mint-500/15"
                     />
                   </div>
                   <button
@@ -175,7 +176,7 @@ function Field({ id, label, type, placeholder }) {
         type={type}
         required
         placeholder={placeholder}
-        className="w-full rounded-xl border border-surface-500/10 bg-surface-800/60 px-4 py-3 text-sm text-surface-100 placeholder:text-surface-600 transition focus:border-mint-500/30 focus:outline-none focus:ring-1 focus:ring-mint-500/15"
+        className="w-full rounded-xl border border-surface-500/10 bg-surface-800/60 px-4 py-3 text-sm text-surface-100 placeholder:text-surface-600 transition focus:border-mint-500/30 focus:outline-hidden focus:ring-1 focus:ring-mint-500/15"
       />
     </div>
   )

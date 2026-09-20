@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion } from 'motion/react'
 import { ArrowRight, FileText } from 'lucide-react'
 import HeroFX from './HeroFX'
 
