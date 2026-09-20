@@ -59,7 +59,7 @@ export default function App() {
 
   return (
     <>
-      <a href="#panel" className="skip-link">
+      <a href={`#panel-${screen.id}`} className="skip-link">
         Skip to content
       </a>
 
