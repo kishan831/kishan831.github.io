@@ -25,7 +25,7 @@ export default function Hud({ objective, stars, shipped, ratio }) {
           <RadioStrip />
         </div>
 
-        <div className="flex flex-col items-end gap-1">
+        <div className="ml-auto flex flex-col items-end gap-1">
           <Clock />
           <Stars stars={stars} />
           <span className="hidden sm:block">
