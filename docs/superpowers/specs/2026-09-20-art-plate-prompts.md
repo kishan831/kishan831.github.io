@@ -20,9 +20,9 @@ Model used for the cost preflight: `gpt_image_2_5`, 16:9, quality `high`, resolu
 
 ## Block 2 — Character lock (verbatim, every prompt)
 
-> CHARACTER LOCK: a single male subject, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a dark navy textured bandhgala jacket with a mandarin collar over a black shirt and black trousers. Confident, neutral expression. Same face, same hair, same outfit in every image.
+> CHARACTER LOCK: a single male subject, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a plain black button-down shirt with the sleeves slightly rolled, and black trousers. Confident, neutral expression. Same face, same hair, same outfit in every image.
 
-The bandhgala is deliberate. It is what he actually wears in the reference photograph, it is distinctive rather than generic, and it holds up under neon lighting. Locking wardrobe in the prompt — rather than leaving it to the model — removes the single largest source of set drift.
+The plain black shirt is deliberate, and it is what Kishan's own first generated plate already uses. It is simple enough that the model reproduces it reliably, it reads cleanly against neon rim light, and it echoes the dark shirt in the reference photograph. Locking wardrobe in the prompt — rather than leaving it to the model — removes the single largest source of set drift.
 
 ## Block 3 — Dark anchor (every prompt, scene-adapted)
 
@@ -152,7 +152,7 @@ Every prompt already ends with a no-text instruction. Leave it in — invented s
 ```
 Stylised cinematic key art in the illustrated-realism style of modern open-world crime game cover art — hand-painted digital illustration built over photographic structure, clean confident edges, rich saturated colour, strong rim lighting, fine film grain, slight chromatic aberration at the frame edges, shallow depth of field, 35mm anamorphic framing. 16:9 landscape.
 
-Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a dark navy textured bandhgala jacket with a mandarin collar over a black shirt and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
+Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a plain black button-down shirt with the sleeves slightly rolled, and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
 
 Scene: he leans against the front wing of a dark low-slung sports car on a palm-lined beachfront boulevard at golden-hour sunset. Neon signage glows along the strip behind him. Hot pink and magenta sky grading to deep orange at the horizon. Pink neon rim light along his shoulders and jaw. Wet asphalt reflecting the neon.
 
@@ -168,7 +168,7 @@ No legible text, no readable signage, no lettering anywhere in the image.
 ```
 Stylised cinematic key art in the illustrated-realism style of modern open-world crime game cover art — hand-painted digital illustration built over photographic structure, clean confident edges, rich saturated colour, strong rim lighting, fine film grain, slight chromatic aberration at the frame edges, shallow depth of field, 35mm anamorphic framing. 16:9 landscape.
 
-Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a dark navy textured bandhgala jacket with a mandarin collar over a black shirt and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
+Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a plain black button-down shirt with the sleeves slightly rolled, and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
 
 Scene: he sits on a low concrete seawall along an empty promenade in early morning light. Ocean and pale haze behind him. Warm orange sun low and to the right, casting long shadows. A few gulls. Pastel art-deco facades softly out of focus in the distance.
 
@@ -184,7 +184,7 @@ No legible text, no readable signage, no lettering anywhere in the image.
 ```
 Stylised cinematic key art in the illustrated-realism style of modern open-world crime game cover art — hand-painted digital illustration built over photographic structure, clean confident edges, rich saturated colour, strong rim lighting, fine film grain, slight chromatic aberration at the frame edges, shallow depth of field, 35mm anamorphic framing. 16:9 landscape.
 
-Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a dark navy textured bandhgala jacket with a mandarin collar over a black shirt and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
+Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a plain black button-down shirt with the sleeves slightly rolled, and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
 
 Scene: he sits at a workstation beside a floor-to-ceiling rain-streaked window. Three monitors glow cool violet across his face. An overcast grey-violet city is visible beyond the glass. Keyboard and scattered notes on the desk. The room itself is dim.
 
@@ -200,7 +200,7 @@ No legible text, no readable signage, no lettering or UI text on the monitors.
 ```
 Stylised cinematic key art in the illustrated-realism style of modern open-world crime game cover art — hand-painted digital illustration built over photographic structure, clean confident edges, rich saturated colour, strong rim lighting, fine film grain, slight chromatic aberration at the frame edges, shallow depth of field, 35mm anamorphic framing. 16:9 landscape.
 
-Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a dark navy textured bandhgala jacket with a mandarin collar over a black shirt and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
+Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a plain black button-down shirt with the sleeves slightly rolled, and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
 
 Scene: he stands on an art-deco beachfront terrace under a hard bright midday sun. Cyan sky and turquoise sea behind him. A laptop and sunglasses on a white table beside him. Tall palms. Pastel hotel facades receding down the strip.
 
@@ -216,7 +216,7 @@ No legible text, no readable signage, no lettering anywhere in the image.
 ```
 Stylised cinematic key art in the illustrated-realism style of modern open-world crime game cover art — hand-painted digital illustration built over photographic structure, clean confident edges, rich saturated colour, strong rim lighting, fine film grain, slight chromatic aberration at the frame edges, shallow depth of field, 35mm anamorphic framing. 16:9 landscape.
 
-Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a dark navy textured bandhgala jacket with a mandarin collar over a black shirt and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
+Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a plain black button-down shirt with the sleeves slightly rolled, and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
 
 Scene: he stands at a rooftop parapet at blue hour, three-quarters turned away from camera, looking out over a freeway interchange streaming with vehicle light trails toward a distant downtown skyline. Deep indigo sky with the last band of warmth at the horizon.
 
@@ -232,7 +232,7 @@ No legible text, no readable signage, no lettering anywhere in the image.
 ```
 Stylised cinematic key art in the illustrated-realism style of modern open-world crime game cover art — hand-painted digital illustration built over photographic structure, clean confident edges, rich saturated colour, strong rim lighting, fine film grain, slight chromatic aberration at the frame edges, shallow depth of field, 35mm anamorphic framing. 16:9 landscape.
 
-Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a dark navy textured bandhgala jacket with a mandarin collar over a black shirt and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
+Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a plain black button-down shirt with the sleeves slightly rolled, and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
 
 Scene: he stands beneath a glowing theatre marquee on a rain-slick downtown street at night. Crimson and magenta neon signage stacked above and behind him. Puddles mirroring the signs. Wet pavement. A dark car parked at the kerb.
 
@@ -248,7 +248,7 @@ No legible text, no readable signage, no lettering on the marquee or any sign.
 ```
 Stylised cinematic key art in the illustrated-realism style of modern open-world crime game cover art — hand-painted digital illustration built over photographic structure, clean confident edges, rich saturated colour, strong rim lighting, fine film grain, slight chromatic aberration at the frame edges, shallow depth of field, 35mm anamorphic framing. 16:9 landscape.
 
-Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a dark navy textured bandhgala jacket with a mandarin collar over a black shirt and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
+Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a plain black button-down shirt with the sleeves slightly rolled, and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
 
 Scene: he stands in the open bay of a workshop at dusk. A car is raised on a lift behind him. Tools racked along the wall. Warm sodium and amber worklight spills out across the forecourt. Deep blue dusk sky visible through the open bay door.
 
@@ -264,7 +264,7 @@ No legible text, no readable signage, no lettering anywhere in the image.
 ```
 Stylised cinematic key art in the illustrated-realism style of modern open-world crime game cover art — hand-painted digital illustration built over photographic structure, clean confident edges, rich saturated colour, strong rim lighting, fine film grain, slight chromatic aberration at the frame edges, shallow depth of field, 35mm anamorphic framing. 16:9 landscape.
 
-Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a dark navy textured bandhgala jacket with a mandarin collar over a black shirt and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
+Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a plain black button-down shirt with the sleeves slightly rolled, and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
 
 Scene: he sits on the bonnet of a dark car in an empty floodlit lot late at night, phone in one hand. Cool ice-blue moonlight and a single distant sodium lamp. Low mist across the tarmac. City glow faint on the horizon.
 
@@ -280,7 +280,7 @@ No legible text, no readable signage, no lettering anywhere in the image.
 ```
 Stylised cinematic key art in the illustrated-realism style of modern open-world crime game cover art — hand-painted digital illustration built over photographic structure, clean confident edges, rich saturated colour, strong rim lighting, fine film grain, slight chromatic aberration at the frame edges, shallow depth of field, 35mm anamorphic framing. 16:9 landscape.
 
-Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a dark navy textured bandhgala jacket with a mandarin collar over a black shirt and black trousers. Seen from behind, walking away. Keep this exact hair, build and outfit.
+Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a plain black button-down shirt with the sleeves slightly rolled, and black trousers. Seen from behind, walking away. Keep this exact hair, build and outfit.
 
 Scene: he walks away from camera down a long empty causeway at dawn. A dark car is parked behind him at the kerb. Coral and peach sky over calm water on both sides. Low sun directly ahead, flaring. Palms lining the far end of the causeway.
 
