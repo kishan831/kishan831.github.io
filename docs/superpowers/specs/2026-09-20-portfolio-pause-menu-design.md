@@ -37,17 +37,21 @@ The Projects screen splits into these two mission strands. As of this date the w
 
 Nine screens, driven by one config file. No component is edited to change content.
 
-| # | Menu label | Content | Location watermark |
+| # | Menu label | Content | Plate |
 |---|---|---|---|
-| 1 | START GAME | Name lockup, menu, portrait plate, availability | THE STRIP |
-| 2 | ABOUT ME | Stat rows, short bio, current objective | NEON DISTRICT |
-| 3 | SKILLS | Loadout: capability bars measured in real units | THE WORKSHOP |
-| 4 | PROJECTS | Mission list, split Casino Ops / Web Ops | SLOT EMPIRE |
-| 5 | EXPERIENCE | Career as mission history, current role pinned | BILIONS HQ |
-| 6 | ACHIEVEMENTS | Trophy list with real metrics | TROPHY ROOM |
-| 7 | GARAGE | Tech stack and tools as a collection screen | THE GARAGE |
-| 8 | CONTACT | Phone-screen layout, working form | SAFEHOUSE |
-| 9 | EXIT GAME | "MISSION COMPLETE", résumé download, back to start | SUNSET CAUSEWAY |
+| 1 | START GAME | Name lockup, menu, portrait plate, availability | Sunset supercar on the waterfront, facing camera |
+| 2 | ABOUT ME | Stat rows, short bio, current objective | Seated on the seawall at sunset |
+| 3 | SKILLS | Loadout: capability bars measured in real units | Unity studio at night, three monitors |
+| 4 | PROJECTS | Mission list, split Casino Ops / Web Ops | Control room, wall of monitors |
+| 5 | EXPERIENCE | Career as mission history, current role pinned | Rooftop over the city at dusk |
+| 6 | ACHIEVEMENTS | Trophy list with real metrics | Trophy shelf |
+| 7 | ACADEMY | What he teaches and shares; tech stack collection | Late-night study desk |
+| 8 | CONTACT | Phone-screen layout, working form | On the car with phone, neon waterfront |
+| 9 | EXIT GAME | "MISSION COMPLETE", résumé download, back to start | Walking away down the causeway |
+
+Screen 7 was specified as GARAGE. There is no garage plate in the generated set, and the study-desk plate is a natural ACADEMY screen — which is also what the reference portfolio used. Renamed accordingly.
+
+**No location watermark.** The spec originally carried a per-screen place name in the bottom right, as the reference does. Kishan does not want it. The HUD keeps the objective line and the progress bar in that region instead.
 
 **Skills screen — deliberate divergence from the reference.** The reference uses self-assessed percentage bars (HTML/CSS 95%, Python 80%). Percentages invented by the candidate are widely read as a junior signal. GTA's own stat bars are canonical, so the bars stay, but each is measured in a real unit: `UNITY  5 YRS ████████`, `SLOT MECHANICS  67 TITLES ████████`, `TEAM LEADERSHIP  15 DEVS ██████`. Same visual language, verifiable numbers.
 
@@ -75,10 +79,11 @@ Persistent across all nine screens, giving separate plates one continuous identi
 │    CONTACT                                                     │
 │    EXIT GAME                                                   │
 │                                                                │
-│  ┌────────┐  CURRENT OBJECTIVE                    THE STRIP    │
-│  │minimap │  BUILD NEXT-LEVEL REAL-TIME SYSTEMS    Vice City   │
+│  ┌────────┐  CURRENT OBJECTIVE                                 │
+│  │minimap │  BUILD NEXT-LEVEL REAL-TIME SYSTEMS                 │
 │  └────────┘                                                    │
 │  [Ent] SELECT  [↑↓] NAVIGATE  [Esc] RESUME                     │
+│                        A DEVELOPER'S JOURNEY CONTINUES ▓▓▓▒░░  │
 └────────────────────────────────────────────────────────────────┘
 ```
 
@@ -91,6 +96,8 @@ Persistent across all nine screens, giving separate plates one continuous identi
 | Minimap | Small animated progress plot; the marker advances with completion. |
 | Current objective | One line per screen, telling the visitor what to look at. |
 | Key hint bar | Keyboard hints on pointer devices, swipe hints on touch. |
+| Journey bar | "A DEVELOPER'S JOURNEY CONTINUES" with a thin progress rule, bottom right, filling with completion. Taken from Kishan's own first mockup. |
+| Motto | "DISCIPLINE CREATES FREEDOM", small, top right, static. Also his. |
 
 Menu entries gain a checkmark once visited. Progress persists to `localStorage`, and a "MISSION PASSED" toast fires on each first visit.
 
@@ -157,6 +164,28 @@ Anton skewed roughly -8° closely matches the reference's heavy condensed italic
 | `toastDrop` | mission passed | 280ms drop and settle, auto-dismiss at 2.4s |
 
 All motion collapses to instant state changes under `prefers-reduced-motion: reduce`. Plate cross-dissolves become hard cuts.
+
+### 5.4 Plate animation layer
+
+The plates are stills, but they must not read as wallpaper. Three techniques, all transform-and-opacity only, all observer-gated, all disabled under reduced-motion and save-data. No WebGL, no continuous JS loops — the constraint from the three.js removal still governs.
+
+**Ambient (every plate).** A slow Ken Burns drift of about 3% over 40 seconds, an animated grain overlay, a periodic light sweep, and a masked glow layer whose opacity pulses to suggest neon flicker. Costs no extra assets and nothing measurable in frame time.
+
+**Sprites (per plate, hand-placed).** Small transparent loops positioned over specific points in the art:
+
+| Plate | Sprites |
+|---|---|
+| 1 Start | helicopter drifting across the sky, sun shimmer on water, car tail-light pulse |
+| 2 About | slow wave motion, distant window lights twinkling |
+| 3 Skills | steam rising from the coffee mug, monitor glow flicker, neon sign flicker |
+| 4 Projects | monitor bank flicker at staggered intervals, neon sign hum |
+| 5 Experience | city window lights twinkling, a slow aircraft light crossing |
+| 6 Achievements | shelf lighting warm pulse, faint dust in the light beams |
+| 7 Academy | steam from the mug, desk lamp flicker, laptop screen glow |
+| 8 Contact | water shimmer, neon sign flicker, phone screen glow on his face |
+| 9 Exit | helicopter, sun shimmer on wet road, car tail-light pulse |
+
+**Parallax (plate 1 only, initially).** The start plate is cut into three layers — sky and sea, midground city and palms, foreground subject and car — offset against pointer position on desktop and device tilt on mobile. This is the expensive one per plate, so it is proven on the start screen before being considered for any other. Layer cutting is done locally from the source PNG; no regeneration needed.
 
 ---
 
