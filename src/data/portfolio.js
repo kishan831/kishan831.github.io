@@ -168,3 +168,20 @@ export const caseStudies = {
 // To enable silent in-page submission instead, create a free form at formspree.io
 // and set FORMSPREE_ACTION to its endpoint (e.g. https://formspree.io/f/abcdwxyz).
 export const FORMSPREE_ACTION = ''
+
+/**
+ * Capability bars for the Skills screen.
+ *
+ * Every bar is measured in a real, checkable unit. Self-assigned percentages
+ * are deliberately absent — they read as a junior signal and none of these
+ * numbers needs one.
+ */
+export const capabilities = [
+  { label: 'Unity Engine', unit: '5 YRS', fill: 1 },
+  { label: 'Casino & Slot Mechanics', unit: '67 TITLES', fill: 1 },
+  { label: 'Built From Scratch', unit: '30+ GAMES', fill: 0.85 },
+  { label: 'Team Leadership', unit: '15 DEVS', fill: 0.8 },
+  { label: 'Multiplayer & Realtime', unit: 'PHOTON · SOCKET.IO', fill: 0.75 },
+  { label: 'Web & Product', unit: 'REACT · NODE · TS', fill: 0.6 },
+  { label: 'Cross-Platform Delivery', unit: 'WEBGL · ANDROID · IOS', fill: 0.8 },
+]
