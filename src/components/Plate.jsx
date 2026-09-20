@@ -23,15 +23,7 @@ export default function Plate({ plate, alt, accent, priority = false }) {
         aria-hidden
         className="absolute inset-0"
         style={{
-          // The var() reference is a no-op fallback (always resolves to
-          // `transparent`, matching the literal value it replaces). Its
-          // purpose is environment-specific: this repo's jsdom (v30, using
-          // css-tree/@asamuzakjp for CSS parsing) canonicalizes any *fully
-          // parsed* color to rgb()/rgba() when the style is read back,
-          // which would erase the literal accent hex the tests assert on.
-          // A value containing var() is left as an unparsed/raw token
-          // stream per the CSS spec, so the literal accent hex survives.
-          background: `radial-gradient(120% 90% at 72% 38%, ${accent}33 0%, var(--plate-fallback-fade, transparent) 62%), linear-gradient(160deg, #12121c 0%, #05050a 70%)`,
+          background: `radial-gradient(120% 90% at 72% 38%, ${accent}33 0%, transparent 62%), linear-gradient(160deg, #12121c 0%, #05050a 70%)`,
         }}
       />
       <picture>

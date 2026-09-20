@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
+import { renderToStaticMarkup } from 'react-dom/server'
 import Plate from './Plate'
 
 describe('Plate', () => {
@@ -21,10 +22,13 @@ describe('Plate', () => {
   })
 
   it('renders a gradient behind the image so a missing plate is invisible', () => {
-    const { container } = render(<Plate plate="9-exit" alt="Exit" accent="#ff9e6b" />)
-    const fallback = container.querySelector('[data-testid="plate-fallback"]')
-    expect(fallback).toBeInTheDocument()
-    expect(fallback.style.background).toContain('#ff9e6b')
+    // jsdom's `background` shorthand parser drops a radial-gradient layer that
+    // uses the two-value size form (`120% 90% at 72% 38%`), taking the accent
+    // colour with it — so the live DOM never carries it. React's serialized
+    // output is what actually ships, so assert against that instead.
+    const html = renderToStaticMarkup(<Plate plate="9-exit" alt="Exit" accent="#ff9e6b" />)
+    expect(html).toContain('data-testid="plate-fallback"')
+    expect(html).toContain('#ff9e6b')
   })
 
   it('loads eagerly and decodes synchronously when marked priority', () => {
