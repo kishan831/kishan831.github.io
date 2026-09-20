@@ -11,4 +11,10 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: false,
   },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: ['./vitest.setup.js'],
+    include: ['src/**/*.test.{js,jsx}'],
+  },
 })
