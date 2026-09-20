@@ -127,3 +127,166 @@ Symptoms that show up mid-set, and what to change. Change one thing at a time �
 ## Review method
 
 Generate the set as a batch and review all nine **side by side at thumbnail size**. Set consistency is a property of the set, not of any single image, and a plate that looks great alone will often be the one breaking the group. Judge face, wardrobe, colour temperature progression and left-third clearance in that order.
+
+---
+
+# Paste-ready prompts
+
+Each prompt below is complete and self-contained — all four blocks already assembled. Copy one, paste it, generate, move to the next.
+
+## How to run these in ChatGPT
+
+1. **One conversation for all nine.** Do not start a fresh chat per image. Consistency comes largely from the model holding the earlier plates in context.
+2. **Upload the reference photo first**, before prompt 1, with the message: *"This is the person. Keep this exact face, hair and build in every image I ask for in this conversation."*
+3. **Generate in order, 1 through 9.** The day cycle runs sunset → morning → noon → day → blue hour → night → dusk → late night → dawn, and generating out of order makes drift harder to spot.
+4. **Ask for 16:9 landscape.** If the output comes back square or portrait, say "regenerate as 16:9 landscape" rather than re-pasting the whole prompt.
+5. **After plate 3, check back against plate 1.** If the face has moved, re-upload the reference before continuing rather than pushing on.
+6. **Save as** `plate-1-start.png` … `plate-9-exit.png` and drop them in `public/plates/`.
+
+Every prompt already ends with a no-text instruction. Leave it in — invented signage renders as gibberish and dates the image instantly.
+
+---
+
+### Prompt 1 — START GAME · sunset · THE STRIP
+
+```
+Stylised cinematic key art in the illustrated-realism style of modern open-world crime game cover art — hand-painted digital illustration built over photographic structure, clean confident edges, rich saturated colour, strong rim lighting, fine film grain, slight chromatic aberration at the frame edges, shallow depth of field, 35mm anamorphic framing. 16:9 landscape.
+
+Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a dark navy textured bandhgala jacket with a mandarin collar over a black shirt and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
+
+Scene: he leans against the front wing of a dark low-slung sports car on a palm-lined beachfront boulevard at golden-hour sunset. Neon signage glows along the strip behind him. Hot pink and magenta sky grading to deep orange at the horizon. Pink neon rim light along his shoulders and jaw. Wet asphalt reflecting the neon.
+
+Silhouetted palms and the dark car body form a deep shadow mass on the right of frame, holding the value range so the illustration never flattens.
+
+Keep the left third of the frame and the bottom-left corner visually quiet and uncluttered — open sky and empty wet road only. Place the subject in the right third of frame.
+
+No legible text, no readable signage, no lettering anywhere in the image.
+```
+
+### Prompt 2 — ABOUT ME · morning · NEON DISTRICT
+
+```
+Stylised cinematic key art in the illustrated-realism style of modern open-world crime game cover art — hand-painted digital illustration built over photographic structure, clean confident edges, rich saturated colour, strong rim lighting, fine film grain, slight chromatic aberration at the frame edges, shallow depth of field, 35mm anamorphic framing. 16:9 landscape.
+
+Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a dark navy textured bandhgala jacket with a mandarin collar over a black shirt and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
+
+Scene: he sits on a low concrete seawall along an empty promenade in early morning light. Ocean and pale haze behind him. Warm orange sun low and to the right, casting long shadows. A few gulls. Pastel art-deco facades softly out of focus in the distance.
+
+A heavily shadowed palm trunk and railing cross the right foreground as a deep shadow mass, holding the value range so the illustration never flattens.
+
+Keep the left third of the frame and the bottom-left corner visually quiet and uncluttered — flat open water and sky only. Place the subject in the right third of frame.
+
+No legible text, no readable signage, no lettering anywhere in the image.
+```
+
+### Prompt 3 — SKILLS · overcast noon · THE WORKSHOP
+
+```
+Stylised cinematic key art in the illustrated-realism style of modern open-world crime game cover art — hand-painted digital illustration built over photographic structure, clean confident edges, rich saturated colour, strong rim lighting, fine film grain, slight chromatic aberration at the frame edges, shallow depth of field, 35mm anamorphic framing. 16:9 landscape.
+
+Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a dark navy textured bandhgala jacket with a mandarin collar over a black shirt and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
+
+Scene: he sits at a workstation beside a floor-to-ceiling rain-streaked window. Three monitors glow cool violet across his face. An overcast grey-violet city is visible beyond the glass. Keyboard and scattered notes on the desk. The room itself is dim.
+
+The unlit interior wall and ceiling fill the right half of the frame in deep shadow, holding the value range so the illustration never flattens.
+
+Keep the left third of the frame and the bottom-left corner visually quiet and uncluttered — rain-streaked window glass, empty but for running water. Place the subject in the right third of frame.
+
+No legible text, no readable signage, no lettering or UI text on the monitors.
+```
+
+### Prompt 4 — PROJECTS · bright day · SLOT EMPIRE
+
+```
+Stylised cinematic key art in the illustrated-realism style of modern open-world crime game cover art — hand-painted digital illustration built over photographic structure, clean confident edges, rich saturated colour, strong rim lighting, fine film grain, slight chromatic aberration at the frame edges, shallow depth of field, 35mm anamorphic framing. 16:9 landscape.
+
+Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a dark navy textured bandhgala jacket with a mandarin collar over a black shirt and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
+
+Scene: he stands on an art-deco beachfront terrace under a hard bright midday sun. Cyan sky and turquoise sea behind him. A laptop and sunglasses on a white table beside him. Tall palms. Pastel hotel facades receding down the strip.
+
+A deep-shade awning and its cast shadow occupy the top-right and right edge of the frame as a dark mass, holding the value range so the illustration never flattens in the bright light.
+
+Keep the left third of the frame and the bottom-left corner visually quiet and uncluttered — flat sea and sky only. Place the subject in the right third of frame.
+
+No legible text, no readable signage, no lettering anywhere in the image.
+```
+
+### Prompt 5 — EXPERIENCE · blue hour · BILIONS HQ
+
+```
+Stylised cinematic key art in the illustrated-realism style of modern open-world crime game cover art — hand-painted digital illustration built over photographic structure, clean confident edges, rich saturated colour, strong rim lighting, fine film grain, slight chromatic aberration at the frame edges, shallow depth of field, 35mm anamorphic framing. 16:9 landscape.
+
+Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a dark navy textured bandhgala jacket with a mandarin collar over a black shirt and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
+
+Scene: he stands at a rooftop parapet at blue hour, three-quarters turned away from camera, looking out over a freeway interchange streaming with vehicle light trails toward a distant downtown skyline. Deep indigo sky with the last band of warmth at the horizon.
+
+The parapet and a rooftop plant are silhouetted almost black across the bottom and right of frame as a deep shadow mass, holding the value range so the illustration never flattens.
+
+Keep the left third of the frame and the bottom-left corner visually quiet and uncluttered — open indigo sky only. Place the subject in the right third of frame.
+
+No legible text, no readable signage, no lettering anywhere in the image.
+```
+
+### Prompt 6 — ACHIEVEMENTS · night, neon · TROPHY ROOM
+
+```
+Stylised cinematic key art in the illustrated-realism style of modern open-world crime game cover art — hand-painted digital illustration built over photographic structure, clean confident edges, rich saturated colour, strong rim lighting, fine film grain, slight chromatic aberration at the frame edges, shallow depth of field, 35mm anamorphic framing. 16:9 landscape.
+
+Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a dark navy textured bandhgala jacket with a mandarin collar over a black shirt and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
+
+Scene: he stands beneath a glowing theatre marquee on a rain-slick downtown street at night. Crimson and magenta neon signage stacked above and behind him. Puddles mirroring the signs. Wet pavement. A dark car parked at the kerb.
+
+Unlit building facades in near-black fill the left background and right edge as a deep shadow mass, holding the value range so the illustration never flattens.
+
+Keep the left third of the frame and the bottom-left corner visually quiet and uncluttered — empty wet pavement with sign glow only. Place the subject in the right third of frame.
+
+No legible text, no readable signage, no lettering on the marquee or any sign.
+```
+
+### Prompt 7 — GARAGE · dusk · THE GARAGE
+
+```
+Stylised cinematic key art in the illustrated-realism style of modern open-world crime game cover art — hand-painted digital illustration built over photographic structure, clean confident edges, rich saturated colour, strong rim lighting, fine film grain, slight chromatic aberration at the frame edges, shallow depth of field, 35mm anamorphic framing. 16:9 landscape.
+
+Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a dark navy textured bandhgala jacket with a mandarin collar over a black shirt and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
+
+Scene: he stands in the open bay of a workshop at dusk. A car is raised on a lift behind him. Tools racked along the wall. Warm sodium and amber worklight spills out across the forecourt. Deep blue dusk sky visible through the open bay door.
+
+The unlit depth of the workshop interior, near-black, fills the right of frame as a deep shadow mass, holding the value range so the illustration never flattens.
+
+Keep the left third of the frame and the bottom-left corner visually quiet and uncluttered — plain forecourt floor and dusk sky through the bay opening. Place the subject in the right third of frame.
+
+No legible text, no readable signage, no lettering anywhere in the image.
+```
+
+### Prompt 8 — CONTACT · late night · SAFEHOUSE
+
+```
+Stylised cinematic key art in the illustrated-realism style of modern open-world crime game cover art — hand-painted digital illustration built over photographic structure, clean confident edges, rich saturated colour, strong rim lighting, fine film grain, slight chromatic aberration at the frame edges, shallow depth of field, 35mm anamorphic framing. 16:9 landscape.
+
+Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a dark navy textured bandhgala jacket with a mandarin collar over a black shirt and black trousers. Confident, neutral expression. Keep this exact face, hair and outfit.
+
+Scene: he sits on the bonnet of a dark car in an empty floodlit lot late at night, phone in one hand. Cool ice-blue moonlight and a single distant sodium lamp. Low mist across the tarmac. City glow faint on the horizon.
+
+The black mass of the car and the unlit lot edge run across the right and bottom of frame as a deep shadow, holding the value range so the illustration never flattens.
+
+Keep the left third of the frame and the bottom-left corner visually quiet and uncluttered — empty misted tarmac and night sky only. Place the subject in the right third of frame.
+
+No legible text, no readable signage, no lettering anywhere in the image.
+```
+
+### Prompt 9 — EXIT GAME · dawn · SUNSET CAUSEWAY
+
+```
+Stylised cinematic key art in the illustrated-realism style of modern open-world crime game cover art — hand-painted digital illustration built over photographic structure, clean confident edges, rich saturated colour, strong rim lighting, fine film grain, slight chromatic aberration at the frame edges, shallow depth of field, 35mm anamorphic framing. 16:9 landscape.
+
+Subject: a single male, Indian, late twenties, short black hair swept back, light beard and moustache, medium athletic build, wearing a dark navy textured bandhgala jacket with a mandarin collar over a black shirt and black trousers. Seen from behind, walking away. Keep this exact hair, build and outfit.
+
+Scene: he walks away from camera down a long empty causeway at dawn. A dark car is parked behind him at the kerb. Coral and peach sky over calm water on both sides. Low sun directly ahead, flaring. Palms lining the far end of the causeway.
+
+The causeway railing and the parked car are silhouetted dark across the right foreground as a deep shadow mass, holding the value range so the illustration never flattens.
+
+Keep the left third of the frame and the bottom-left corner visually quiet and uncluttered — calm water and pale dawn sky only. Place the subject in the right third of frame.
+
+No legible text, no readable signage, no lettering anywhere in the image.
+```

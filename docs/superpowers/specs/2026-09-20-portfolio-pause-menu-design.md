@@ -186,7 +186,7 @@ Generation runs through the Higgsfield image tooling available in the build sess
 - **Navigation:** hash routing (`#/skills`), so every screen is linkable, shareable and indexable, and the browser back button works.
 - **Config:** one `src/data/screens.js` holds all nine screens — label, accent, watermark, objective, plate, content. Content changes never touch a component.
 - **Loading splash:** progress bar over the first plate's decode, then the start screen. Dismisses immediately if assets are cached.
-- **Optional video:** any screen may declare a looping clip instead of a still; auto-pauses when the document is hidden or the screen is not active.
+- **Video:** gameplay stays on YouTube, embedded on demand from the Projects screen exactly as the current build does — a click-to-play poster, never an autoplaying embed. No self-hosted video, no looping clips behind screens. Kishan's decision, and it removes the largest single item from the delivery budget.
 - **State:** current screen, visited set, progression derived from the visited set. Persisted to `localStorage` behind a try/catch, since private browsing can throw.
 
 ---
@@ -243,8 +243,6 @@ Additional non-negotiables:
 |---|---|---|
 | Reference portrait | Character lock for all nine plates | Clear, front-facing, even lighting, shoulders up, 1600px+. This is the single highest-value asset; every plate depends on it. |
 | Wardrobe preference | Style lock | What he wants to be wearing across all nine scenes, since it must stay constant |
-| 3–6 gameplay clips | Optional video screens, Projects | 6–10s, muted, 1080p, MP4 |
-| Slot Empire screenshots | Projects mission detail | 3–5 at 1920×1080 |
 | Choice of 2–3 web projects | Web Ops mission strand | Which React/Node applications will unlock those entries |
 | Formspree endpoint | Contact | Free form ID, to replace the mailto fallback |
 
