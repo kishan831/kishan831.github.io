@@ -209,8 +209,29 @@ The concept's main risk is burying content behind a game. Mitigations are mandat
 - JavaScript ≤ 180KB gzip.
 - LCP ≤ 2.5s on simulated 4G mobile, measured against the first plate; CLS 0.
 - Total transferred on first screen ≤ 600KB including the plate.
-- Mobile first. The HUD thins to clock, stars and objective under 480px; the minimap is dropped.
 - WCAG AA on every screen's accent against its scrim.
+
+### 9.1 Device matrix
+
+Kishan's stated hard requirement: the interface must work on any device and must not break. The previous build shipped with content cut off on Android, so this is treated as a release gate, not a goal. Every screen must be verified at each of these widths before merge, in both orientations where applicable:
+
+| Width | Represents | Layout |
+|---|---|---|
+| 320px | small Android, iPhone SE | HUD reduced to clock, stars and objective. Minimap dropped. Menu is a bottom sheet. Wordmark drops to `--fs-wordmark` minimum. |
+| 390px | typical modern phone | As above, with the key-hint bar replaced by a swipe hint. |
+| 768px | tablet portrait | Menu returns inline, left-aligned. Minimap returns. Full HUD. |
+| 1024px | tablet landscape, small laptop | Desktop layout at reduced scale. |
+| 1440px | standard laptop | Reference layout. |
+| 1920px+ | desktop, ultrawide | Plate fills; content is capped so the menu never drifts far from the left edge. |
+
+Additional non-negotiables:
+
+- Landscape phone (e.g. 844×390) must remain usable — the plate letterboxes rather than pushing the HUD off-screen.
+- No horizontal overflow at any width. `overflow-x: hidden` stays on `html, body`, and long strings wrap.
+- Safe-area insets respected for notches and home indicators, as in the current build.
+- Viewport units use `svh`/`dvh`, never bare `vh`, so mobile browser chrome cannot clip a screen.
+- All interactive targets meet the 44px minimum.
+- Verified on a real Android device before ship, not only in a simulator.
 
 **Out of scope:** WebGL, GSAP, Astro, a blog, internationalisation, audio (the reference's radio strip is visual only — no autoplaying sound).
 
