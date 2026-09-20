@@ -101,8 +101,8 @@ section[id] {
 }
 
 body {
-  background: var(--bg);
-  color: var(--color-surface-200);
+  background: var(--ink);
+  color: var(--bone);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -151,21 +151,21 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #07070d;
+  background: var(--ink);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1c1c2e;
+  background: #1b1b29;
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--mint);
+  background: var(--color-mint-500);
 }
 
 /* ============================================================
    ACCESSIBILITY — visible keyboard focus + skip link
    ============================================================ */
 :focus-visible {
-  outline: 2px solid var(--mint);
+  outline: 2px solid var(--color-mint-500);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -179,7 +179,7 @@ body {
   transform: translateY(-150%);
   transition: transform 0.2s ease;
   border-radius: 0.5rem;
-  background: var(--mint);
+  background: var(--color-mint-500);
   padding: 0.6rem 1rem;
   font-size: 0.8rem;
   font-weight: 700;
@@ -204,19 +204,6 @@ body {
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
-  }
-
-  .card {
-    background: var(--card);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--border);
-    transition: border-color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
-  }
-  .card:hover {
-    border-color: rgba(0, 214, 138, 0.18);
-    transform: translateY(-6px);
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.25);
   }
 
   /* Touch targets: ensure tappable elements meet 44px minimum on mobile */
@@ -346,9 +333,6 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card:hover {
-    transform: none;
-  }
   .fx-inner {
     animation: none;
   }
