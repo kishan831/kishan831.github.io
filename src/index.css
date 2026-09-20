@@ -4,46 +4,22 @@
    THEME  (Tailwind v4 — CSS-first config, replaces tailwind.config.js)
    ============================================================ */
 @theme {
-  /* Near-black surfaces with slightly elevated steps (not pure #000) */
-  --color-surface-50: #f4f4f6;
-  --color-surface-100: #e2e2e8;
-  --color-surface-200: #c5c5cd;
-  --color-surface-300: #9e9eac;
-  --color-surface-400: #6b6b80;
-  --color-surface-500: #1c1c2e;
-  --color-surface-600: #141424;
-  --color-surface-700: #0e0e1b;
-  --color-surface-800: #0a0a14;
-  --color-surface-900: #07070d;
-
-  /* Brand accent — mint */
-  --color-mint-50: #e6fff5;
-  --color-mint-100: #b3ffe0;
-  --color-mint-200: #80ffcc;
-  --color-mint-300: #4dfdb5;
-  --color-mint-400: #1ae89e;
+  --color-ink-950: #05050a;
+  --color-ink-900: #0a0a12;
+  --color-ink-800: #12121c;
+  --color-ink-700: #1b1b29;
+  --color-bone: #f5f5f7;
+  --color-muted: #8d8da3;
   --color-mint-500: #00d68a;
-  --color-mint-600: #00ad6f;
-  --color-mint-700: #008454;
-  --color-mint-800: #005b3a;
-  --color-mint-900: #00331f;
 
-  --color-ember-400: #fca556;
-  --color-ember-500: #f59042;
-  --color-ember-600: #e07a2f;
-
-  --font-heading: 'Sora', system-ui, sans-serif;
+  --font-display: 'Anton', 'Arial Narrow', sans-serif;
+  --font-script: 'Kaushan Script', cursive;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Fluid type scale — clamp(min, preferred, max). Kills overflow from
-     oversized fixed headings on small screens (the Android cut-off fix). */
   --text-fluid-sm: clamp(0.875rem, 0.83rem + 0.22vw, 1rem);
   --text-fluid-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
   --text-fluid-lg: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);
-  --text-fluid-xl: clamp(1.375rem, 1.2rem + 0.9vw, 1.875rem);
-  --text-fluid-2xl: clamp(1.75rem, 1.4rem + 1.7vw, 2.75rem);
-  --text-fluid-hero: clamp(2.25rem, 1.5rem + 3.8vw, 4rem);
 
   --container-content: 72rem;
 }
@@ -51,16 +27,51 @@
 /* ============================================================
    DESIGN TOKENS
    ============================================================ */
-:root {
-  --mint: #00d68a;
-  --bg: #07070d;
-  --card: rgba(14, 14, 27, 0.7);
-  --border: rgba(255, 255, 255, 0.06);
-
-  /* Fluid spacing scale (used for section rhythm) */
-  --space-section: clamp(4rem, 2.5rem + 7vw, 8rem);
-  --gutter: clamp(1.25rem, 0.8rem + 2vw, 2rem);
+@font-face {
+  font-family: 'Anton';
+  src: url('/fonts/anton-latin.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
 }
+
+@font-face {
+  font-family: 'Kaushan Script';
+  src: url('/fonts/kaushan-script-latin.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  --ink: #05050a;
+  --bone: #f5f5f7;
+  --muted: #8d8da3;
+
+  /* Overridden per screen below. Start-screen values are the defaults so a
+     first paint before hydration already looks right. */
+  --accent: #ff3e88;
+  --accent-hi: #ff7ab0;
+  --accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
+
+  --fs-wordmark: clamp(2.5rem, 1.2rem + 6.5vw, 7rem);
+  --fs-screen: clamp(1.75rem, 1.1rem + 3.4vw, 4rem);
+  --fs-hud: clamp(0.625rem, 0.6rem + 0.2vw, 0.8125rem);
+
+  --gutter: clamp(1rem, 0.6rem + 2vw, 2.5rem);
+  --hud-pad: clamp(0.75rem, 0.5rem + 1.2vw, 1.5rem);
+
+  /* One transition covers every accent-driven property. */
+  --accent-transition: 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-screen='start']        { --accent: #ff3e88; --accent-hi: #ff7ab0; }
+[data-screen='about']        { --accent: #ff8a3d; --accent-hi: #ffad74; }
+[data-screen='skills']       { --accent: #7c6cff; --accent-hi: #a79bff; }
+[data-screen='projects']     { --accent: #19c8ff; --accent-hi: #6bdcff; }
+[data-screen='experience']   { --accent: #5b7cff; --accent-hi: #8fa5ff; }
+[data-screen='achievements'] { --accent: #ff2e63; --accent-hi: #ff6f93; }
+[data-screen='academy']      { --accent: #ffb43d; --accent-hi: #ffcd7a; }
+[data-screen='contact']      { --accent: #3dd6ff; --accent-hi: #84e6ff; }
+[data-screen='exit']         { --accent: #ff9e6b; --accent-hi: #ffc0a0; }
 
 /* ============================================================
    RESPONSIVE FOUNDATION  (the Android "UI cut off" fixes)
@@ -220,6 +231,53 @@ body {
     background: rgba(0, 214, 138, 0.08);
     color: #4dfdb5;
     border-color: rgba(0, 214, 138, 0.18);
+  }
+
+  /* The menu sits over the left third of every plate. Several plates are busy
+     there, so the scrim is a guarantee of contrast rather than a nicety. */
+  .scrim-left {
+    background: linear-gradient(
+      90deg,
+      rgb(5 5 10 / 0.92) 0%,
+      rgb(5 5 10 / 0.78) 28%,
+      rgb(5 5 10 / 0.35) 52%,
+      transparent 78%
+    );
+  }
+
+  .scrim-bottom {
+    background: linear-gradient(
+      0deg,
+      rgb(5 5 10 / 0.88) 0%,
+      rgb(5 5 10 / 0.45) 40%,
+      transparent 100%
+    );
+  }
+
+  .wordmark {
+    font-family: var(--font-display);
+    font-size: var(--fs-wordmark);
+    line-height: 0.84;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    transform: skewX(-8deg);
+    transform-origin: left bottom;
+    color: var(--bone);
+    text-shadow: 0 6px 24px rgb(0 0 0 / 0.55);
+  }
+
+  .script-sub {
+    font-family: var(--font-script);
+    color: var(--accent);
+    transition: color var(--accent-transition);
+  }
+
+  .hud-label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-hud);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
   }
 }
 
