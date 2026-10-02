@@ -163,7 +163,7 @@ export default function App() {
               <button
                 type="button"
                 onClick={() => setPlain(true)}
-                className="tap mt-4 w-full justify-start px-3 font-mono text-[11px] tracking-[0.16em] text-bone/55 underline decoration-dotted underline-offset-4 hover:text-bone"
+                className="tap mt-4 w-full justify-start px-3 font-mono text-[11px] tracking-[0.16em] text-bone/70 underline decoration-dotted underline-offset-4 hover:text-bone"
               >
                 PLAIN RÉSUMÉ VIEW
               </button>

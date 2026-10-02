@@ -8,10 +8,10 @@ import {
 } from 'lucide-react'
 
 export const stats = [
-  { value: 5, label: 'Years Exp.' },
-  { value: 50, label: 'Projects' },
-  { value: 67, label: 'Casino Games' },
-  { value: 15, label: 'Team Led', accent: true },
+  { value: 5, suffix: '+', label: 'Years Exp.' },
+  { value: 50, suffix: '+', label: 'Projects' },
+  { value: 67, suffix: '+', label: 'Casino Games' },
+  { value: 15, suffix: '', label: 'Team Led', accent: true },
 ]
 
 export const coreSkills = [
@@ -178,7 +178,7 @@ export const FORMSPREE_ACTION = ''
  */
 export const capabilities = [
   { label: 'Unity Engine', unit: '5 YRS', fill: 1 },
-  { label: 'Casino & Slot Mechanics', unit: '67 TITLES', fill: 1 },
+  { label: 'Casino & Slot Mechanics', unit: '67+ TITLES', fill: 1 },
   { label: 'Built From Scratch', unit: '30+ GAMES', fill: 0.85 },
   { label: 'Team Leadership', unit: '15 DEVS', fill: 0.8 },
   { label: 'Multiplayer & Realtime', unit: 'PHOTON · SOCKET.IO', fill: 0.75 },
@@ -216,7 +216,7 @@ export const webProjects = [
 ]
 
 export const achievements = [
-  { title: '67 casino games shipped', desc: 'One platform, shared infrastructure, Addressables delivery.' },
+  { title: '67+ casino games shipped', desc: 'One platform, shared infrastructure, Addressables delivery.' },
   { title: '30+ games built from scratch', desc: 'Architected end to end within the Slot Empire platform.' },
   { title: 'Led 15 developers', desc: 'Across 50+ projects at PhiBonacci Solutions.' },
   { title: 'Best Project Award 2021', desc: 'Government Polytechnic Shahjahanpur, Diploma in C.S.E.' },

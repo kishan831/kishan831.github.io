@@ -5,7 +5,9 @@ import ScreenBody from './ScreenBody'
 describe('screen bodies', () => {
   it('shows the real headline stats on the start screen', () => {
     render(<ScreenBody screenId="start" />)
-    expect(screen.getByText('67')).toBeInTheDocument()
+    expect(screen.getByText('67+')).toBeInTheDocument()
+    expect(screen.getByText('5+')).toBeInTheDocument()
+    expect(screen.getByText('50+')).toBeInTheDocument()
     expect(screen.getByText(/casino games/i)).toBeInTheDocument()
     expect(screen.getByText('15')).toBeInTheDocument()
   })

@@ -30,7 +30,7 @@ export default function AboutScreen() {
             key={row.label}
             className="flex items-baseline gap-4 rounded-lg border border-bone/10 bg-ink-950/50 px-3.5 py-2.5"
           >
-            <dt className="w-28 shrink-0 font-mono text-[10px] uppercase tracking-[0.16em] text-bone/50">
+            <dt className="w-28 shrink-0 font-mono text-[10px] uppercase tracking-[0.16em] text-bone/60">
               {row.label}
             </dt>
             <dd className="min-w-0 text-sm text-bone">{row.value}</dd>

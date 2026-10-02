@@ -49,7 +49,7 @@ describe('experience screen', () => {
 describe('achievements screen', () => {
   it('lists trophies with real metrics', () => {
     render(<ScreenBody screenId="achievements" />)
-    expect(screen.getByText(/67 casino games/i)).toBeInTheDocument()
+    expect(screen.getByText(/67\+ casino games/i)).toBeInTheDocument()
     expect(screen.getByText(/best project award/i)).toBeInTheDocument()
   })
 })

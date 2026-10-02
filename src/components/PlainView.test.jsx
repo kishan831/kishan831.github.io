@@ -17,7 +17,7 @@ describe('PlainView', () => {
     render(<PlainView onClose={() => {}} />)
     expect(screen.getByText('Casino Games')).toBeInTheDocument()
     const statsList = screen.getByRole('list', { name: /headline numbers/i })
-    expect(within(statsList).getByText('67')).toBeInTheDocument()
+    expect(within(statsList).getByText('67+')).toBeInTheDocument()
     expect(screen.getAllByText(/bilions/i).length).toBeGreaterThan(0)
   })
 

@@ -54,7 +54,7 @@ export default function PlainView({ onClose }) {
         <ul aria-label="Headline numbers" className="mt-3 flex flex-wrap gap-x-6 gap-y-1 text-sm text-bone/70">
           {stats.map((s) => (
             <li key={s.label}>
-              <strong className="text-bone">{s.value}</strong> {s.label}
+              <strong className="text-bone">{s.value}{s.suffix}</strong> {s.label}
             </li>
           ))}
         </ul>

@@ -26,11 +26,11 @@ export default function StartScreen() {
       <dl className="mb-8 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
         {stats.map((s) => (
           <div key={s.label}>
-            <dt className="font-mono text-[10px] uppercase tracking-[0.16em] text-bone/50">
+            <dt className="font-mono text-[10px] uppercase tracking-[0.16em] text-bone/60">
               {s.label === 'Casino Games' ? 'Casino games' : s.label}
             </dt>
             <dd className="font-display text-[clamp(1.75rem,1.2rem+2.4vw,3.25rem)] leading-none text-[var(--accent-hi)]">
-              {s.value}
+              {s.value}{s.suffix}
             </dd>
           </div>
         ))}
