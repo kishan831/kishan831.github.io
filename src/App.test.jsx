@@ -228,3 +228,11 @@ describe('App — menu sheet focus', () => {
     expect(screen.getByRole('button', { name: /^menu$/i })).toHaveFocus()
   })
 })
+
+describe('App — name on small screens', () => {
+  it('renders a compact wordmark in the MENU / PLAIN row', () => {
+    render(<App />)
+    const row = screen.getByRole('button', { name: /^menu$/i }).parentElement
+    expect(row).toHaveTextContent(/kishan\s*jaiswal/i)
+  })
+})

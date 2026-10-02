@@ -1,5 +1,12 @@
 @import 'tailwindcss';
 
+/* Laptop heights. The desktop menu column (wordmark + nine 44px tabs + PLAIN)
+   is taller than the space above the HUD on 1366x768 and 1280x720, so these
+   tighten its rhythm. `short` collapses the wordmark to one line; `shorter`
+   also trims the column's top and bottom padding. */
+@custom-variant short (@media (max-height: 879px));
+@custom-variant shorter (@media (max-height: 767px));
+
 /* ============================================================
    THEME  (Tailwind v4 — CSS-first config, replaces tailwind.config.js)
    ============================================================ */
@@ -237,6 +244,21 @@ body {
     );
   }
 
+  /* At lg the copy runs past the menu column to the panel's max-w-xl edge
+     (~gutter + column + gap + 36rem, roughly 1010px at 1440 and 1920), often
+     over the brightest sky. Hold the scrim dark to that edge, then fade. */
+  @media (min-width: 64rem) {
+    .scrim-left {
+      background: linear-gradient(
+        90deg,
+        rgb(5 5 10 / 0.92) 0,
+        rgb(5 5 10 / 0.84) calc(var(--gutter) + min(30vw, 22rem) + 3.5rem),
+        rgb(5 5 10 / 0.76) calc(var(--gutter) + min(30vw, 22rem) + 39.5rem),
+        transparent calc(var(--gutter) + min(30vw, 22rem) + 54rem)
+      );
+    }
+  }
+
   .scrim-bottom {
     background: linear-gradient(
       0deg,
@@ -256,6 +278,41 @@ body {
     transform-origin: left bottom;
     color: var(--bone);
     text-shadow: 0 6px 24px rgb(0 0 0 / 0.55);
+  }
+
+  /* The menu-column wordmark. Sized to the column (JAISWAL is ~3.7em wide in
+     Anton, plus the skew) so the last letter never wraps, and to the height
+     so the menu below it still clears the HUD. */
+  .wordmark-menu {
+    font-size: min(
+      var(--fs-wordmark),
+      calc(min(30vw, 22rem) / 3.9),
+      calc((100svh - 49rem) / 1.7)
+    );
+  }
+
+  @media (max-height: 879px) {
+    .wordmark-menu {
+      font-size: min(var(--fs-wordmark), calc(min(30vw, 22rem) / 7.4));
+      line-height: 0.95;
+    }
+    .wordmark-menu br {
+      display: none;
+    }
+  }
+
+  /* Phones and tablets: the name sits beside MENU / PLAIN. */
+  .wordmark-compact {
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    transform: skewX(-8deg);
+    transform-origin: left bottom;
+    white-space: nowrap;
+    color: var(--bone);
+    text-shadow: 0 2px 12px rgb(0 0 0 / 0.7);
   }
 
   .script-sub {

@@ -163,30 +163,34 @@ export default function App() {
           </motion.div>
         </AnimatePresence>
 
-        <div className="scrim-left pointer-events-none absolute inset-y-0 left-0 z-20 w-full sm:w-2/3 lg:w-1/2" />
+        <div className="scrim-left pointer-events-none absolute inset-y-0 left-0 z-20 w-full sm:w-2/3 lg:w-full" />
 
         <div className="absolute inset-0 z-20 flex flex-col">
-          <div className="flex min-h-0 flex-1 flex-col gap-4 px-[var(--gutter)] pb-28 pt-[6.75rem] lg:pt-20 lg:flex-row lg:gap-10">
-            <div className="hidden w-full shrink-0 lg:block lg:w-[min(30vw,22rem)]">
-              <p className="wordmark mb-1">
-                Kishan
-                <br />
+          <div className="flex min-h-0 flex-1 flex-col gap-4 px-[var(--gutter)] pb-28 pt-[6.75rem] lg:flex-row lg:gap-10 lg:pt-20 lg:shorter:pb-[5.5rem] lg:shorter:pt-14">
+            {/* Scrolls only as a last resort: the short/shorter variants tighten
+                the rhythm so all nine tabs and PLAIN fit above the HUD at laptop
+                heights. The extra 0.5rem each side keeps focus rings unclipped. */}
+            <div className="hidden w-full shrink-0 lg:-ml-2 lg:block lg:min-h-0 lg:w-[calc(min(30vw,22rem)+1rem)] lg:overflow-x-hidden lg:overflow-y-auto lg:px-2 lg:pb-2">
+              {/* The space before the break becomes the word gap when the
+                  wordmark collapses to one line on short screens. */}
+              <p className="wordmark wordmark-menu mb-1 w-fit short:mt-1">
+                Kishan{' '}<br />
                 Jaiswal
               </p>
-              <p className="script-sub mb-5 -mt-1 pl-1 text-[clamp(1.1rem,0.9rem+1vw,1.9rem)]">
+              <p className="script-sub mb-5 -mt-1 pl-1 text-[clamp(1.1rem,0.9rem+1vw,1.9rem)] short:mb-2 short:mt-0">
                 Portfolio
               </p>
               <Menu activeId={screen.id} isVisited={isVisited} onSelect={setScreenId} />
               <button
                 type="button"
                 onClick={() => setPlain(true)}
-                className="tap mt-4 w-full justify-start px-3 font-mono text-[11px] tracking-[0.16em] text-bone/70 underline decoration-dotted underline-offset-4 hover:text-bone"
+                className="tap mt-4 w-full justify-start px-3 font-mono text-[11px] tracking-[0.16em] text-bone/70 short:mt-2 underline decoration-dotted underline-offset-4 hover:text-bone"
               >
                 PLAIN RÉSUMÉ VIEW
               </button>
             </div>
 
-            <div className="absolute left-[var(--gutter)] top-[calc(var(--hud-pad)+2.5rem)] z-30 flex gap-2 lg:hidden">
+            <div className="absolute left-[var(--gutter)] top-[calc(var(--hud-pad)+2.5rem)] z-30 flex items-center gap-2 lg:hidden">
               <button
                 ref={menuButtonRef}
                 type="button"
@@ -204,6 +208,11 @@ export default function App() {
               >
                 PLAIN
               </button>
+              <p className="wordmark-compact ml-1.5">
+                Kishan
+                <br />
+                Jaiswal
+              </p>
             </div>
 
             <div
