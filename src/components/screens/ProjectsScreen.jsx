@@ -12,7 +12,7 @@ function Strand({ title, count, children }) {
           {title}
         </h2>
         <span className="h-px flex-1 bg-bone/15" />
-        <span className="font-mono text-[10px] text-bone/40">{count}</span>
+        <span className="font-mono text-[10px] text-bone/60">{count}</span>
       </div>
       <ul className="space-y-1.5">{children}</ul>
     </section>
@@ -96,9 +96,9 @@ export default function ProjectsScreen() {
               <div className="flex items-start gap-3">
                 <Lock size={14} className="mt-0.5 shrink-0 text-bone/35" />
                 <div className="min-w-0">
-                  <p className="text-sm font-semibold text-bone/55">{w.title}</p>
-                  <p className="mt-0.5 text-xs leading-relaxed text-bone/40">{w.desc}</p>
-                  <p className="mt-1.5 font-mono text-[10px] tracking-[0.16em] text-bone/35">
+                  <p className="text-sm font-semibold text-bone/60">{w.title}</p>
+                  <p className="mt-0.5 text-xs leading-relaxed text-bone/60">{w.desc}</p>
+                  <p className="mt-1.5 font-mono text-[10px] tracking-[0.16em] text-bone/65">
                     IN DEVELOPMENT · {w.stack.join(' · ')}
                   </p>
                 </div>

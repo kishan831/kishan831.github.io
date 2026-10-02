@@ -29,11 +29,11 @@ export default function ExperienceScreen() {
         {rest.map((e) => (
           <li key={`${e.date}-${e.role}`} className="relative">
             <span className="absolute -left-[1.6rem] top-1.5 h-2 w-2 rounded-full bg-bone/30" />
-            <p className="font-mono text-[10px] tracking-[0.18em] text-bone/45">{e.date}</p>
+            <p className="font-mono text-[10px] tracking-[0.18em] text-bone/60">{e.date}</p>
             <p className="mt-0.5 text-sm font-semibold text-bone">{e.role}</p>
             <p className="text-xs text-bone/60">{e.org}</p>
             {e.desc && (
-              <p className="mt-1.5 text-xs leading-relaxed text-bone/50">{e.desc}</p>
+              <p className="mt-1.5 text-xs leading-relaxed text-bone/60">{e.desc}</p>
             )}
           </li>
         ))}
