@@ -14,6 +14,15 @@ import Splash from './components/Splash'
 import ScreenBody from './components/screens/ScreenBody'
 import PlainView from './components/PlainView'
 
+function isEditable(el) {
+  if (!(el instanceof Element)) return false
+  return (
+    el.matches('input, textarea, select') ||
+    el.isContentEditable === true ||
+    el.closest('[contenteditable=""], [contenteditable="true"], [contenteditable="plaintext-only"]') !== null
+  )
+}
+
 export default function App() {
   const [screenId, setScreenId] = useHashRoute()
   const { visit, isVisited, stars, shipped, ratio } = useProgress()
@@ -49,6 +58,11 @@ export default function App() {
   useEffect(() => {
     const onKey = (e) => {
       if (e.key !== 'Escape' || plain) return
+      // A dialog (the case study) already handled it.
+      if (e.defaultPrevented) return
+      // Escape inside a form field belongs to the field, not to navigation —
+      // leaving the screen would throw away what the visitor typed.
+      if (isEditable(e.target)) return
       // The sheet is an overlay: Escape dismisses it before anything else.
       if (menuOpen) setMenuOpen(false)
       else setScreenId(DEFAULT_SCREEN_ID)

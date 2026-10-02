@@ -89,3 +89,28 @@ describe('App', () => {
     expect(screen.getByRole('button', { name: /^plain$/i })).toBeInTheDocument()
   })
 })
+
+describe('App — Escape is scoped', () => {
+  it('closes the case study on Escape without leaving the projects screen', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await user.click(screen.getByRole('tab', { name: /projects/i }))
+    await user.click(screen.getAllByRole('button', { name: /case file/i })[0])
+    expect(await screen.findByRole('dialog')).toBeInTheDocument()
+    await user.keyboard('{Escape}')
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+    expect(document.documentElement).toHaveAttribute('data-screen', 'projects')
+    expect(window.location.hash).toBe('#/projects')
+  })
+
+  it('leaves Escape inside a contact field to the field and keeps the text', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await user.click(screen.getByRole('tab', { name: /contact/i }))
+    const name = screen.getByLabelText(/name/i)
+    await user.type(name, 'Ada')
+    await user.keyboard('{Escape}')
+    expect(document.documentElement).toHaveAttribute('data-screen', 'contact')
+    expect(screen.getByLabelText(/name/i)).toHaveValue('Ada')
+  })
+})
