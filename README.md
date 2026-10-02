@@ -36,7 +36,7 @@
 
 ## About the site
 
-The portfolio is built as a **game pause menu**. Every section is a "screen" with its own full-bleed art plate, accent colour and mission objective. A HUD frames it all: a clock, a star rating and a "shipped" counter that fill as you explore, a minimap, and a journey bar. The first visit to each screen shows a "Mission passed" toast, and progress is remembered between visits.
+The portfolio is built as a **game pause menu**. Every section is a "screen" with its own full-bleed art plate, accent colour and mission objective. A HUD frames it all: a clock, a star rating and a "shipped" counter that fill as you explore, a minimap, a journey bar, and the **KJ-FM 96.7** radio toggle. The first visit to each screen shows a "Mission passed" toast, and progress is remembered between visits.
 
 ### The nine screens
 
@@ -64,6 +64,7 @@ Every screen has its own deep link at `https://kishan831.github.io/#/<id>`.
 - The menu is a real **ARIA tablist** with a roving tabindex, so the whole menu is a single Tab stop. Each item is a `role="tab"` that controls its `role="tabpanel"`.
 - The first Tab stop is a **Skip to content** link. The panel takes focus on a screen change, except while you are arrowing through the menu, where focus stays on the tab. A polite live region announces `<LABEL> screen`.
 - The mobile menu sheet and the case-study dialog are `role="dialog"` with `aria-modal`, and both close when you click the backdrop. Opening the case study focuses its close button. The sheet focuses the active tab on open and returns focus to the MENU button on close.
+- The **KJ-FM** radio is a `<button aria-pressed>` with a 44px target, off by default, and never plays without a gesture (WCAG 1.4.2 Audio Control).
 - Escape is ignored while focus is inside a form field, so it does not throw away text you are typing.
 - Design targets: WCAG AA accent contrast, hit targets of at least 44px, and no horizontal overflow from 320px up to 1920px wide.
 
@@ -76,6 +77,7 @@ Every screen has its own deep link at `https://kishan831.github.io/#/<id>`.
 | `Home` / `End` | Jump to Start / Exit |
 | `Enter` / `Space` | Activate the focused tab |
 | `Esc` | Close the case study, then the mobile sheet, then go to Start |
+| `Enter` / `Space` on **KJ-FM** | Turn the radio on or off (off by default) |
 | Swipe left / right | Next / previous screen on touch devices (no wrap) |
 
 The browser's back and forward buttons work too, because routing is hash-based (`#/<id>`).
@@ -86,6 +88,13 @@ The browser's back and forward buttons work too, because routing is hash-based (
 - CSS backs this up. Under reduced motion, CSS animations and transitions (including the splash loader) are cut to near zero, and the `.fx-*` layers are disabled.
 - The ambient plate animations only touch `transform` and `opacity`, and there are no continuous JS animation loops.
 
+### KJ-FM radio
+The **KJ-FM 96.7** strip in the HUD is an opt-in radio, **off by default**. Turning it on fades in a quiet synthesized night-city pad (Web Audio only: no audio files, no new dependencies, and no AudioContext exists until you opt in). While it is on, the menu makes soft sounds: a short blip when the selection moves (arrow keys, Home/End, swipe) and a two-note confirm when you pick a screen (click, tap or Enter). Nothing plays while it is off.
+
+- **No autoplay.** The choice is remembered per device in localStorage (`kj-radio`). A remembered ON shows as ON but stays silent until your first gesture on the page (a key, a click or a tap); it never starts on load.
+- It pauses while the tab is hidden and while the plain résumé view is open, and picks up again when you come back.
+- The EQ bars animate only while audio is actually playing and ambient motion is allowed.
+
 ### Plain résumé view
 One click on **PLAIN RÉSUMÉ VIEW** (or **PLAIN** on phones) swaps the game UI for a plain, single-page document built from the same data: contact links, About and stats, Skills, Projects, Experience, Achievements and Contact. It is written for recruiters, ATS-style readers and anyone who would rather skip the theatrics.
 
@@ -93,8 +102,8 @@ One click on **PLAIN RÉSUMÉ VIEW** (or **PLAIN** on phones) swaps the game UI 
 
 | Budget | Target | Current build |
 | :-- | :-- | :-- |
-| JavaScript (gzip, total) | ≤ 180 KB | **129.43 KB** (one 410.91 KB chunk) |
-| CSS (gzip) | — | about 9 KB (about 41 KB raw) |
+| JavaScript (gzip, total) | ≤ 180 KB | **132.45 KB** (one 418.90 KB chunk) |
+| CSS (gzip) | — | about 9 KB (about 43 KB raw) |
 | HTML (gzip) | — | about 1.6 KB |
 | Each art plate at full width | ≤ 200 KiB | largest is 198 KiB (`2-about-1672.webp`, 202,332 bytes) |
 | LCP, simulated 4G mobile | ≤ 2.5 s | target |
@@ -173,7 +182,10 @@ npm run dev       # start the Vite dev server
 │   ├── state/
 │   │   ├── useHashRoute.js        # #/<id> routing with back/forward support
 │   │   ├── useProgress.js         # visited screens in localStorage → stars + shipped counter
-│   │   └── useAmbientMotion.js    # reduced-motion / Save-Data gate
+│   │   ├── useAmbientMotion.js    # reduced-motion / Save-Data gate
+│   │   └── useRadio.js            # opt-in radio: kj-radio preference, first-gesture start, pause when hidden
+│   ├── audio/
+│   │   └── radio.js               # Web Audio synth: KJ-FM pad + menu blips
 │   └── components/
 │       ├── Plate.jsx              # responsive <picture> art plate
 │       ├── PlateFX.jsx            # CSS grain / sweep / neon overlay
