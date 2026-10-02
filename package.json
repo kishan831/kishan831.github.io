@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Kishan Jaiswal — Unity & Casino Game Developer portfolio",
+  "description": "Kishan Jaiswal — Real-Time Systems Engineer (Unity & Web) portfolio: Unity/C# game systems and React, Node.js, TypeScript products",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
