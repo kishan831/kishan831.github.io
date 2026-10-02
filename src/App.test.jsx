@@ -236,3 +236,20 @@ describe('App — name on small screens', () => {
     expect(row).toHaveTextContent(/kishan\s*jaiswal/i)
   })
 })
+
+describe('App — arrow keys inside the menu sheet', () => {
+  it('keeps the sheet open and focus on the tabs while arrowing', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await user.click(screen.getByRole('button', { name: /^menu$/i }))
+    const dialog = screen.getByRole('dialog', { name: /menu/i })
+    await user.keyboard('{ArrowDown}')
+    await user.keyboard('{ArrowDown}')
+    await waitFor(() => expect(document.documentElement).toHaveAttribute('data-screen', 'skills'))
+    expect(screen.getByRole('dialog', { name: /menu/i })).toBe(dialog)
+    expect(within(dialog).getByRole('tab', { name: /skills/i })).toHaveFocus()
+    await user.keyboard('{Enter}')
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+    expect(document.documentElement).toHaveAttribute('data-screen', 'skills')
+  })
+})

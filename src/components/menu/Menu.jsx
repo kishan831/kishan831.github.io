@@ -31,7 +31,7 @@ export default function Menu({ activeId, isVisited, onSelect }) {
     else return
 
     event.preventDefault()
-    onSelect(screenIds[next])
+    onSelect(screenIds[next], 'keyboard')
   }
 
   return (

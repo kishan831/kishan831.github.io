@@ -48,23 +48,23 @@ describe('Menu', () => {
     const { onSelect, user } = setup()
     screen.getByRole('tab', { name: /start game/i }).focus()
     await user.keyboard('{ArrowDown}')
-    expect(onSelect).toHaveBeenCalledWith('about')
+    expect(onSelect).toHaveBeenCalledWith('about', 'keyboard')
   })
 
   it('wraps from the last tab back to the first', async () => {
     const { onSelect, user } = setup({ activeId: 'exit' })
     screen.getByRole('tab', { name: /exit game/i }).focus()
     await user.keyboard('{ArrowDown}')
-    expect(onSelect).toHaveBeenCalledWith('start')
+    expect(onSelect).toHaveBeenCalledWith('start', 'keyboard')
   })
 
   it('jumps to the ends with Home and End', async () => {
     const { onSelect, user } = setup({ activeId: 'skills' })
     screen.getByRole('tab', { name: /skills/i }).focus()
     await user.keyboard('{End}')
-    expect(onSelect).toHaveBeenCalledWith('exit')
+    expect(onSelect).toHaveBeenCalledWith('exit', 'keyboard')
     await user.keyboard('{Home}')
-    expect(onSelect).toHaveBeenCalledWith('start')
+    expect(onSelect).toHaveBeenCalledWith('start', 'keyboard')
   })
 
   it('shows a checkmark only on visited entries', () => {

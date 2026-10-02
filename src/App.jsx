@@ -258,9 +258,10 @@ export default function App() {
               <Menu
                 activeId={screen.id}
                 isVisited={isVisited}
-                onSelect={(id) => {
+                onSelect={(id, source) => {
                   setScreenId(id)
-                  setMenuOpen(false)
+                  // Arrow keys browse inside the sheet; a tap or Enter picks.
+                  if (source !== 'keyboard') setMenuOpen(false)
                 }}
               />
               <button
