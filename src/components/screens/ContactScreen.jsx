@@ -11,7 +11,7 @@ const CHANNELS = [
 ]
 
 const FIELD_CLASS =
-  'min-h-[44px] w-full rounded-lg border border-bone/15 bg-ink-950/60 px-3.5 py-2.5 text-sm text-bone placeholder:text-bone/60 focus:border-[var(--accent)] focus:outline-hidden'
+  'min-h-[44px] w-full rounded-lg border border-bone/15 bg-ink-950/60 px-3.5 py-2.5 text-sm text-bone placeholder:text-bone/60 focus:border-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-solid focus-visible:outline-[color:var(--accent)]'
 
 const LABEL_CLASS =
   'mb-1 block font-mono text-[10px] uppercase tracking-[0.16em] text-bone/60'

@@ -164,10 +164,15 @@ body {
 /* ============================================================
    ACCESSIBILITY — visible keyboard focus + skip link
    ============================================================ */
-:focus-visible {
-  outline: 2px solid var(--color-mint-500);
-  outline-offset: 3px;
-  border-radius: 4px;
+/* In the base layer so a utility (the panel's outline-none) can opt out.
+   The ring takes the screen's accent: every accent is a bright tint on the
+   ink background, well above 3:1. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
 }
 
 /* Skip-to-content link: hidden until keyboard-focused */
