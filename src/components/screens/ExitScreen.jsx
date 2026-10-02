@@ -5,7 +5,7 @@ export default function ExitScreen() {
   return (
     <div className="max-w-xl">
       <p className="hud-label mb-2">Thank you for visiting</p>
-      <h1 className="font-display mb-1 text-[var(--fs-screen)] uppercase italic leading-[0.92] text-bone">
+      <h1 className="font-display mb-1 text-[length:var(--fs-screen)] uppercase italic leading-[0.92] text-bone">
         Mission <br />
         complete
       </h1>

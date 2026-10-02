@@ -3,7 +3,7 @@ import { skillGroups } from '../../data/portfolio'
 export default function AcademyScreen() {
   return (
     <div className="max-w-xl">
-      <h1 className="font-display mb-1 text-[var(--fs-screen)] uppercase italic leading-none text-bone">
+      <h1 className="font-display mb-1 text-[length:var(--fs-screen)] uppercase italic leading-none text-bone">
         Academy
       </h1>
       <p className="script-sub mb-6 text-[clamp(1rem,0.9rem+0.8vw,1.6rem)]">Loadout</p>

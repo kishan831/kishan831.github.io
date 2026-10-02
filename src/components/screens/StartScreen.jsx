@@ -11,7 +11,7 @@ export default function StartScreen() {
         </span>
       </p>
 
-      <h1 className="font-display mb-4 text-[var(--fs-screen)] uppercase italic leading-[0.92] text-bone">
+      <h1 className="font-display mb-4 text-[length:var(--fs-screen)] uppercase italic leading-[0.92] text-bone">
         Real-time systems
         <br />
         engineer
