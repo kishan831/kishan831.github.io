@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import App from './App'
 
@@ -58,5 +58,34 @@ describe('App', () => {
     await waitFor(() =>
       expect(document.documentElement).toHaveAttribute('data-screen', 'start'),
     )
+  })
+
+  it('opens the menu sheet, switches screen and closes it', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await user.click(screen.getByRole('button', { name: /^menu$/i }))
+    const dialog = screen.getByRole('dialog', { name: /menu/i })
+    expect(dialog).toHaveAttribute('aria-modal', 'true')
+    const tab = within(dialog).getByRole('tab', { name: /skills/i })
+    await user.click(tab)
+    await waitFor(() =>
+      expect(document.documentElement).toHaveAttribute('data-screen', 'skills'),
+    )
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+  })
+
+  it('closes the sheet on Escape without leaving the current screen', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await user.click(screen.getByRole('tab', { name: /projects/i }))
+    await user.click(screen.getByRole('button', { name: /^menu$/i }))
+    await user.keyboard('{Escape}')
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+    expect(document.documentElement).toHaveAttribute('data-screen', 'projects')
+  })
+
+  it('keeps the plain résumé control reachable outside the sheet', () => {
+    render(<App />)
+    expect(screen.getByRole('button', { name: /^plain$/i })).toBeInTheDocument()
   })
 })

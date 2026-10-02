@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import { DEFAULT_SCREEN_ID, getScreen } from './data/screens'
+import { DEFAULT_SCREEN_ID, getScreen, screenIds } from './data/screens'
 import { useHashRoute } from './state/useHashRoute'
 import { useProgress } from './state/useProgress'
 import { useAmbientMotion } from './state/useAmbientMotion'
@@ -21,6 +21,7 @@ export default function App() {
   const [toast, setToast] = useState('')
   const [ready, setReady] = useState(false)
   const [plain, setPlain] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const panelRef = useRef(null)
 
   const screen = getScreen(screenId) ?? getScreen(DEFAULT_SCREEN_ID)
@@ -47,11 +48,42 @@ export default function App() {
 
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === 'Escape' && !plain) setScreenId(DEFAULT_SCREEN_ID)
+      if (e.key !== 'Escape' || plain) return
+      // The sheet is an overlay: Escape dismisses it before anything else.
+      if (menuOpen) setMenuOpen(false)
+      else setScreenId(DEFAULT_SCREEN_ID)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [setScreenId, plain])
+  }, [setScreenId, plain, menuOpen])
+
+  // Horizontal swipe moves between screens on touch devices.
+  useEffect(() => {
+    let startX = 0
+    let startY = 0
+
+    const onStart = (e) => {
+      startX = e.changedTouches[0].clientX
+      startY = e.changedTouches[0].clientY
+    }
+
+    const onEnd = (e) => {
+      if (menuOpen) return
+      const dx = e.changedTouches[0].clientX - startX
+      const dy = e.changedTouches[0].clientY - startY
+      if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return
+      const i = screenIds.indexOf(screen.id)
+      const next = dx < 0 ? i + 1 : i - 1
+      if (next >= 0 && next < screenIds.length) setScreenId(screenIds[next])
+    }
+
+    window.addEventListener('touchstart', onStart, { passive: true })
+    window.addEventListener('touchend', onEnd, { passive: true })
+    return () => {
+      window.removeEventListener('touchstart', onStart)
+      window.removeEventListener('touchend', onEnd)
+    }
+  }, [screen.id, setScreenId, menuOpen])
 
   const clearToast = useCallback(() => setToast(''), [])
 
@@ -94,8 +126,8 @@ export default function App() {
         <div className="scrim-left pointer-events-none absolute inset-y-0 left-0 z-20 w-full sm:w-2/3 lg:w-1/2" />
 
         <div className="absolute inset-0 z-20 flex flex-col">
-          <div className="flex min-h-0 flex-1 flex-col gap-4 px-[var(--gutter)] pb-28 pt-16 sm:pt-20 lg:flex-row lg:gap-10">
-            <div className="w-full shrink-0 lg:w-[min(30vw,22rem)]">
+          <div className="flex min-h-0 flex-1 flex-col gap-4 px-[var(--gutter)] pb-28 pt-[6.75rem] lg:pt-20 lg:flex-row lg:gap-10">
+            <div className="hidden w-full shrink-0 lg:block lg:w-[min(30vw,22rem)]">
               <p className="wordmark mb-1">
                 Kishan
                 <br />
@@ -114,6 +146,23 @@ export default function App() {
               </button>
             </div>
 
+            <div className="absolute left-[var(--gutter)] top-[calc(var(--hud-pad)+2.5rem)] z-30 flex gap-2 lg:hidden">
+              <button
+                type="button"
+                onClick={() => setMenuOpen(true)}
+                className="tap gap-2 rounded-lg border border-bone/20 bg-ink-950/70 px-3.5 py-2 font-mono text-[11px] tracking-[0.16em] text-bone"
+              >
+                MENU
+              </button>
+              <button
+                type="button"
+                onClick={() => setPlain(true)}
+                className="tap rounded-lg border border-bone/20 bg-ink-950/70 px-3 py-2 font-mono text-[11px] tracking-[0.16em] text-bone/70"
+              >
+                PLAIN
+              </button>
+            </div>
+
             <div
               id={`panel-${screen.id}`}
               ref={panelRef}
@@ -126,6 +175,47 @@ export default function App() {
             </div>
           </div>
         </div>
+
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-label="Menu"
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'tween', duration: ambient ? 0.3 : 0, ease: [0.4, 0, 0.2, 1] }}
+              className="fixed inset-x-0 bottom-0 z-40 max-h-[80svh] overflow-y-auto rounded-t-2xl border-t border-bone/15 bg-ink-950/97 p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] backdrop-blur-xl lg:hidden"
+            >
+              <Menu
+                activeId={screen.id}
+                isVisited={isVisited}
+                onSelect={(id) => {
+                  setScreenId(id)
+                  setMenuOpen(false)
+                }}
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  setMenuOpen(false)
+                  setPlain(true)
+                }}
+                className="tap mt-3 w-full rounded-lg border border-bone/20 font-mono text-[11px] tracking-[0.16em] text-bone/70"
+              >
+                PLAIN RÉSUMÉ VIEW
+              </button>
+              <button
+                type="button"
+                onClick={() => setMenuOpen(false)}
+                className="tap mt-2 w-full rounded-lg border border-bone/20 font-mono text-[11px] tracking-[0.16em] text-bone"
+              >
+                CLOSE
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <Hud objective={screen.objective} stars={stars} shipped={shipped} ratio={ratio} />
         <Toast message={toast} onDone={clearToast} />
