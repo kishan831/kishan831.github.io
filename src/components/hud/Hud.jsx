@@ -17,15 +17,27 @@ import RadioStrip from './RadioStrip'
  * a responsive layout — that double-announces content like the clock to
  * assistive technology at every width, not only under test.
  */
-export default function Hud({ objective, stars, shipped, ratio }) {
+export default function Hud({
+  objective,
+  stars,
+  shipped,
+  ratio,
+  radioOn = false,
+  radioAnimate = false,
+  onRadioToggle,
+}) {
   return (
     <>
       <div className="pointer-events-none absolute inset-x-0 top-0 z-30 flex items-start justify-between p-[var(--hud-pad)]">
-        <div className="hidden sm:block">
-          <RadioStrip />
+        {/* The radio is a real control, so it shows at every width. Its 44px
+            hit area is pulled up so it clears the MENU row below it on
+            phones and tablets; from lg it sits beside the clock, clear of the
+            wordmark column. */}
+        <div className="-mt-2 lg:-mt-3 lg:ml-auto lg:mr-2">
+          <RadioStrip on={radioOn} animate={radioAnimate} onToggle={onRadioToggle} />
         </div>
 
-        <div className="ml-auto flex flex-col items-end gap-1">
+        <div className="ml-auto flex flex-col items-end gap-1 lg:ml-0">
           <Clock />
           <Stars stars={stars} />
           <span className="hidden sm:block">

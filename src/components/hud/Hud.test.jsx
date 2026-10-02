@@ -33,17 +33,40 @@ describe('Hud', () => {
     expect(container.querySelectorAll('[data-star="on"]')).toHaveLength(3)
   })
 
+  // Changed for the KJ-FM radio: this used to assert the radio strip was
+  // aria-hidden decoration. It is now a real toggle, so it must be exposed to
+  // assistive technology; the minimap is still decoration and stays hidden.
   it('hides decoration from assistive technology', () => {
     const { container } = render(
       <Hud objective="X" stars={1} shipped={7} ratio={0.11} />,
-    )
-    expect(container.querySelector('[data-testid="radio"]')).toHaveAttribute(
-      'aria-hidden',
-      'true',
     )
     expect(container.querySelector('[data-testid="minimap"]')).toHaveAttribute(
       'aria-hidden',
       'true',
     )
+    const radio = screen.getByRole('button', { name: /kj-fm.*radio/i })
+    expect(radio.closest('[aria-hidden="true"]')).toBeNull()
+  })
+
+  // New: the strip used to sit in a `hidden sm:block` wrapper (phones never
+  // saw it). The toggle has to be reachable at every width.
+  it('shows the radio toggle at every width', () => {
+    render(<Hud objective="X" stars={1} shipped={7} ratio={0.11} />)
+    let el = screen.getByRole('button', { name: /kj-fm.*radio/i })
+    while (el) {
+      expect(el.classList?.contains('hidden') ?? false).toBe(false)
+      el = el.parentElement
+    }
+  })
+
+  it('passes radio state and the toggle through to the strip', () => {
+    const onRadioToggle = vi.fn()
+    render(
+      <Hud objective="X" stars={1} shipped={7} ratio={0.11} radioOn onRadioToggle={onRadioToggle} />,
+    )
+    const radio = screen.getByRole('button', { name: /kj-fm.*radio/i })
+    expect(radio).toHaveAttribute('aria-pressed', 'true')
+    radio.click()
+    expect(onRadioToggle).toHaveBeenCalledTimes(1)
   })
 })
