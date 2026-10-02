@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'motion/react'
 import { X, ExternalLink, Play, Check } from 'lucide-react'
 import { Github } from './BrandIcons'
@@ -8,8 +9,12 @@ export default function CaseStudyModal({ study, onClose }) {
 
   useEffect(() => {
     if (!study) return
+    // preventDefault marks the key as handled, so the app-level Escape (which
+    // jumps to Start) leaves it alone: with a dialog open, Escape only closes it.
     const onKey = (e) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key !== 'Escape') return
+      e.preventDefault()
+      onClose()
     }
     document.addEventListener('keydown', onKey)
     document.body.style.overflow = 'hidden'
@@ -22,7 +27,9 @@ export default function CaseStudyModal({ study, onClose }) {
     }
   }, [study, onClose])
 
-  return (
+  // Portalled to <body>: the screen layer is its own stacking context below the
+  // HUD, so rendering in place let the HUD paint over the dialog.
+  return createPortal(
     <AnimatePresence>
       {study && (
         <motion.div
@@ -33,7 +40,8 @@ export default function CaseStudyModal({ study, onClose }) {
           transition={{ duration: 0.2 }}
         >
           <div
-            className="absolute inset-0 bg-surface-900/80 backdrop-blur-xs"
+            data-testid="case-study-backdrop"
+            className="absolute inset-0 bg-ink-950/90 backdrop-blur-xs"
             onClick={onClose}
             aria-hidden
           />
@@ -45,30 +53,30 @@ export default function CaseStudyModal({ study, onClose }) {
             animate={{ y: 0, opacity: 1, scale: 1 }}
             exit={{ y: 24, opacity: 0 }}
             transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-            className="relative z-10 max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-t-3xl border border-white/10 bg-surface-800 p-6 sm:rounded-3xl sm:p-8"
+            className="relative z-10 max-h-[92dvh] w-full max-w-2xl overflow-y-auto rounded-t-3xl border border-bone/15 bg-ink-900 p-6 shadow-[0_24px_80px_rgb(0_0_0/0.6)] sm:rounded-3xl sm:p-8"
           >
             <button
               ref={closeRef}
               type="button"
               onClick={onClose}
               aria-label="Close case study"
-              className="tap absolute right-2 top-2 rounded-full text-surface-400 transition hover:text-mint-400"
+              className="tap absolute right-2 top-2 rounded-full text-bone/70 transition hover:text-[var(--accent-hi)]"
             >
               <X size={22} />
             </button>
 
-            <span className="font-mono text-[11px] uppercase tracking-widest text-mint-400">
+            <span className="font-mono text-[11px] uppercase tracking-widest text-[var(--accent-hi)]">
               {study.badge}
             </span>
             <h3
               id="cs-title"
-              className="mb-4 mt-1 font-heading text-fluid-xl font-bold leading-tight text-surface-50"
+              className="mb-4 mt-1 pr-10 font-display text-[clamp(1.5rem,1.2rem+1.4vw,2.25rem)] uppercase leading-tight text-bone"
             >
               {study.title}
             </h3>
 
             {study.vid && (
-              <div className="mb-6 aspect-video overflow-hidden rounded-xl border border-white/[0.06]">
+              <div className="mb-6 aspect-video overflow-hidden rounded-xl border border-bone/10">
                 <img
                   src={`https://img.youtube.com/vi/${study.vid}/maxresdefault.jpg`}
                   alt={`${study.title} preview`}
@@ -78,17 +86,17 @@ export default function CaseStudyModal({ study, onClose }) {
               </div>
             )}
 
-            <p className="mb-6 text-fluid-base leading-relaxed text-surface-300">{study.overview}</p>
+            <p className="mb-6 text-fluid-base leading-relaxed text-bone/80">{study.overview}</p>
 
             <Block label="My Role">
-              <p className="text-sm leading-relaxed text-surface-300">{study.role}</p>
+              <p className="text-sm leading-relaxed text-bone/80">{study.role}</p>
             </Block>
 
             <Block label="What I Built">
               <ul className="space-y-2">
                 {study.highlights.map((h) => (
-                  <li key={h} className="flex gap-2.5 text-sm leading-relaxed text-surface-300">
-                    <Check size={16} className="mt-0.5 shrink-0 text-mint-400" aria-hidden />
+                  <li key={h} className="flex gap-2.5 text-sm leading-relaxed text-bone/80">
+                    <Check size={16} className="mt-0.5 shrink-0 text-[var(--accent)]" aria-hidden />
                     <span>{h}</span>
                   </li>
                 ))}
@@ -106,7 +114,7 @@ export default function CaseStudyModal({ study, onClose }) {
             </Block>
 
             <Block label="Outcome">
-              <p className="text-sm leading-relaxed text-surface-300">{study.outcome}</p>
+              <p className="text-sm leading-relaxed text-bone/80">{study.outcome}</p>
             </Block>
 
             {study.links?.length > 0 && (
@@ -117,7 +125,7 @@ export default function CaseStudyModal({ study, onClose }) {
                     href={l.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="tap gap-2 rounded-xl bg-mint-500 px-5 py-2.5 text-sm font-bold text-surface-900 transition hover:shadow-[0_0_28px_rgba(0,214,138,0.25)]"
+                    className="tap gap-2 rounded-lg bg-[var(--accent)] px-5 py-2.5 text-sm font-bold text-ink-950 transition hover:bg-[var(--accent-hi)]"
                   >
                     {l.type === 'github' ? <Github size={16} /> : l.type === 'video' ? <Play size={16} /> : <ExternalLink size={16} />}
                     {l.label}
@@ -128,14 +136,15 @@ export default function CaseStudyModal({ study, onClose }) {
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   )
 }
 
 function Block({ label, children }) {
   return (
-    <div className="mb-5 border-t border-white/[0.06] pt-5">
-      <h4 className="mb-2.5 font-mono text-[11px] uppercase tracking-widest text-mint-400/80">
+    <div className="mb-5 border-t border-bone/10 pt-5">
+      <h4 className="mb-2.5 font-mono text-[11px] uppercase tracking-widest text-[var(--accent-hi)]">
         {label}
       </h4>
       {children}
