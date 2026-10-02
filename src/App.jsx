@@ -32,6 +32,9 @@ export default function App() {
   const [plain, setPlain] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const panelRef = useRef(null)
+  const sheetRef = useRef(null)
+  const menuButtonRef = useRef(null)
+  const sheetWasOpen = useRef(false)
 
   const screen = getScreen(screenId) ?? getScreen(DEFAULT_SCREEN_ID)
 
@@ -57,6 +60,18 @@ export default function App() {
     if (document.activeElement?.closest('[role="tablist"]')) return
     panelRef.current?.focus({ preventScroll: true })
   }, [screen.id])
+
+  // The sheet is modal: opening it puts focus on the active tab inside it, and
+  // closing it (by any route) hands focus back to the MENU button.
+  useEffect(() => {
+    if (menuOpen) {
+      sheetWasOpen.current = true
+      sheetRef.current?.querySelector('[role="tab"][aria-selected="true"]')?.focus()
+    } else if (sheetWasOpen.current) {
+      sheetWasOpen.current = false
+      menuButtonRef.current?.focus()
+    }
+  }, [menuOpen])
 
   const skipToPanel = (e) => {
     // The panel id is not a route; following the href would fire hashchange.
@@ -91,7 +106,9 @@ export default function App() {
     }
 
     const onEnd = (e) => {
-      if (menuOpen) return
+      // Never swipe the screen out from under an overlay (the menu sheet or
+      // a case study) — the gesture was meant for whatever is on top.
+      if (document.querySelector('[role="dialog"]')) return
       const dx = e.changedTouches[0].clientX - startX
       const dy = e.changedTouches[0].clientY - startY
       if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return
@@ -106,7 +123,7 @@ export default function App() {
       window.removeEventListener('touchstart', onStart)
       window.removeEventListener('touchend', onEnd)
     }
-  }, [screen.id, setScreenId, menuOpen])
+  }, [screen.id, setScreenId])
 
   const clearToast = useCallback(() => setToast(''), [])
 
@@ -171,7 +188,10 @@ export default function App() {
 
             <div className="absolute left-[var(--gutter)] top-[calc(var(--hud-pad)+2.5rem)] z-30 flex gap-2 lg:hidden">
               <button
+                ref={menuButtonRef}
                 type="button"
+                aria-haspopup="dialog"
+                aria-expanded={menuOpen}
                 onClick={() => setMenuOpen(true)}
                 className="tap gap-2 rounded-lg border border-bone/20 bg-ink-950/70 px-3.5 py-2 font-mono text-[11px] tracking-[0.16em] text-bone"
               >
@@ -202,6 +222,21 @@ export default function App() {
         <AnimatePresence>
           {menuOpen && (
             <motion.div
+              key="sheet-backdrop"
+              data-testid="sheet-backdrop"
+              aria-hidden
+              onClick={() => setMenuOpen(false)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: ambient ? 0.3 : 0 }}
+              className="fixed inset-0 z-40 bg-ink-950/60 lg:hidden"
+            />
+          )}
+          {menuOpen && (
+            <motion.div
+              key="sheet"
+              ref={sheetRef}
               role="dialog"
               aria-modal="true"
               aria-label="Menu"
@@ -209,7 +244,7 @@ export default function App() {
               animate={{ y: 0 }}
               exit={{ y: '100%' }}
               transition={{ type: 'tween', duration: ambient ? 0.3 : 0, ease: [0.4, 0, 0.2, 1] }}
-              className="fixed inset-x-0 bottom-0 z-40 max-h-[80svh] overflow-y-auto rounded-t-2xl border-t border-bone/15 bg-ink-950/97 p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] backdrop-blur-xl lg:hidden"
+              className="fixed inset-x-0 bottom-0 z-50 max-h-[80svh] overflow-y-auto rounded-t-2xl border-t border-bone/15 bg-ink-950/97 p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] backdrop-blur-xl lg:hidden"
             >
               <Menu
                 activeId={screen.id}
