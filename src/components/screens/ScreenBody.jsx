@@ -2,11 +2,17 @@ import { getScreen } from '../../data/screens'
 import StartScreen from './StartScreen'
 import AboutScreen from './AboutScreen'
 import SkillsScreen from './SkillsScreen'
+import ProjectsScreen from './ProjectsScreen'
+import ExperienceScreen from './ExperienceScreen'
+import AchievementsScreen from './AchievementsScreen'
 
 const BODIES = {
   start: StartScreen,
   about: AboutScreen,
   skills: SkillsScreen,
+  projects: ProjectsScreen,
+  experience: ExperienceScreen,
+  achievements: AchievementsScreen,
 }
 
 export default function ScreenBody({ screenId }) {
