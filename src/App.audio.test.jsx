@@ -40,7 +40,7 @@ describe('App — no audio before opt-in', () => {
     window.localStorage.setItem('kj-radio', 'on')
     render(<App />)
     expect(audio.Ctor).not.toHaveBeenCalled()
-    await act(async () => fireEvent.pointerDown(document.body))
+    await act(async () => fireEvent.pointerDown(document.body, { pointerType: 'mouse' }))
     expect(audio.Ctor).toHaveBeenCalledTimes(1)
   })
 })

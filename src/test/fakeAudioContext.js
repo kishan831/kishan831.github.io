@@ -49,19 +49,29 @@ export class FakeAudioContext {
     this.currentTime = 0
     this.sampleRate = 8000
     this.state = 'suspended'
+    this.onstatechange = null
+    // Set to true to model a browser that has not seen a user activation yet:
+    // resume() then never settles and the context stays suspended.
+    this.blockResume = false
     this.destination = new FakeNode(this, 'destination')
     this.resume = vi.fn(() => {
-      this.state = 'running'
+      if (this.blockResume) return new Promise(() => {})
+      this.setState('running')
       return Promise.resolve()
     })
     this.suspend = vi.fn(() => {
-      this.state = 'suspended'
+      this.setState('suspended')
       return Promise.resolve()
     })
     this.close = vi.fn(() => {
-      this.state = 'closed'
+      this.setState('closed')
       return Promise.resolve()
     })
+  }
+  setState(state) {
+    if (this.state === state) return
+    this.state = state
+    this.onstatechange?.()
   }
   createGain() {
     const n = new FakeNode(this, 'gain')
@@ -104,10 +114,11 @@ export class FakeAudioContext {
 }
 
 /** Installs a spying AudioContext constructor on window; returns the spy and created contexts. */
-export function installFakeAudio() {
+export function installFakeAudio({ blockResume = false } = {}) {
   const contexts = []
   const Ctor = vi.fn(function AudioContext() {
     const ctx = new FakeAudioContext()
+    ctx.blockResume = blockResume
     contexts.push(ctx)
     return ctx
   })

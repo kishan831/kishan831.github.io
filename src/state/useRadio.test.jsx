@@ -47,7 +47,7 @@ describe('useRadio', () => {
     expect(result.current.on).toBe(false)
   })
 
-  it('remembers ON but waits for the first pointerdown before starting', async () => {
+  it('remembers ON but waits for the first (mouse) pointerdown before starting', async () => {
     window.localStorage.setItem(RADIO_KEY, 'on')
     const engine = fakeEngine()
     const { result } = renderHook(() => useRadio(engine))
@@ -55,11 +55,11 @@ describe('useRadio', () => {
     expect(result.current.playing).toBe(false)
     expect(engine.start).not.toHaveBeenCalled()
 
-    await act(async () => fireEvent.pointerDown(document.body))
+    await act(async () => fireEvent.pointerDown(document.body, { pointerType: 'mouse' }))
     expect(engine.start).toHaveBeenCalledTimes(1)
     expect(result.current.playing).toBe(true)
 
-    await act(async () => fireEvent.pointerDown(document.body))
+    await act(async () => fireEvent.pointerDown(document.body, { pointerType: 'mouse' }))
     expect(engine.start).toHaveBeenCalledTimes(1)
   })
 
@@ -84,11 +84,153 @@ describe('useRadio', () => {
     const engine = fakeEngine()
     engine.start.mockResolvedValueOnce(false)
     const { result } = renderHook(() => useRadio(engine))
-    await act(async () => fireEvent.pointerDown(document.body))
+    await act(async () => fireEvent.pointerDown(document.body, { pointerType: 'mouse' }))
     expect(result.current.playing).toBe(false)
-    await act(async () => fireEvent.pointerDown(document.body))
+    await act(async () => fireEvent.pointerDown(document.body, { pointerType: 'mouse' }))
     expect(engine.start).toHaveBeenCalledTimes(2)
     expect(result.current.playing).toBe(true)
+  })
+
+  it('on touch, a pointerdown is not a user activation; the pointerup of the same tap starts it', async () => {
+    window.localStorage.setItem(RADIO_KEY, 'on')
+    const engine = fakeEngine()
+    const { result } = renderHook(() => useRadio(engine))
+    await act(async () => fireEvent.pointerDown(document.body, { pointerType: 'touch' }))
+    expect(engine.start).not.toHaveBeenCalled()
+    await act(async () => fireEvent.pointerUp(document.body, { pointerType: 'touch' }))
+    expect(engine.start).toHaveBeenCalledTimes(1)
+    expect(result.current.playing).toBe(true)
+  })
+
+  it('starts on touchend and click too (iOS unlocks on those)', async () => {
+    window.localStorage.setItem(RADIO_KEY, 'on')
+    const engine = fakeEngine()
+    const first = renderHook(() => useRadio(engine))
+    await act(async () => fireEvent.touchEnd(document.body))
+    expect(engine.start).toHaveBeenCalledTimes(1)
+    first.unmount()
+
+    const other = fakeEngine()
+    renderHook(() => useRadio(other))
+    await act(async () => fireEvent.click(document.body))
+    expect(other.start).toHaveBeenCalledTimes(1)
+  })
+
+  it('ignores a pen pointerdown and a mouse pointerup', async () => {
+    window.localStorage.setItem(RADIO_KEY, 'on')
+    const engine = fakeEngine()
+    renderHook(() => useRadio(engine))
+    await act(async () => fireEvent.pointerDown(document.body, { pointerType: 'pen' }))
+    await act(async () => fireEvent.pointerUp(document.body, { pointerType: 'mouse' }))
+    expect(engine.start).not.toHaveBeenCalled()
+  })
+
+  it('retries the unlock on later gestures of the same tap while a start is still in flight', async () => {
+    window.localStorage.setItem(RADIO_KEY, 'on')
+    const engine = fakeEngine()
+    engine.start.mockImplementation(() => new Promise(() => {}))
+    renderHook(() => useRadio(engine))
+    await act(async () => fireEvent.pointerUp(document.body, { pointerType: 'touch' }))
+    await act(async () => fireEvent.touchEnd(document.body))
+    await act(async () => fireEvent.click(document.body))
+    expect(engine.start).toHaveBeenCalledTimes(3)
+  })
+
+  it('does not count presses on controls marked data-radio-skip', async () => {
+    window.localStorage.setItem(RADIO_KEY, 'on')
+    const engine = fakeEngine()
+    renderHook(() => useRadio(engine))
+    const button = document.createElement('button')
+    button.setAttribute('data-radio-skip', '')
+    document.body.append(button)
+    try {
+      await act(async () => fireEvent.pointerDown(button, { pointerType: 'mouse' }))
+      await act(async () => fireEvent.click(button))
+      await act(async () => fireEvent.keyDown(button, { key: 'Enter' }))
+      expect(engine.start).not.toHaveBeenCalled()
+    } finally {
+      button.remove()
+    }
+  })
+
+  it('ignores a stale start result after OFF then ON', async () => {
+    const engine = fakeEngine()
+    let settleFirst
+    engine.start
+      .mockImplementationOnce(() => new Promise((r) => (settleFirst = r)))
+      .mockImplementationOnce(async () => true)
+    const { result } = renderHook(() => useRadio(engine))
+    await act(async () => result.current.toggle()) // ON (slow)
+    await act(async () => result.current.toggle()) // OFF
+    await act(async () => result.current.toggle()) // ON (fast, running)
+    expect(result.current.playing).toBe(true)
+    await act(async () => settleFirst(false))
+    expect(result.current.playing).toBe(true)
+  })
+
+  it("follows the engine's running state when it changes after start()", async () => {
+    window.localStorage.setItem(RADIO_KEY, 'on')
+    const engine = fakeEngine()
+    let report
+    engine.subscribe = vi.fn((fn) => {
+      report = fn
+      return () => {}
+    })
+    engine.start.mockResolvedValue(false) // resume slower than the cap
+    const { result } = renderHook(() => useRadio(engine))
+    await act(async () => fireEvent.keyDown(window, { key: 'a' }))
+    expect(result.current.playing).toBe(false)
+    act(() => report(true)) // the resume lands late
+    expect(result.current.playing).toBe(true)
+    act(() => report(false)) // OS interruption
+    expect(result.current.playing).toBe(false)
+  })
+
+  it('ignores engine state reports while off', () => {
+    const engine = fakeEngine()
+    let report
+    engine.subscribe = (fn) => {
+      report = fn
+      return () => {}
+    }
+    const { result } = renderHook(() => useRadio(engine))
+    act(() => report(true))
+    expect(result.current.playing).toBe(false)
+  })
+
+  it('muted: a remembered ON does not start on a gesture, and starts once unmuted', async () => {
+    window.localStorage.setItem(RADIO_KEY, 'on')
+    const engine = fakeEngine()
+    const { rerender } = renderHook(({ muted }) => useRadio(engine, { muted }), {
+      initialProps: { muted: true },
+    })
+    await act(async () => fireEvent.keyDown(window, { key: 'a' }))
+    expect(engine.start).not.toHaveBeenCalled()
+    rerender({ muted: false })
+    await act(async () => fireEvent.keyDown(window, { key: 'a' }))
+    expect(engine.start).toHaveBeenCalledTimes(1)
+  })
+
+  it('muted: suspends a playing radio, silences blips, and resumes when unmuted', async () => {
+    const engine = fakeEngine()
+    const { result, rerender } = renderHook(({ muted }) => useRadio(engine, { muted }), {
+      initialProps: { muted: false },
+    })
+    await act(async () => result.current.toggle())
+    rerender({ muted: true })
+    expect(engine.suspend).toHaveBeenCalledTimes(1)
+    act(() => result.current.blip('move'))
+    expect(engine.blip).not.toHaveBeenCalled()
+    expect(result.current.on).toBe(true)
+    expect(window.localStorage.getItem(RADIO_KEY)).toBe('on')
+
+    // Coming back from a hidden tab while still muted stays silent.
+    act(() => setVisibility('hidden'))
+    act(() => setVisibility('visible'))
+    expect(engine.resume).not.toHaveBeenCalled()
+
+    rerender({ muted: false })
+    expect(engine.resume).toHaveBeenCalledTimes(1)
   })
 
   it('blips only while on, with the given kind', async () => {

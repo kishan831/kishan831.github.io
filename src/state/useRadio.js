@@ -20,33 +20,68 @@ function save(on) {
   }
 }
 
-/** The toggle itself handles its own presses; it must not count as the "first gesture". */
-const isToggle = (target) => target instanceof Element && target.closest('[data-radio-toggle]') !== null
+/**
+ * The toggle handles its own presses, and controls marked `data-radio-skip`
+ * (the ways into the plain résumé, which has no radio control) must not
+ * start audio either, so neither counts as the "first gesture".
+ */
+const isExempt = (target) =>
+  target instanceof Element && target.closest('[data-radio-toggle], [data-radio-skip]') !== null
+
+/**
+ * Only events that grant user activation can unlock audio. Per the HTML
+ * spec a pointerdown counts only for a mouse; touch and pen activate on
+ * pointerup / touchend. Escape never counts. `click` is a backstop for
+ * browsers (older iOS) that unlock on it rather than on touchend.
+ */
+function isActivation(e) {
+  switch (e.type) {
+    case 'keydown':
+      return e.key !== 'Escape'
+    case 'pointerdown':
+      return e.pointerType === 'mouse'
+    case 'pointerup':
+      return e.pointerType !== 'mouse'
+    default:
+      return true // touchend, click
+  }
+}
+
+const GESTURES = ['pointerdown', 'pointerup', 'touchend', 'click', 'keydown']
 
 /**
  * Opt-in HUD radio. Off by default. A remembered ON never plays on load —
  * browsers block it and visitors hate it — so it waits for the first
- * pointerdown or keydown anywhere on the page. `playing` is true once the
- * engine has actually been asked to play; until then ON is "pending".
+ * user-activation gesture anywhere on the page. `playing` is true only while
+ * the engine reports audio actually running; until then ON is "pending".
+ *
+ * `muted` silences an ON radio without changing the stored preference (the
+ * plain résumé view has no radio control, so nothing may play there).
  */
-export function useRadio(engine = defaultEngine) {
+export function useRadio(engine = defaultEngine, { muted = false } = {}) {
   const [on, setOn] = useState(load)
   const [playing, setPlaying] = useState(false)
   const onRef = useRef(on)
-  const playingRef = useRef(false)
+  // The engine has been asked to play (and not stopped since).
+  const startedRef = useRef(false)
+  const mutedRef = useRef(muted)
+  mutedRef.current = muted
+  // Only the newest start() may settle `playing`; older results are stale.
+  const tokenRef = useRef(0)
   const engineRef = useRef(engine)
   engineRef.current = engine
 
   const begin = useCallback(() => {
-    playingRef.current = true
-    setPlaying(true)
-    Promise.resolve(engineRef.current.start()).then((ok) => {
-      // Blocked (no activation yet) or no Web Audio: go back to pending.
-      if (ok === false && onRef.current) {
-        playingRef.current = false
-        setPlaying(false)
-      }
-    }, () => {})
+    startedRef.current = true
+    const token = ++tokenRef.current
+    Promise.resolve(engineRef.current.start()).then(
+      (ok) => {
+        if (token !== tokenRef.current || !onRef.current) return
+        // Blocked (no activation yet) or no Web Audio: stay pending.
+        setPlaying(ok !== false)
+      },
+      () => {},
+    )
   }, [])
 
   const toggle = useCallback(() => {
@@ -57,50 +92,63 @@ export function useRadio(engine = defaultEngine) {
     if (next) {
       begin()
     } else {
-      playingRef.current = false
+      startedRef.current = false
+      tokenRef.current += 1
       setPlaying(false)
       engineRef.current.stop()
     }
   }, [begin])
 
-  // Remembered ON: start on the first real gesture. Capture phase so the
-  // engine is running before the same keydown reaches the menu and blips.
+  // The engine's own view of the context: a slow resume that lands after
+  // start() stopped waiting, or a suspend (hidden tab, OS interruption).
   useEffect(() => {
-    if (!on || playing) return
+    const unsubscribe = engineRef.current.subscribe?.((running) => {
+      if (onRef.current && startedRef.current) setPlaying(running)
+    })
+    return () => unsubscribe?.()
+  }, [])
+
+  // Remembered ON (or a start the browser blocked): retry on every
+  // activation gesture until audio runs. Capture phase so the engine is
+  // running before the same keydown reaches the menu and blips.
+  useEffect(() => {
+    if (!on || playing || muted) return
     const onGesture = (e) => {
-      if (isToggle(e.target)) return
-      // Escape is not a user activation, so it could not unlock audio anyway.
-      if (e.type === 'keydown' && e.key === 'Escape') return
-      if (playingRef.current) return
+      if (isExempt(e.target) || !isActivation(e)) return
       begin()
     }
-    window.addEventListener('pointerdown', onGesture, true)
-    window.addEventListener('keydown', onGesture, true)
+    for (const type of GESTURES) window.addEventListener(type, onGesture, true)
     return () => {
-      window.removeEventListener('pointerdown', onGesture, true)
-      window.removeEventListener('keydown', onGesture, true)
+      for (const type of GESTURES) window.removeEventListener(type, onGesture, true)
     }
-  }, [on, playing, begin])
+  }, [on, playing, muted, begin])
+
+  // Hidden tab or muted: suspend. Visible and unmuted again: resume.
+  const syncPause = useCallback(() => {
+    if (!onRef.current || !startedRef.current) return
+    if (mutedRef.current || document.visibilityState === 'hidden') engineRef.current.suspend()
+    else engineRef.current.resume()
+  }, [])
 
   useEffect(() => {
-    const onVisibility = () => {
-      if (!onRef.current || !playingRef.current) return
-      if (document.visibilityState === 'hidden') engineRef.current.suspend()
-      else engineRef.current.resume()
-    }
-    document.addEventListener('visibilitychange', onVisibility)
-    return () => document.removeEventListener('visibilitychange', onVisibility)
-  }, [])
+    document.addEventListener('visibilitychange', syncPause)
+    return () => document.removeEventListener('visibilitychange', syncPause)
+  }, [syncPause])
+
+  // A no-op on mount (nothing has started yet); after that, every change.
+  useEffect(() => {
+    syncPause()
+  }, [muted, syncPause])
 
   useEffect(
     () => () => {
-      if (playingRef.current) engineRef.current.stop()
+      if (startedRef.current) engineRef.current.stop()
     },
     [],
   )
 
   const blip = useCallback((kind) => {
-    if (!onRef.current) return
+    if (!onRef.current || mutedRef.current) return
     engineRef.current.blip(kind)
   }, [])
 

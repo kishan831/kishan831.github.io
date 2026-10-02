@@ -28,11 +28,12 @@ export default function App() {
   const [screenId, setScreenId] = useHashRoute()
   const { visit, isVisited, stars, shipped, ratio } = useProgress()
   const ambient = useAmbientMotion()
-  const radio = useRadio()
+  const [plain, setPlain] = useState(false)
+  // The plain résumé has no radio control, so an ON radio is silenced there.
+  const radio = useRadio(undefined, { muted: plain })
   const { blip } = radio
   const [toast, setToast] = useState('')
   const [ready, setReady] = useState(false)
-  const [plain, setPlain] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const panelRef = useRef(null)
   const sheetRef = useRef(null)
@@ -199,6 +200,7 @@ export default function App() {
               <Menu activeId={screen.id} isVisited={isVisited} onSelect={selectScreen} />
               <button
                 type="button"
+                data-radio-skip
                 onClick={() => setPlain(true)}
                 className="tap mt-4 w-full justify-start px-3 font-mono text-[11px] tracking-[0.16em] text-bone/70 short:mt-2 underline decoration-dotted underline-offset-4 hover:text-bone"
               >
@@ -219,6 +221,7 @@ export default function App() {
               </button>
               <button
                 type="button"
+                data-radio-skip
                 onClick={() => setPlain(true)}
                 className="tap rounded-lg border border-bone/20 bg-ink-950/70 px-3 py-2 font-mono text-[11px] tracking-[0.16em] text-bone/70"
               >
@@ -282,6 +285,7 @@ export default function App() {
               />
               <button
                 type="button"
+                data-radio-skip
                 onClick={() => {
                   setMenuOpen(false)
                   setPlain(true)

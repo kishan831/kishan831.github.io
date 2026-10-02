@@ -95,6 +95,18 @@ export function createRadio() {
   let chordTimer = null
   let teardownTimer = null
   let chordIndex = 0
+  // Set when a start() could not get the context running (no user activation
+  // yet). While blocked, blips are dropped: a suspended context's clock is
+  // frozen, so they would all pile up at one instant and burst out together
+  // the moment audio is finally allowed.
+  let blocked = false
+  const listeners = new Set()
+
+  const isRunning = () => ctx?.state === 'running'
+
+  function notify(running) {
+    for (const fn of listeners) safely(() => fn(running))
+  }
 
   function ensureContext() {
     if (ctx) return true
@@ -105,7 +117,15 @@ export function createRadio() {
       return false
     }
     try {
-      ctx = new Ctor()
+      const created = new Ctor()
+      ctx = created
+      // Report the context's real state: a resume that lands after start()
+      // gave up waiting, an OS interruption, a suspend for a hidden tab.
+      created.onstatechange = () => {
+        if (created !== ctx) return
+        if (created.state === 'running') blocked = false
+        notify(created.state === 'running')
+      }
       return true
     } catch {
       unavailable = true
@@ -297,40 +317,51 @@ export function createRadio() {
     if (ctx) {
       const closing = ctx
       ctx = null
+      closing.onstatechange = null
       safely(() => closing.close?.()?.catch?.(() => {}))
     }
     mode = 'idle'
     paused = false
+    blocked = false
   }
 
   return {
-    /** Creates or resumes the context and fades the pad in. Resolves true once audio is running. */
+    /**
+     * Creates or resumes the context and fades the pad in. Resolves true once
+     * audio is running. Safe to call again while already playing: it only
+     * retries resume(), which is what a later user-activation gesture needs.
+     * resume() is called synchronously, inside the caller's event handler,
+     * because that is where browsers (iOS Safari above all) allow it.
+     */
     async start() {
       if (!ensureContext()) return false
       if (teardownTimer) {
         clearTimeout(teardownTimer)
         teardownTimer = null
       }
-      try {
-        if (!graph) {
-          build()
-          chordIndex = 0
-          graph.chord = playChord(CHORDS[0])
+      if (mode !== 'playing') {
+        try {
+          if (!graph) {
+            build()
+            chordIndex = 0
+            graph.chord = playChord(CHORDS[0])
+          }
+          mode = 'playing'
+          paused = false
+          rampMaster(PAD_PEAK, FADE_IN)
+          if (!chordTimer) scheduleChords()
+        } catch {
+          teardown()
+          return false
         }
-        mode = 'playing'
-        paused = false
-        rampMaster(PAD_PEAK, FADE_IN)
-        if (!chordTimer) scheduleChords()
-      } catch {
-        teardown()
-        return false
       }
 
+      const context = ctx
       // resume() can stay pending forever without a user activation, so cap the wait.
       let timer
       try {
         await Promise.race([
-          Promise.resolve(ctx.resume()),
+          Promise.resolve(context.resume()),
           new Promise((r) => {
             timer = setTimeout(r, 400)
           }),
@@ -340,7 +371,16 @@ export function createRadio() {
       } finally {
         clearTimeout(timer)
       }
-      return ctx?.state === 'running'
+      if (context !== ctx) return false
+      const running = isRunning()
+      if (!running && mode === 'playing') blocked = true
+      return running
+    },
+
+    /** Subscribes to whether audio is actually running. Returns an unsubscribe function. */
+    subscribe(fn) {
+      listeners.add(fn)
+      return () => listeners.delete(fn)
     },
 
     /** Fades out over ~1s, then stops every source and releases the graph and context. */
@@ -354,7 +394,10 @@ export function createRadio() {
 
     /** A soft UI sound: 'move' (one short note) or 'select' (two rising notes). */
     blip(kind) {
-      if (mode !== 'playing' || !ctx || !graph) return
+      if (mode !== 'playing' || !ctx || !graph || paused) return
+      // A context still waiting on its first resume (same gesture) is about
+      // to run, so the blip is kept; one the browser refused is not.
+      if (blocked && !isRunning()) return
       safely(() => {
         const t = ctx.currentTime + 0.005
         const notes =

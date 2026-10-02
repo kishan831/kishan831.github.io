@@ -171,6 +171,96 @@ describe('radio engine', () => {
     expect(ctx.of('oscillator').length).toBeGreaterThan(count)
   })
 
+  it('a start() the browser blocks reports false after the cap, and later blips are dropped, not queued', async () => {
+    audio.restore()
+    audio = installFakeAudio({ blockResume: true })
+    const radio = createRadio()
+    const started = radio.start()
+    await vi.advanceTimersByTimeAsync(450)
+    await expect(started).resolves.toBe(false)
+    const [ctx] = audio.contexts
+    const before = ctx.of('oscillator').length
+    radio.blip('move')
+    radio.blip('select')
+    expect(ctx.of('oscillator').length).toBe(before)
+
+    // A later activation gesture retries; once running, blips sound again.
+    ctx.blockResume = false
+    await expect(radio.start()).resolves.toBe(true)
+    expect(audio.Ctor).toHaveBeenCalledTimes(1)
+    radio.blip('move')
+    expect(ctx.of('oscillator').length).toBeGreaterThan(before)
+  })
+
+  it('keeps a blip fired in the same gesture as start(), before the resume settles', async () => {
+    const radio = createRadio()
+    const started = radio.start()
+    const [ctx] = audio.contexts
+    const before = ctx.of('oscillator').length
+    radio.blip('move')
+    expect(ctx.of('oscillator').length).toBeGreaterThan(before)
+    await started
+  })
+
+  it('drops blips while suspended for a hidden tab', async () => {
+    const radio = createRadio()
+    await radio.start()
+    const [ctx] = audio.contexts
+    radio.suspend()
+    const before = ctx.of('oscillator').length
+    radio.blip('move')
+    expect(ctx.of('oscillator').length).toBe(before)
+  })
+
+  it('calling start() again while playing only retries resume: no second pad, no re-fade', async () => {
+    const radio = createRadio()
+    await radio.start()
+    const [ctx] = audio.contexts
+    const nodes = ctx.nodes.length
+    const ramps = masterOf(ctx).gain.events.length
+    await radio.start()
+    expect(ctx.resume).toHaveBeenCalledTimes(2)
+    expect(ctx.nodes.length).toBe(nodes)
+    expect(masterOf(ctx).gain.events.length).toBe(ramps)
+  })
+
+  it('reports the real context state to subscribers, including a resume that lands after the cap', async () => {
+    audio.restore()
+    audio = installFakeAudio({ blockResume: true })
+    const radio = createRadio()
+    const seen = []
+    const unsubscribe = radio.subscribe((running) => seen.push(running))
+    const started = radio.start()
+    await vi.advanceTimersByTimeAsync(450)
+    await expect(started).resolves.toBe(false)
+    const [ctx] = audio.contexts
+
+    ctx.setState('running') // the slow resume finally lands
+    expect(seen).toEqual([true])
+    const before = ctx.of('oscillator').length
+    radio.blip('move')
+    expect(ctx.of('oscillator').length).toBeGreaterThan(before)
+
+    radio.suspend()
+    expect(seen).toEqual([true, false])
+    unsubscribe()
+    ctx.blockResume = false
+    radio.resume()
+    expect(ctx.state).toBe('running')
+    expect(seen).toEqual([true, false])
+  })
+
+  it('a torn-down context closing does not report to subscribers', async () => {
+    const radio = createRadio()
+    await radio.start()
+    const seen = []
+    radio.subscribe((running) => seen.push(running))
+    radio.stop()
+    vi.advanceTimersByTime(1500)
+    expect(audio.contexts[0].close).toHaveBeenCalled()
+    expect(seen).toEqual([])
+  })
+
   it('is a silent no-op without Web Audio', async () => {
     delete window.AudioContext
     const radio = createRadio()

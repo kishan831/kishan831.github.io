@@ -119,7 +119,7 @@ describe('App — KJ-FM radio', () => {
     render(<App />)
     expect(radioButton()).toHaveAttribute('aria-pressed', 'true')
     expect(engine.start).not.toHaveBeenCalled()
-    await act(async () => fireEvent.pointerDown(document.body))
+    await act(async () => fireEvent.pointerDown(document.body, { pointerType: 'mouse' }))
     expect(engine.start).toHaveBeenCalledTimes(1)
   })
 
@@ -133,6 +133,52 @@ describe('App — KJ-FM radio', () => {
     expect(engine.start).toHaveBeenCalledTimes(1)
     expect(engine.blip).toHaveBeenCalledWith('move')
     expect(engine.start.mock.invocationCallOrder[0]).toBeLessThan(engine.blip.mock.invocationCallOrder[0])
+  })
+
+  it('plays the select confirm when a focused tab is chosen with Enter', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await user.click(radioButton())
+    const [menu] = screen.getAllByRole('tablist')
+    within(menu).getByRole('tab', { name: /skills/i }).focus()
+    await user.keyboard('{Enter}')
+    await waitFor(() => expect(document.documentElement).toHaveAttribute('data-screen', 'skills'))
+    expect(engine.blip).toHaveBeenLastCalledWith('select')
+  })
+
+  it('remembers ON and, on a touch tap, starts on the pointerup rather than the pointerdown', async () => {
+    window.localStorage.setItem('kj-radio', 'on')
+    render(<App />)
+    await act(async () => fireEvent.pointerDown(document.body, { pointerType: 'touch' }))
+    expect(engine.start).not.toHaveBeenCalled()
+    await act(async () => fireEvent.pointerUp(document.body, { pointerType: 'touch' }))
+    expect(engine.start).toHaveBeenCalledTimes(1)
+  })
+
+  it('silences a playing radio in the plain résumé view and resumes it on the way back', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await user.click(radioButton())
+    await user.click(screen.getAllByRole('button', { name: /plain/i })[0])
+    expect(engine.suspend).toHaveBeenCalledTimes(1)
+    expect(engine.stop).not.toHaveBeenCalled()
+    swipe(300, 100)
+    expect(engine.blip).not.toHaveBeenCalled()
+
+    await user.click(screen.getByRole('button', { name: /back to the menu/i }))
+    expect(radioButton()).toHaveAttribute('aria-pressed', 'true')
+    expect(engine.resume).toHaveBeenCalledTimes(1)
+  })
+
+  it('with a remembered ON, pressing PLAIN does not start the radio there', async () => {
+    window.localStorage.setItem('kj-radio', 'on')
+    const user = userEvent.setup()
+    render(<App />)
+    await user.click(screen.getAllByRole('button', { name: /plain/i })[0])
+    expect(screen.getByRole('button', { name: /back to the menu/i })).toBeInTheDocument()
+    await user.keyboard('a')
+    await user.click(document.body)
+    expect(engine.start).not.toHaveBeenCalled()
   })
 
   it('turning a remembered ON off with the toggle never starts it', async () => {
