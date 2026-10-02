@@ -1,7 +1,7 @@
 # Portfolio Redesign — "Split Signal"
 
 **Date:** 2026-09-20
-**Status:** Approved design, ready for implementation planning
+**Status:** SUPERSEDED by 2026-09-20-portfolio-pause-menu-design.md — concept changed the same day after Kishan shared a GTA-styled reference. Kept for the diagnosis in section 1, which still holds.
 **Supersedes:** the Phase 2 visual pass currently on `main`
 
 ---

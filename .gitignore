@@ -20,3 +20,8 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
+
+# Local reference material (screenshots, mood boards) — never deployed
+/reference/
+/GTA Theme portfolio/
+/public/assets/GTA Theme portfolio/

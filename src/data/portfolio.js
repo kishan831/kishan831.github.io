@@ -8,10 +8,10 @@ import {
 } from 'lucide-react'
 
 export const stats = [
-  { value: 5, label: 'Years Exp.' },
-  { value: 50, label: 'Projects' },
-  { value: 67, label: 'Casino Games' },
-  { value: 15, label: 'Team Led', accent: true },
+  { value: 5, suffix: '+', label: 'Years Exp.' },
+  { value: 50, suffix: '+', label: 'Projects' },
+  { value: 67, suffix: '+', label: 'Casino Games' },
+  { value: 15, suffix: '', label: 'Team Led', accent: true },
 ]
 
 export const coreSkills = [
@@ -168,3 +168,57 @@ export const caseStudies = {
 // To enable silent in-page submission instead, create a free form at formspree.io
 // and set FORMSPREE_ACTION to its endpoint (e.g. https://formspree.io/f/abcdwxyz).
 export const FORMSPREE_ACTION = ''
+
+/**
+ * Capability bars for the Skills screen.
+ *
+ * Every bar is measured in a real, checkable unit. Self-assigned percentages
+ * are deliberately absent — they read as a junior signal and none of these
+ * numbers needs one.
+ */
+export const capabilities = [
+  { label: 'Unity Engine', unit: '5 YRS', fill: 1 },
+  { label: 'Casino & Slot Mechanics', unit: '67+ TITLES', fill: 1 },
+  { label: 'Built From Scratch', unit: '30+ GAMES', fill: 0.85 },
+  { label: 'Team Leadership', unit: '15 DEVS', fill: 0.8 },
+  { label: 'Multiplayer & Realtime', unit: 'PHOTON · SOCKET.IO', fill: 0.75 },
+  { label: 'Web & Product', unit: 'REACT · NODE · TS', fill: 0.6 },
+  { label: 'Cross-Platform Delivery', unit: 'WEBGL · ANDROID · IOS', fill: 0.8 },
+]
+
+/**
+ * Web Ops missions. Locked entries are a designed state, not a gap — a game
+ * menu can show something not yet unlocked without looking broken, which a
+ * conventional portfolio cannot.
+ *
+ * Move an entry to status 'live' and add url/repo once it ships.
+ */
+export const webProjects = [
+  {
+    title: 'Realtime Slot Dashboard',
+    desc: 'Operator-facing live view of sessions, RTP and jackpot state over WebSockets.',
+    stack: ['React', 'Node', 'Socket.IO'],
+    status: 'locked',
+  },
+  {
+    title: 'Game Config Studio',
+    desc: 'Browser tool for authoring and validating slot configurations without a Unity build.',
+    stack: ['React', 'TypeScript', 'Node'],
+    status: 'locked',
+  },
+  {
+    title: 'This Portfolio',
+    desc: 'Nine-screen pause-menu interface. React 19, Vite, Tailwind 4, no framework beyond that.',
+    stack: ['React', 'Vite', 'Tailwind'],
+    status: 'live',
+    repo: 'https://github.com/kishan831/kishan831.github.io',
+  },
+]
+
+export const achievements = [
+  { title: '67+ casino games shipped', desc: 'One platform, shared infrastructure, Addressables delivery.' },
+  { title: '30+ games built from scratch', desc: 'Architected end to end within the Slot Empire platform.' },
+  { title: 'Led 15 developers', desc: 'Across 50+ projects at PhiBonacci Solutions.' },
+  { title: 'Best Project Award 2021', desc: 'Government Polytechnic Shahjahanpur, Diploma in C.S.E.' },
+  { title: 'Stack Engine & RGS integration', desc: 'Server-driven game logic for web-playable deployment.' },
+]

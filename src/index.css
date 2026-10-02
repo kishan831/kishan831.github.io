@@ -1,20 +1,84 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+/* Laptop heights. The desktop menu column (wordmark + nine 44px tabs + PLAIN)
+   is taller than the space above the HUD on 1366x768 and 1280x720, so these
+   tighten its rhythm. `short` collapses the wordmark to one line; `shorter`
+   also trims the column's top and bottom padding. */
+@custom-variant short (@media (max-height: 879px));
+@custom-variant shorter (@media (max-height: 767px));
+
+/* ============================================================
+   THEME  (Tailwind v4 — CSS-first config, replaces tailwind.config.js)
+   ============================================================ */
+@theme {
+  --color-ink-950: #05050a;
+  --color-ink-900: #0a0a12;
+  --color-ink-800: #12121c;
+  --color-ink-700: #1b1b29;
+  --color-bone: #f5f5f7;
+  --color-muted: #8d8da3;
+  --color-mint-500: #00d68a;
+
+  --font-display: 'Anton', 'Arial Narrow', sans-serif;
+  --font-script: 'Kaushan Script', cursive;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --text-fluid-sm: clamp(0.875rem, 0.83rem + 0.22vw, 1rem);
+  --text-fluid-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-fluid-lg: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);
+
+  --container-content: 72rem;
+}
 
 /* ============================================================
    DESIGN TOKENS
    ============================================================ */
-:root {
-  --mint: #00d68a;
-  --bg: #07070d;
-  --card: rgba(14, 14, 27, 0.7);
-  --border: rgba(255, 255, 255, 0.06);
-
-  /* Fluid spacing scale (used for section rhythm) */
-  --space-section: clamp(4rem, 2.5rem + 7vw, 8rem);
-  --gutter: clamp(1.25rem, 0.8rem + 2vw, 2rem);
+@font-face {
+  font-family: 'Anton';
+  src: url('/fonts/anton-latin.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
 }
+
+@font-face {
+  font-family: 'Kaushan Script';
+  src: url('/fonts/kaushan-script-latin.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  --ink: #05050a;
+  --bone: #f5f5f7;
+  --muted: #8d8da3;
+
+  /* Overridden per screen below. Start-screen values are the defaults so a
+     first paint before hydration already looks right. */
+  --accent: #ff3e88;
+  --accent-hi: #ff7ab0;
+  --accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
+
+  --fs-wordmark: clamp(2.5rem, 1.2rem + 6.5vw, 7rem);
+  --fs-screen: clamp(1.75rem, 1.1rem + 3.4vw, 4rem);
+  --fs-hud: clamp(0.625rem, 0.6rem + 0.2vw, 0.8125rem);
+
+  --gutter: clamp(1rem, 0.6rem + 2vw, 2.5rem);
+  --hud-pad: clamp(0.75rem, 0.5rem + 1.2vw, 1.5rem);
+
+  /* One transition covers every accent-driven property. */
+  --accent-transition: 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-screen='start']        { --accent: #ff3e88; --accent-hi: #ff7ab0; }
+[data-screen='about']        { --accent: #ff8a3d; --accent-hi: #ffad74; }
+[data-screen='skills']       { --accent: #7c6cff; --accent-hi: #a79bff; }
+[data-screen='projects']     { --accent: #19c8ff; --accent-hi: #6bdcff; }
+[data-screen='experience']   { --accent: #5b7cff; --accent-hi: #8fa5ff; }
+[data-screen='achievements'] { --accent: #ff2e63; --accent-hi: #ff6f93; }
+[data-screen='academy']      { --accent: #ffb43d; --accent-hi: #ffcd7a; }
+[data-screen='contact']      { --accent: #3dd6ff; --accent-hi: #84e6ff; }
+[data-screen='exit']         { --accent: #ff9e6b; --accent-hi: #ffc0a0; }
 
 /* ============================================================
    RESPONSIVE FOUNDATION  (the Android "UI cut off" fixes)
@@ -44,9 +108,9 @@ section[id] {
 }
 
 body {
-  background: var(--bg);
-  color: theme('colors.surface.200');
-  font-family: theme('fontFamily.body');
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -94,23 +158,28 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #07070d;
+  background: var(--ink);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1c1c2e;
+  background: #1b1b29;
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--mint);
+  background: var(--color-mint-500);
 }
 
 /* ============================================================
    ACCESSIBILITY — visible keyboard focus + skip link
    ============================================================ */
-:focus-visible {
-  outline: 2px solid var(--mint);
-  outline-offset: 3px;
-  border-radius: 4px;
+/* In the base layer so a utility (the panel's outline-none) can opt out.
+   The ring takes the screen's accent: every accent is a bright tint on the
+   ink background, well above 3:1. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
 }
 
 /* Skip-to-content link: hidden until keyboard-focused */
@@ -122,7 +191,7 @@ body {
   transform: translateY(-150%);
   transition: transform 0.2s ease;
   border-radius: 0.5rem;
-  background: var(--mint);
+  background: var(--color-mint-500);
   padding: 0.6rem 1rem;
   font-size: 0.8rem;
   font-weight: 700;
@@ -149,19 +218,6 @@ body {
     color: transparent;
   }
 
-  .card {
-    background: var(--card);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--border);
-    transition: border-color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
-  }
-  .card:hover {
-    border-color: rgba(0, 214, 138, 0.18);
-    transform: translateY(-6px);
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.25);
-  }
-
   /* Touch targets: ensure tappable elements meet 44px minimum on mobile */
   .tap {
     @apply inline-flex items-center justify-center;
@@ -175,86 +231,212 @@ body {
     color: #4dfdb5;
     border-color: rgba(0, 214, 138, 0.18);
   }
-}
 
-/* ============================================================
-   HERO FX — lightweight floating casino elements (no WebGL)
-   ============================================================ */
-.hero-fx {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.fx-disc {
-  position: absolute;
-  /* parallax: translate by pointer offset × per-disc depth */
-  transform: translate3d(
-    calc(var(--px, 0) * var(--depth, 16) * 1px),
-    calc(var(--py, 0) * var(--depth, 16) * 1px),
-    0
-  );
-  transition: transform 0.35s ease-out;
-  will-change: transform;
-}
-
-.fx-inner {
-  display: block;
-  width: var(--size, 64px);
-  height: var(--size, 64px);
-  border-radius: 50%;
-  animation: fxFloat 8s ease-in-out infinite;
-  will-change: transform;
-}
-
-.fx-blur {
-  filter: blur(2px);
-  opacity: 0.7;
-}
-
-.fx-coin {
-  background: radial-gradient(circle at 34% 28%, #ffdca6 0%, #fca556 52%, #e07a2f 100%);
-  border: 2px solid rgba(255, 255, 255, 0.28);
-  box-shadow: 0 0 36px rgba(252, 165, 86, 0.22), inset 0 -4px 10px rgba(0, 0, 0, 0.25),
-    inset 0 4px 8px rgba(255, 255, 255, 0.35);
-}
-
-.fx-chip {
-  background: radial-gradient(circle at 34% 28%, #7dffce 0%, #00d68a 52%, #007a4d 100%);
-  border: 3px dashed rgba(255, 255, 255, 0.32);
-  box-shadow: 0 0 40px rgba(0, 214, 138, 0.22), inset 0 -4px 10px rgba(0, 0, 0, 0.25);
-}
-
-@keyframes fxFloat {
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
+  /* The menu sits over the left third of every plate. Several plates are busy
+     there, so the scrim is a guarantee of contrast rather than a nicety. */
+  .scrim-left {
+    background: linear-gradient(
+      90deg,
+      rgb(5 5 10 / 0.92) 0%,
+      rgb(5 5 10 / 0.78) 28%,
+      rgb(5 5 10 / 0.35) 52%,
+      transparent 78%
+    );
   }
-  50% {
-    transform: translateY(-20px) rotate(10deg);
-  }
-}
 
-/* Paused when hero is scrolled out of view */
-.hero-fx.is-paused .fx-inner {
-  animation-play-state: paused;
+  /* At lg the copy runs past the menu column to the panel's max-w-xl edge
+     (~gutter + column + gap + 36rem, roughly 1010px at 1440 and 1920), often
+     over the brightest sky. Hold the scrim dark to that edge, then fade. */
+  @media (min-width: 64rem) {
+    .scrim-left {
+      background: linear-gradient(
+        90deg,
+        rgb(5 5 10 / 0.92) 0,
+        rgb(5 5 10 / 0.84) calc(var(--gutter) + min(30vw, 22rem) + 3.5rem),
+        rgb(5 5 10 / 0.76) calc(var(--gutter) + min(30vw, 22rem) + 39.5rem),
+        transparent calc(var(--gutter) + min(30vw, 22rem) + 54rem)
+      );
+    }
+  }
+
+  .scrim-bottom {
+    background: linear-gradient(
+      0deg,
+      rgb(5 5 10 / 0.88) 0%,
+      rgb(5 5 10 / 0.45) 40%,
+      transparent 100%
+    );
+  }
+
+  .wordmark {
+    font-family: var(--font-display);
+    font-size: var(--fs-wordmark);
+    line-height: 0.84;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    transform: skewX(-8deg);
+    transform-origin: left bottom;
+    color: var(--bone);
+    text-shadow: 0 6px 24px rgb(0 0 0 / 0.55);
+  }
+
+  /* The menu-column wordmark. Sized to the column (JAISWAL is ~3.7em wide in
+     Anton, plus the skew) so the last letter never wraps, and to the height
+     so the menu below it still clears the HUD. */
+  .wordmark-menu {
+    font-size: min(
+      var(--fs-wordmark),
+      calc(min(30vw, 22rem) / 3.9),
+      calc((100svh - 49rem) / 1.7)
+    );
+  }
+
+  @media (max-height: 879px) {
+    .wordmark-menu {
+      font-size: min(var(--fs-wordmark), calc(min(30vw, 22rem) / 7.4));
+      line-height: 0.95;
+    }
+    .wordmark-menu br {
+      display: none;
+    }
+  }
+
+  /* Phones and tablets: the name sits beside MENU / PLAIN. */
+  .wordmark-compact {
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    transform: skewX(-8deg);
+    transform-origin: left bottom;
+    white-space: nowrap;
+    color: var(--bone);
+    text-shadow: 0 2px 12px rgb(0 0 0 / 0.7);
+  }
+
+  .script-sub {
+    font-family: var(--font-script);
+    color: var(--accent);
+    transition: color var(--accent-transition);
+  }
+
+  .hud-label {
+    font-family: var(--font-mono);
+    font-size: var(--fs-hud);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card:hover {
-    transform: none;
-  }
-  .fx-inner {
-    animation: none;
-  }
-  .fx-disc {
-    transition: none;
-  }
   *,
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+/* ============================================================
+   PLATE AMBIENT LAYER — transforms and opacity only
+   ============================================================ */
+.fx-drift {
+  animation: fxDrift 40s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes fxDrift {
+  from { transform: scale(1.03) translate3d(0, 0, 0); }
+  to   { transform: scale(1.06) translate3d(-1.2%, -0.8%, 0); }
+}
+
+.fx-grain {
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: fxGrain 0.9s steps(3) infinite;
+}
+
+@keyframes fxGrain {
+  0%   { transform: translate3d(0, 0, 0); }
+  33%  { transform: translate3d(-2%, 1%, 0); }
+  66%  { transform: translate3d(1%, -2%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+.fx-sweep {
+  background: linear-gradient(105deg, transparent 38%, rgb(255 255 255 / 0.05) 50%, transparent 62%);
+  animation: fxSweep 9s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes fxSweep {
+  0%, 70%, 100% { transform: translate3d(-60%, 0, 0); }
+  35%           { transform: translate3d(60%, 0, 0); }
+}
+
+.fx-neon {
+  background: radial-gradient(60% 40% at 78% 34%, var(--accent) 0%, transparent 60%);
+  opacity: 0.1;
+  animation: fxNeon 4.5s ease-in-out infinite;
+}
+
+@keyframes fxNeon {
+  0%, 100% { opacity: 0.08; }
+  42%      { opacity: 0.16; }
+  46%      { opacity: 0.06; }
+  52%      { opacity: 0.15; }
+}
+
+.fx-steam {
+  background: radial-gradient(closest-side, rgb(255 255 255 / 0.5), transparent);
+  filter: blur(6px);
+  animation: fxSteam 5.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes fxSteam {
+  0%   { opacity: 0; transform: translate3d(0, 6%, 0) scale(0.8); }
+  25%  { opacity: 0.5; }
+  100% { opacity: 0; transform: translate3d(-18%, -70%, 0) scale(1.5); }
+}
+
+.fx-heli {
+  animation: fxHeli 26s linear infinite;
+  will-change: transform;
+}
+
+@keyframes fxHeli {
+  from { transform: translate3d(-8vw, 0, 0); }
+  to   { transform: translate3d(70vw, -4vh, 0); }
+}
+
+.fx-twinkle {
+  animation: fxTwinkle 3.2s ease-in-out infinite;
+}
+
+@keyframes fxTwinkle {
+  0%, 100% { opacity: 0.25; }
+  50%      { opacity: 0.75; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-drift, .fx-grain, .fx-sweep, .fx-neon,
+  .fx-steam, .fx-heli, .fx-twinkle {
+    animation: none;
   }
 }
