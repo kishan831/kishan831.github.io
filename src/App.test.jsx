@@ -114,3 +114,42 @@ describe('App — Escape is scoped', () => {
     expect(screen.getByLabelText(/name/i)).toHaveValue('Ada')
   })
 })
+
+describe('App — keyboard navigation', () => {
+  it('keeps arrow-key navigation going past the first step', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    // The desktop menu is the first tablist in document order.
+    const [menu] = screen.getAllByRole('tablist')
+    within(menu).getByRole('tab', { name: /start game/i }).focus()
+
+    await user.keyboard('{ArrowDown}')
+    await waitFor(() => expect(document.documentElement).toHaveAttribute('data-screen', 'about'))
+    await user.keyboard('{ArrowDown}')
+    await waitFor(() => expect(document.documentElement).toHaveAttribute('data-screen', 'skills'))
+    await user.keyboard('{ArrowDown}')
+    await waitFor(() => expect(document.documentElement).toHaveAttribute('data-screen', 'projects'))
+    expect(within(menu).getByRole('tab', { name: /projects/i })).toHaveFocus()
+
+    await user.keyboard('{ArrowUp}')
+    await waitFor(() => expect(document.documentElement).toHaveAttribute('data-screen', 'skills'))
+    await user.keyboard('{End}')
+    await waitFor(() => expect(document.documentElement).toHaveAttribute('data-screen', 'exit'))
+    await user.keyboard('{Home}')
+    await waitFor(() => expect(document.documentElement).toHaveAttribute('data-screen', 'start'))
+    expect(within(menu).getByRole('tab', { name: /start game/i })).toHaveFocus()
+  })
+
+  it('moves focus to the panel from the skip link without changing screen', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await user.click(screen.getByRole('tab', { name: /about/i }))
+    await waitFor(() => expect(document.documentElement).toHaveAttribute('data-screen', 'about'))
+    const skip = screen.getByRole('link', { name: /skip to content/i })
+    expect(skip).toHaveAttribute('href', '#panel-about')
+    await user.click(skip)
+    expect(screen.getByRole('tabpanel')).toHaveFocus()
+    expect(document.documentElement).toHaveAttribute('data-screen', 'about')
+    expect(window.location.hash).toBe('#/about')
+  })
+})

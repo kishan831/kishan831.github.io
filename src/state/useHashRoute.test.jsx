@@ -36,4 +36,14 @@ describe('useHashRoute', () => {
     })
     expect(result.current[0]).toBe('experience')
   })
+
+  it('keeps the current screen when the hash is an in-page anchor, not a route', () => {
+    const { result } = renderHook(() => useHashRoute())
+    act(() => result.current[1]('about'))
+    act(() => {
+      window.location.hash = '#panel-about'
+      window.dispatchEvent(new HashChangeEvent('hashchange'))
+    })
+    expect(result.current[0]).toBe('about')
+  })
 })

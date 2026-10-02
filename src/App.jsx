@@ -49,11 +49,20 @@ export default function App() {
     return () => clearTimeout(id)
   }, [])
 
-  // Focus the panel heading on change so keyboard and screen-reader users
-  // land on the new content rather than staying in the menu.
+  // Focus the panel on change so keyboard and screen-reader users land on the
+  // new content — unless focus is in the menu: arrow-key navigation keeps
+  // focus on the tab it just selected, and taking it away would stop the
+  // next ArrowDown from reaching the tablist.
   useEffect(() => {
+    if (document.activeElement?.closest('[role="tablist"]')) return
     panelRef.current?.focus({ preventScroll: true })
   }, [screen.id])
+
+  const skipToPanel = (e) => {
+    // The panel id is not a route; following the href would fire hashchange.
+    e.preventDefault()
+    panelRef.current?.focus()
+  }
 
   useEffect(() => {
     const onKey = (e) => {
@@ -105,7 +114,7 @@ export default function App() {
 
   return (
     <>
-      <a href={`#panel-${screen.id}`} className="skip-link">
+      <a href={`#panel-${screen.id}`} onClick={skipToPanel} className="skip-link">
         Skip to content
       </a>
 
