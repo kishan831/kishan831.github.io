@@ -4,6 +4,7 @@ import { DEFAULT_SCREEN_ID, getScreen, screenIds } from './data/screens'
 import { useHashRoute } from './state/useHashRoute'
 import { useProgress } from './state/useProgress'
 import { useAmbientMotion } from './state/useAmbientMotion'
+import { useRadio } from './state/useRadio'
 import Menu from './components/menu/Menu'
 import Hud from './components/hud/Hud'
 import Plate from './components/Plate'
@@ -27,9 +28,12 @@ export default function App() {
   const [screenId, setScreenId] = useHashRoute()
   const { visit, isVisited, stars, shipped, ratio } = useProgress()
   const ambient = useAmbientMotion()
+  const [plain, setPlain] = useState(false)
+  // The plain résumé has no radio control, so an ON radio is silenced there.
+  const radio = useRadio(undefined, { muted: plain })
+  const { blip } = radio
   const [toast, setToast] = useState('')
   const [ready, setReady] = useState(false)
-  const [plain, setPlain] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const panelRef = useRef(null)
   const sheetRef = useRef(null)
@@ -114,7 +118,10 @@ export default function App() {
       if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return
       const i = screenIds.indexOf(screen.id)
       const next = dx < 0 ? i + 1 : i - 1
-      if (next >= 0 && next < screenIds.length) setScreenId(screenIds[next])
+      if (next >= 0 && next < screenIds.length) {
+        setScreenId(screenIds[next])
+        blip('move')
+      }
     }
 
     window.addEventListener('touchstart', onStart, { passive: true })
@@ -123,7 +130,17 @@ export default function App() {
       window.removeEventListener('touchstart', onStart)
       window.removeEventListener('touchend', onEnd)
     }
-  }, [screen.id, setScreenId])
+  }, [screen.id, setScreenId, blip])
+
+  // Arrow keys / Home / End browse (a soft move blip); a click, tap or Enter
+  // picks a screen (the two-note confirm). Silent unless the radio is ON.
+  const selectScreen = useCallback(
+    (id, source) => {
+      setScreenId(id)
+      blip(source === 'keyboard' ? 'move' : 'select')
+    },
+    [setScreenId, blip],
+  )
 
   const clearToast = useCallback(() => setToast(''), [])
 
@@ -180,9 +197,10 @@ export default function App() {
               <p className="script-sub mb-5 -mt-1 pl-1 text-[clamp(1.1rem,0.9rem+1vw,1.9rem)] short:mb-2 short:mt-0">
                 Portfolio
               </p>
-              <Menu activeId={screen.id} isVisited={isVisited} onSelect={setScreenId} />
+              <Menu activeId={screen.id} isVisited={isVisited} onSelect={selectScreen} />
               <button
                 type="button"
+                data-radio-skip
                 onClick={() => setPlain(true)}
                 className="tap mt-4 w-full justify-start px-3 font-mono text-[11px] tracking-[0.16em] text-bone/70 short:mt-2 underline decoration-dotted underline-offset-4 hover:text-bone"
               >
@@ -203,6 +221,7 @@ export default function App() {
               </button>
               <button
                 type="button"
+                data-radio-skip
                 onClick={() => setPlain(true)}
                 className="tap rounded-lg border border-bone/20 bg-ink-950/70 px-3 py-2 font-mono text-[11px] tracking-[0.16em] text-bone/70"
               >
@@ -259,13 +278,14 @@ export default function App() {
                 activeId={screen.id}
                 isVisited={isVisited}
                 onSelect={(id, source) => {
-                  setScreenId(id)
+                  selectScreen(id, source)
                   // Arrow keys browse inside the sheet; a tap or Enter picks.
                   if (source !== 'keyboard') setMenuOpen(false)
                 }}
               />
               <button
                 type="button"
+                data-radio-skip
                 onClick={() => {
                   setMenuOpen(false)
                   setPlain(true)
@@ -285,7 +305,15 @@ export default function App() {
           )}
         </AnimatePresence>
 
-        <Hud objective={screen.objective} stars={stars} shipped={shipped} ratio={ratio} />
+        <Hud
+          objective={screen.objective}
+          stars={stars}
+          shipped={shipped}
+          ratio={ratio}
+          radioOn={radio.on}
+          radioAnimate={ambient && radio.playing}
+          onRadioToggle={radio.toggle}
+        />
         <Toast message={toast} onDone={clearToast} />
 
         <p aria-live="polite" className="sr-only">

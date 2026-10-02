@@ -25,3 +25,6 @@ Thumbs.db
 /reference/
 /GTA Theme portfolio/
 /public/assets/GTA Theme portfolio/
+
+# Local Playwright screenshots for the radio layout check
+.radio-shots/

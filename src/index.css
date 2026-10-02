@@ -440,3 +440,34 @@ body {
     animation: none;
   }
 }
+
+/* ============================================================
+   KJ-FM EQ — transform only; moves only while the radio is ON
+   and ambient motion is allowed (RadioStrip adds .eq-bar-on)
+   ============================================================ */
+.eq-bar {
+  display: block;
+  height: 12px;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+  transform-origin: 50% 100%;
+  transform: scaleY(var(--h, 0.5));
+  transition: transform 300ms ease, opacity 300ms ease;
+}
+
+.eq-bar-on {
+  animation: eqBounce 1s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes eqBounce {
+  from { transform: scaleY(calc(var(--h, 0.5) * 0.3)); }
+  to   { transform: scaleY(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eq-bar-on {
+    animation: none;
+  }
+}
