@@ -5,6 +5,9 @@ import SkillsScreen from './SkillsScreen'
 import ProjectsScreen from './ProjectsScreen'
 import ExperienceScreen from './ExperienceScreen'
 import AchievementsScreen from './AchievementsScreen'
+import AcademyScreen from './AcademyScreen'
+import ContactScreen from './ContactScreen'
+import ExitScreen from './ExitScreen'
 
 const BODIES = {
   start: StartScreen,
@@ -13,6 +16,9 @@ const BODIES = {
   projects: ProjectsScreen,
   experience: ExperienceScreen,
   achievements: AchievementsScreen,
+  academy: AcademyScreen,
+  contact: ContactScreen,
+  exit: ExitScreen,
 }
 
 export default function ScreenBody({ screenId }) {
